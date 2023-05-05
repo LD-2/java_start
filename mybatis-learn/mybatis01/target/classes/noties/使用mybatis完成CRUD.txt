@@ -1,0 +1,55 @@
+和jdbc流程差不多
+只不过这里填充占位符从? 变成了 #{}
+#{xxx}这个取值 和 el表达式中的${}取值有点相似
+多个元素时
+这里可以根据map集合的key取值
+可以根据pojo对象的getXxx()方法的去掉get的xxx取值 也算是根据属性名取值  但根本还是根据方法getXxx()  所以说和el表达式优点相似
+单个占位符的时候#{}中可以随便命名
+对于pojo的对象类型设置 尽量用 包装类数据类型 因为包装类可以防止null的问题，而基本数据类型无法避免null的问题
+且插入数据时注意表中是否允许数据为null
+
+map:
+    <insert id="insertCar-typeMap">
+        insert into t_car(id,car_num,brand,guide_price,produce_time,car_type)
+        values(null,#{k1},#{k2},#{k3},#{k4},#{k5})
+    </insert>
+    如果key不存在则获取null
+
+插入：
+    <insert id="insertCar">
+        insert into t_car(id,car_num,brand,guide_price,produce_time,car_type)
+        values(#{id},#{carNum},#{brand},#{guidePrice},#{produceTime},#{carType})
+    </insert>
+
+删除：
+    <delete id="deleteCarById">
+        delete from t_car where id = #{id}
+    </delete>
+
+根据id修改某条记录
+
+    <update id="updateById">
+        update t_car set
+            car_num = #{carNum},
+            brand =#{brand},
+            guide_price=#{guidePrice},
+            produce_time=#{produceTime},
+            car_type=#{carType}
+        where id=#{id}
+    </update>
+
+查询 查一个 根据主键查 返回的也一定是一个
+
+    <!--    指定结果集要封装的java对象类型 全限定类名   -->
+        <select id="selectById" resultType="com.mirror.mybatis.pojo.Car">
+    <!--        select * from t_car where id = #{id}-->
+            起别名
+                select id,car_num as carNum,brand,guide_price as guidePrice, produce_time as produceTime, car_type as carType from t_car where id = #{id}
+        </select>
+
+select查所有
+        <select id="selectAll" resultType="com.mirror.mybatis.pojo.Car">
+            select id,car_num as carNum,brand,guide_price as guidePrice, produce_time as produceTime, car_type as carType from t_car
+        </select>
+
+

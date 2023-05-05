@@ -1,0 +1,88 @@
+maven是一个项目的构键工具
+maven的作用
+    1、管理依赖: jar管理的，下载、版本
+    2、构键项目: 完成项目代码的编译 测试 打包 安装 部署等
+maven的使用:
+    独立使用maven 配置环境 maven环境 jdk环境(插件要用的)  通过使用maven命令完成代码的编译 测试 打包 等
+    结合开发工具使用 一般在idea中使用maven: 简单快捷 不用命令
+maven的核心概念:
+    约定的目录结构
+        项目目录
+            src
+                main
+                    java
+                    resources
+                test
+                    java
+                    resource
+            target
+            pom.xml
+
+坐标gav
+maven项目的唯一标识
+
+依赖
+maven管理依赖 使用依赖把jar导入到项目中
+
+仓库
+存放jar maven的插件 自定义的项目等
+本地仓库（修改目录）
+中央仓库 镜像 私服
+
+maven的常用命令
+
+生命周期 插件
+生命周期是项目构建的过程
+插件是用来执行maven命令的
+
+导入maven项目
+在项目结构模块那里导入
+
+scope是依赖范围
+scope的值有compile  test  provided
+表示这个依赖在maven构建项目的哪些阶段起作用
+默认是编译compile
+provided是提供者 提供的时候不会打包此jar包
+
+依赖的范围依赖的范围compile  test   provided（默认采用compile）:
+                compile  test   provided
+对主程序是否有效：    是      否       是
+对测试程序是否有效    是      是       是
+是否参与打包         是      否       否
+是否参与部署         是      否       否
+
+
+maven常用操作
+1.maven的属性设置<properties>设置maven的常用属性
+2.maven的全局变量自定义的属性,
+    1.在<properties>通过自定义标签声明变量(标签名就是变量名)
+    2.在pom.xml文件中的其它位置,使用${标签名}使用变量的值自定义
+    全局变量一般是定义依赖的版本号,当你的项目中要使用多个相同的版本号,先使用全局变量定义，在使用${变量名}
+
+
+资源插件
+<build>
+  <resources>
+    <resource>
+      <directory>src/main/java</directory>
+      <!--所在的目录-->
+      <includes>
+        <!--包括目录下的.properties,.xml文件都会扫描到-->
+        <include>**/*.properties</include>
+        <include>**/*.xml</include>
+        <include>**/*.txt</include>
+      </includes>
+      <!--filtering选项false不启用过滤器, *.property已经起到过滤的作用了-->
+      <filtering>false</filtering>
+    </resource>
+  </resources>
+</build>
+
+作用: mybatis课程中会用到这个作用
+1,默认没有使用resources的时候, maven执行编译代码时,会把src/main/resources目录中的文件拷贝到target/classes目录中
+对于src/main/java目录下的非java文件不处理,不拷贝到target/classes目录中
+2,我们的程序有需要把一些文件放在src/main/java目录中,
+当我在执行java程序时,需要用到src/main/java目录中的文件。
+需要告诉maven在mvn compile src/main/java目录下的程序时,
+需要把文件一同拷贝到target/classes目录中。
+此时就需要在<build>中加入<resources>.

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>选择器</title>
+  <script type="text/javascript" src="./jquery_min_3.2.1.js"></script>
+  <style type="text/css">
+    div{
+      width:100px;
+      height:100px
+    }
+  </style>
+</head>
+<body>
+<script type="text/javascript">
+  $(function (){
+    $("#btn1").click(function (){
+      $("#mydiv").css("background","red")
+    })
+
+    $("#btn2").click(function (){
+        $(".mydivs").css("background","blue")
+    })
+
+    $("#btn3").click(function (){
+        $("div").css("background","green")
+    })
+
+    $("#btn4").click(function (){
+        $("*").css("background","white")
+    })
+
+    $("#btn5").click(function (){
+        $("#mydiv,.mydivs").css("background","purple")
+    })
+  })
+</script>
+<div id="mydiv"></div><br/>
+<div class="mydivs"></div><br/>
+<div class="mydivs"></div><br/>
+<div></div><br/>
+  <button id="btn1">id选择器测试</button>
+  <button id="btn2">类选择器测试</button>
+  <button id="btn3">标签选择器测试</button>
+  <button id="btn4">所有选择器测试</button>
+  <button id="btn5">组合选择器测试</button>
+</body>
+</html>

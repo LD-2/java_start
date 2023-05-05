@@ -1,0 +1,10 @@
+<!--    java.util.Properties类,是一个map集合 key和value都是String类型-->
+<!--    在properties标签中可以配置很多属性-->
+<!--    <properties>-->
+<!--        <property name="mybatis.driver" value="com.mysql.cj.jdbc.Driver"/>-->
+<!--        <property name="mybatis.url" value="jdbc:mysql://localhost:3306/mybatis"/>-->
+<!--        <property name="mybatis.username" value="root"/>-->
+<!--        <property name="mybatis.password" value="123456"/>-->
+<!--    </properties>-->
+
+${}取值

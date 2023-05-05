@@ -1,0 +1,7 @@
+后端代码响应类型
+response.setContentType("text/xml")
+和前端中代码 xml的方法 属性不一样
+
+xml和JSON都是常用的数据交换格式
+    xml体积大，解析麻烦，较少用
+    JSON体积小，解析简单，较常用

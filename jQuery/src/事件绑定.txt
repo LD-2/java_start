@@ -1,0 +1,18 @@
+jquery中给dom对象绑定事件
+    1）
+    $（选择器）.事件名称（事件的处理函数）
+    $(选择器):定位dom对象, dom对象可以有多个,这些dom对象都绑定事件了事件名称:就是js中事件去掉on的部分,
+    例如js中的单击事件onclick(),jquery中的事件名称,就是click,都是小写的。
+    事件的处理函数：就是一个function ,当事件发生时，执行这个函数的内容。
+    例如给id是btn的按钮绑定单击事件
+    $("#btn") .click(function () {alert("btn按钮单击了")}
+
+    2）on 事件绑定
+    $（选择器）.on（事件名称，事件的处理函数）
+    事件名称: 就是js事件中去掉on的部分， 例如js中onclick ,这里就是click事件的处理函数: function定义。
+    例如,
+    <input type="button" id="btn">
+    $("#btn") .on("click", function() {处理按钮单击})
+
+
+    on 事件绑定可以对 append的元素进行事件进行绑定

@@ -1,0 +1,17 @@
+反射机制 动态
+
+静态语言 动态语言
+动态语言: 运行的时候可以改变结构的语言 如javaScript PHP Python
+静态语言: C C++ Java
+
+Reflection(反射)是Java被视为动态语言的关键 反射机制允许 程序在执行期间借助Reflection API
+取得任何类的内部信息 并能直接操作任意对象的内部属性及方法
+加载完类以后 堆的方法区中会产生一个 Class类型的对象
+
+获取class类的实例
+Class class Person.class
+Class class person.getClass()
+Class class Class.forName("路径")
+
+
+类加载器: 引导类加载器  扩展类加载器  系统类加载器

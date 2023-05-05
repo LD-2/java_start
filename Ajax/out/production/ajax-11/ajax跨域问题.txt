@@ -1,0 +1,46 @@
+跨域是指从一个域名的网页去请求另一个域名的资源 比如从百度页面去请求京东的资源
+传统的页面跳转方式不存在跨域的问题
+如 form请求 herf location src 是不存在跨域问题的
+但是js发送ajax请求会有跨域问题
+同源策略是指一段脚本只能读取来自同一来源的窗口和文档的属性，同源就是协议、域名、端口都相同
+同源策略有利于保护网站信息
+有些时候也需要ajax进行跨域访问
+
+同源就是 协议 域名 端口都相同
+
+
+解决方案：
+
+1、
+设置响应头允许ajax跨域访问
+resp.setHeader("Access-Control-Allow-Origin","http://localhost:8080"); 允许某个源
+resp.setHeader("Access-Control-Allow-Origin","*"); 允许所有源
+
+2、
+jsonp: json with padding 带填充的json
+jsonp不是一个真正的ajax请求，但是可以完成ajax的局部刷新效果。jsonp是一种类ajax请求机制
+jsonp不是ajax请求，但是可以完成局部刷新的效果，并且可以解决跨域问题
+jsonp解决跨域的时候，只支持GET请求，不支持POST请求 因为src是get请求
+用jQuery库调用jsonp发送仿ajax请求
+写法和jQuery封装的ajax请求差不多
+多了
+ dataType:"jsonp",//指定数据类型是jsonp形式
+//可以不用默认的回调函数success  可以不用默认的提交name 设置jsonp  和   jsonpCallback即可
+jsonp:"fun_name",
+jsonpCallback:"sayHello"
+有人已经对jsonp进行了封装，可以直接用
+底层原理和上面手写的相同
+只不过有默认的 提交函数的名字callback 和 随机生成的回调函数 随机生成的回调函数会调用success回调函数
+当然可以通过jsonp和jsonpCallback修改默认生成值
+
+3、
+代理机制（httpclient）
+ajax请求不可以跨域
+但是java程序servlet可以跨域 有发送get/post请求的方式
+即ajax请求到本地同源的 Java程序servlet(ProxyServlet代理servlet)
+然后本网站的servlet发送get/post请求到非同源的sevlet中 这样将另一个站点的数据传递到本站点的servlet 最终再传到本地进行局部刷新数据
+也就是老乡托老乡办事 此老乡能接触到 非本地的人从而获得自己想要的数据
+而中间商如何做这件事（ProxyServlet如何发送get/post数据）
+    一: 使用JDK内置的API 这些API可以发送HTTP请求
+    二: 使用第三方开源组件 比如 apache的httpclient组件
+    导jar包和网上代码

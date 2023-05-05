@@ -1,0 +1,3 @@
+Ajax get 怎么提交数据：
+和普通get一样在后面按照HTTP协议的格式
+uri?usercode=66&username="66"

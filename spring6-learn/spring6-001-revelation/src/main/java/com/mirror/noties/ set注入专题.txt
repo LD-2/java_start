@@ -1,0 +1,282 @@
+注入外部Bean
+    <bean id="userServiceBean" class="com.mirror.spring6.service.UserService">
+        <property name="userDao">
+            <ref bean="userDaoBean"></ref>
+        </property>
+        <property name="vip" ref="vipDaoBean"/>
+    </bean>
+
+注入内部Bean
+    <bean id="orderServiceBean1" class="com.mirror.spring6.service.OrderService">
+        <property name="orderDao" ref="orderDaoBean"/>
+    </bean>
+   <bean id="orderServiceBean2" class="com.mirror.spring6.service.OrderService">
+        <property name="orderDao">
+            <bean class="com.mirror.spring6.dao.OrderDao"/>
+        </property>
+    </bean>
+
+
+
+
+注入简单类型
+需要特别注意：如果给简单类型赋值，使用value属性或value标签。而不是ref
+<bean id="User" class="com.mirror.spring6.bean.User">
+   <property name="username" value="mirror"/>
+   <property name="password" value="123456"/>
+   <property name="age">
+       <value>20</value>
+   </property>
+</bean>
+
+简单类型包括哪些呢？可以通过Spring的源码来分析一下：BeanUtils类
+通过源码分析得知，简单类型包括：
+● 基本数据类型
+● 基本数据类型对应的包装类
+● String或其他的CharSequence子类
+● Number子类
+● Date子类
+● Enum子类
+● URI
+● URL
+● Temporal子类
+● Locale
+● Class
+● 另外还包括以上简单值类型对应的数组类型
+
+经典案例：给数据源的属性注入值：
+假设我们现在要自己手写一个数据源
+我们都知道所有的数据源都要实现javax.sql.DataSource接口，并且数据源中应该有连接数据库的信息
+例如：driver、url、username、password等
+
+需要注意的是：
+● 如果把Date当做简单类型的话，日期字符串格式不能随便写。格式必须符合Date的toString()方法格式。显然这就比较鸡肋了。如果我们提供一个这样的日期字符串：2010-10-11，在这里是无法赋值给Date类型的属性的。
+● spring6之后，当注入的是URL，那么这个url字符串是会进行有效性检测的。如果是一个存在的url，那就没问题。如果不存在则报错。
+
+
+级联属性赋值
+    <bean id="clazzBean" class="com.powernode.spring6.beans.Clazz"/>
+
+    <bean id="student" class="com.powernode.spring6.beans.Student">
+        <property name="name" value="张三"/>
+
+        <!--要点1：以下两行配置的顺序不能颠倒-->
+        <property name="clazz" ref="clazzBean"/>
+        <!--要点2：clazz属性必须有getter方法-->
+        <property name="clazz.name" value="高三一班"/>
+    </bean>
+要点：
+● 在spring配置文件中，如上，注意顺序。
+● 在spring配置文件中，clazz属性必须提供getter方法。
+
+
+注入数组
+要点：
+● 如果数组中是简单类型，使用value标签。
+● 如果数组中是非简单类型，使用ref标签。
+
+   <bean id="personBean" class="com.mirror.spring6.bean.Person">
+        <property name="favariteFoods">
+            <array>
+                <value>鸡排</value>
+                <value>汉堡</value>
+                <value>鹅肝</value>
+            </array>
+        </property>
+    </bean>
+
+    <bean id="orderBean" class="com.mirror.spring6.bean.Order">
+        <property name="goods">
+            <array>
+                <ref bean="Good1"/>
+                <ref bean="Good2"/>
+            </array>
+        </property>
+    </bean>
+
+注入List集合
+注入Set集合
+注意：注入List集合的时候使用list标签，如果List集合中是简单类型使用value标签，反之使用ref标签。
+要点：
+● 使用<set>标签
+● set集合中元素是简单类型的使用value标签，反之使用ref标签。
+    <bean id="peopleBean" class="com.mirror.spring6.bean.People">
+        <property name="names">
+            <list>
+                <value>铁锤</value>
+                <value>张三</value>
+                <value>张三</value>
+                <value>张三</value>
+                <value>狼</value>
+            </list>
+        </property>
+        <property name="phones">
+            <set>
+                <!--非简单类型可以使用ref，简单类型使用value-->
+                <value>110</value>
+                <value>110</value>
+                <value>120</value>
+                <value>120</value>
+                <value>119</value>
+                <value>119</value>
+            </set>
+        </property>
+    </bean>
+
+注入Map集合
+要点：
+● 使用<map>标签
+● 如果key是简单类型，使用 key 属性，反之使用 key-ref 属性。
+● 如果value是简单类型，使用 value 属性，反之使用 value-ref 属性。
+
+注入Properties
+要点：
+● 使用<props>标签嵌套<prop>标签完成
+
+
+注入null和空字符串
+注入空字符串使用：<value/> 或者 value=""
+注入null使用：<null/> 或者 不为该属性赋值
+
+注入的值中含有特殊符号
+XML中有5个特殊字符，分别是：<、>、'、"、&
+以上5个特殊符号在XML中会被特殊对待，会被当做XML语法的一部分进行解析，如果这些特殊符号直接出现在注入的字符串当中，会报错。
+解决方案包括两种：
+● 第一种：特殊符号使用转义字符代替。
+● 第二种：将含有特殊符号的字符串放到：<![CDATA[]]> 当中。因为放在CDATA区中的数据不会被XML文件解析器解析。
+5个特殊字符对应的转义字符分别是：
+>	&gt;
+<	&lt;
+'	&apos;
+"	&quot;
+&	&amp;
+ <bean id="mathBean" class="com.powernode.spring6.beans.Math">
+        <property name="result" value="2 &lt; 3"/>
+    </bean>
+
+我们再来使用CDATA方式：
+ <bean id="mathBean" class="com.powernode.spring6.beans.Math">
+        <property name="result">
+            <!--只能使用value标签-->
+            <value><![CDATA[2 < 3]]></value>
+        </property>
+    </bean>
+注意：使用CDATA时，不能使用value属性，只能使用value标签。
+
+
+p命名空间注入
+目的：简化配置。
+使用p命名空间注入的前提条件包括两个：
+● 第一：在XML头部信息中添加p命名空间的配置信息：xmlns:p="http://www.springframework.org/schema/p"
+● 第二：p命名空间注入是基于setter方法的，所以需要对应的属性提供setter方法。
+p标签 把 properties标签给属性化了
+p命名空间实际上是对set注入的简化
+
+
+
+c命名空间注入
+c命名空间是简化构造方法注入的。
+使用c命名空间的两个前提条件：
+第一：需要在xml配置文件头部添加信息：xmlns:c="http://www.springframework.org/schema/c"
+第二：需要提供构造方法。
+对 constructor-arg的简化
+c命名空间是依靠构造方法的。
+注意：不管是p命名空间还是c命名空间，注入的时候都可以注入简单类型以及非简单类型。
+
+
+util命名空间
+使用util命名空间可以让配置复用。
+使用util命名空间的前提是：在spring配置文件头部添加配置信息。如下：
+xml中代码复用
+
+
+基于XML的自动装配
+Spring还可以完成自动化的注入，自动化注入又被称为自动装配。它可以根据名字进行自动装配，也可以根据类型进行自动装配。
+public class UserService2 {
+    private UserDao2 aaa;
+
+    // 这个set方法非常关键
+    public void setAaa(UserDao2 aaa) {
+        this.aaa = aaa;
+    }
+
+    public void save(){
+        aaa.insert();
+    }
+}
+
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="userService" class="com.mirror.spring6.service.UserService2" autowire="byName"/>
+
+    <bean id="aaa" class="com.mirror.spring6.bean.UserDao2"/>
+
+</beans>
+这个配置起到关键作用：
+● UserService Bean中需要添加autowire="byName"，表示通过名称进行装配。
+● UserService类中有一个UserDao属性，而UserDao属性的名字是aaa，对应的set方法是setAaa()，正好和UserDao Bean的id是一样的。这就是根据名称自动装配。
+
+根据类型自动装配
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--byType表示根据类型自动装配-->
+    <bean id="accountService" class="com.powernode.spring6.service.AccountService" autowire="byType"/>
+
+    <bean class="com.powernode.spring6.dao.AccountDao"/>
+
+</beans>
+
+
+
+spring引入外部属性配置文件
+我们都知道编写数据源的时候是需要连接数据库的信息的，例如：driver url username password等信息。这些信息可以单独写到一个属性配置文件中吗，这样用户修改起来会更加的方便。当然可以
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:property-placeholder location="jdbc.properties"/>
+
+    <bean id="dataSource" class="com.mirror.spring6.bean.MyDataSource">
+        <property name="driver" value="${mybatis.driver}"/>
+        <property name="url" value="${mybatis.url}"/>
+        <property name="username" value="${mybatis.username}"/>
+        <property name="password" value="${mybatis.password}"/>
+    </bean>
+</beans>
+value="${username}取的是系统user 所以 这样写更好一些
+
+
+总结:
+Spring容器用来存储bean对象 是一个容器
+在xml引入那一刻就有了bean对象的创建
+至于bean对象间的关系 靠构造注入和set注入实现 properties是属性 至于值变量的类型有很多 套娃之类的 只要用对标签就可以
+其底层 是根据properties获得对应的set方法再赋值 从而解决bean对象间的关系问题
+至于构造注入 用另一个标签 这些现用现查就行
+
+● 控制反转是一种思想。
+● 控制反转是为了降低程序耦合度，提高程序扩展力，达到OCP原则，达到DIP原则。
+● 控制反转，反转的是什么？
+  ○ 将对象的创建权利交出去，交给第三方容器负责。
+  ○ 将对象和对象之间关系的维护权交出去，交给第三方容器负责。
+● 控制反转这种思想如何实现呢？
+  ○ DI（Dependency Injection）：依赖注入
+
+
+依赖注入实现了控制反转的思想。
+Spring通过依赖注入的方式来完成Bean管理的。
+Bean管理说的是：Bean对象的创建，以及Bean对象中属性的赋值（或者叫做Bean对象之间关系的维护）。
+依赖注入：
+● 依赖指的是对象和对象之间的关联关系。
+● 注入指的是一种数据传递行为，通过注入行为来让对象和对象产生关系。
+依赖注入常见的实现方式包括两种：
+● 第一种：set注入
+● 第二种：构造注入

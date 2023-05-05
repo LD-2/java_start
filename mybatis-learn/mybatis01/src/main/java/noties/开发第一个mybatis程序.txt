@@ -1,0 +1,53 @@
+开发第一个mybatis程序
+
+1、resources目录
+    放在当前这个目录中，一般都是资源文件，配置文件。
+    直接放到resources目录下的资源，等同于放到了类的根目录下。
+
+2、开发步骤：
+    第一步: 普通java项目就打包方式jar包  web项目打包war包
+    第二步: 引入依赖
+        mybatis依赖
+        mysql依赖
+    第三步: 编写mybatis核心配置文件: mybatis-config.xml
+        注意:
+            第一: 这个文件名叫什么都可以，只不过这里一般都叫这个
+            第二: 这个文件的位置是不固定的，可以随意，不过一般都放在类的根路径下
+    第四步: 编写XxxxMapper.xml
+        在这个配置文件中编写SQL语句、
+        文件名和位置也不固定暂时放到根目录下
+    第五步: mybatis-config.xml文件中指定XxxxMapper.xml文件的路径
+        resource属性会自动从类的根目录找
+        resources文件夹正好是根目录开始的
+    第六步: 编写mybatis程序(使用mybatis的类库，编写mybatis程序，连接数据库，做增删改查)
+        在MyBatis当中，负责执行SQL语句的那个对象叫做什么呢？
+        SqlSession
+
+        SqlSession是专门用来执行SQL语句的，是一个Java程序和数据库之间的一次会话。
+        要想获取SqlSession对象，需要先获取SqlSessionFactory对象，通过SqlSessionFactory工厂来生产SqlSession对象。
+
+        怎么获取SqlSessionFactory对象呢？
+        需要首先获取SqlSessionFactoryBuilder对象。
+        通过SqlSessionFactoryBuilder对象的build方法，来获取一个SqlSessionFactory对象。
+
+        mybatis的核心对象包括：
+            SqlSessionFactoryBuilder
+            SqlSessionFactory
+            SqlSession
+
+        SqlSessionFactoryBuilder --> SqlSessionFactory --> SqlSession
+
+
+
+3、从xml中构建SqlSessionFactory
+    通过官方此话可了解
+    每个基于 MyBatis 的应用都是以一个 SqlSessionFactory 的实例为核心的
+    且SqlSessionFactory对象的创建需要xml
+    xml是是一个配置文件
+
+4、mybatis中有两种主要的配置文件
+    其中一个是：mybatis-config.xml 这个是核心配置文件，主要配置连接数据库的信息。
+    另一种是：XxxMapper.xml 这个文件是专门编写sql语句的配置文件。
+        t_user表，一般会对应一个UserMapper.xml文件
+        t_student表，一般会对应一个StudentMapper.xml文件
+        当然也可以只写一个Mapper.xml映射文件

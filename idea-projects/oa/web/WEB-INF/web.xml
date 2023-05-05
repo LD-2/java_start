@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
+         version="5.0">
+
+    <servlet>
+        <servlet-name>list</servlet-name>
+        <servlet-class>com.mirror.action.ListServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>list</servlet-name>
+        <url-pattern>/ldMirror/ListServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>details</servlet-name>
+        <servlet-class>com.mirror.action.DetailsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>details</servlet-name>
+        <url-pattern>/ldMirror/DetailsServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>add</servlet-name>
+        <servlet-class>com.mirror.action.AddServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>add</servlet-name>
+        <url-pattern>/ldMirror/AddServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>delete</servlet-name>
+        <servlet-class>com.mirror.action.DeleteServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>delete</servlet-name>
+        <url-pattern>/ldMirror/DeleteServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>updateShow</servlet-name>
+        <servlet-class>com.mirror.action.UpdateShowServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>updateShow</servlet-name>
+        <url-pattern>/ldMirror/UpdateShowServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>update</servlet-name>
+        <servlet-class>com.mirror.action.UpdateServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>update</servlet-name>
+        <url-pattern>/ldMirror/UpdateServlet</url-pattern>
+    </servlet-mapping>
+
+</web-app>

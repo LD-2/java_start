@@ -1,0 +1,24 @@
+发送ajax请求 是一个浏览器的内置对象XMLHttpRequest对象所进行的
+XMLHttpRequest对象是ajax的核心对象，发送请求以及接收服务器数据的返回，全部都是此对象完成的
+
+AJAX请求,以及AJAX接收服务器的响应,完全都是依靠XMLHttpRequest对象的xMLHttpRequest对象中的readystate属性记录下了XMLHttpRequest对象的状态
+未初始化0   建立服务器和浏览器的连接通道1  接收请求2  处理请求3   请求完成服务器响应数据到浏览器4
+ajax-GET请求:
+    1、创建XMLHttpRequest对象
+    2、注册此对象的onreadystatechange 状态改变事件
+    3、open()方法 建立通道
+    4、发送请求
+     xmlObj.open("GET","/ajax/new-request",true)
+     xmlObj.send()
+
+ajax-POSTT请求:
+    1、创建XMLHttpRequest对象
+    2、注册此对象的onreadystatechange 状态改变事件
+    3、open()方法 建立通道
+    4、发送请求
+     xmlObj.open("POST","/ajax/new-request",true)
+     xmlObj.setRequestHeader("Content-Type","application/x-www-form-urlencoded")
+     xmlObj.send("name="+name.value)
+
+GET和POST的不同之处 open中和 设置发送格式   以及发送函数
+

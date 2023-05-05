@@ -1,0 +1,61 @@
+写一个模板类 模板类中有一个模板方法 模板方法中定义核心算法骨架 具体的实现步骤可以延迟到子类中完成
+
+什么是设计模式:
+    某些问题的固定解决方法
+常见的设计模式:
+    GoF设计模式:
+        23设计模式（Gang of Four: 4人提出的设计模式）
+        单例模式
+        工厂模式
+        代理模式
+        门面模式
+        责任链模式
+        观察者模式
+        模板方法设计模式
+        ...
+    javaEE设计模式:
+        DAO
+        DTO
+        VO
+        PO
+        pojo
+    ...
+
+模板方法设计模式:
+    在模板类中定义核心算法骨架具体的实现步骤可以在子类中实现
+    模板类通常是抽象类 模板类中的模板方法一般是final类型的
+
+HTTPServlet类是专门为HTTP协议准备的，比GenericServlet更适合的HTTP协议下的开发
+HTTPServlet在哪个包下
+    jakarta.servlet.http.HttpServlet
+目前所学习的servlet规范中的接口
+    jakarta.servlet.Servlet 接口
+    jakarta.servlet.ServletConfig Servlet配置信息接口
+    jakarta.servlet.ServletContext Servlet上下文配置信息
+    jakarta.servlet.ServletRequest Servlet请求接口
+    jakarta.servlet.ServletResponse Servlet响应接口
+    jakarta.servlet.ServletException Servlet异常
+    jakarta.servlet.GenericServlet 标准通用的Servlet类(抽象类)
+http包下有哪些类和接口?
+    jakarta.servlet.http.HttpServlet (Http协议专用的Servlet类 抽象类)
+    jakarta.servlet.http.HttpRequest (Http协议专用的请求对象)
+    jakarta.servlet.http.HttpServletResponse (Http协议专用的响应对象)
+HttpServletRequest对象中封装了什么信息
+    HttpServletRequest 简称request对象
+    其里面封装了前端请求发送的请求协议的所有内容
+    Tomcat服务器将请求协议中的数据全部解析出来 这些数据全部封装到 request对象当中
+    此时面向HttpServletRequest编程 就可以 获取请求协议中的数据
+HttpServletResponse对象是专门用来响应HTTP协议到浏览器的
+
+Servlet声明周期:
+    用户的第一次请求:
+        Tomcat服务器通过反射 调用无参构造方法 创建Servlet对象(web.xml文件中servlet配置信息找到对应的类)
+        调用servlet对象的init()方法完成初始化
+        调用servlet对象的service方法处理请求
+    用户的第二次请求:
+        直接调用service方法
+    用户的第三次请求:
+        .....
+    服务器关闭
+        服务器软件调用servlet的的destroy方法 做销毁之前的准备工作
+        tomcat服务器销毁servlet对象

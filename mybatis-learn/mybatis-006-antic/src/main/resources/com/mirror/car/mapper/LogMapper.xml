@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mirror.car.mapper.LogMapper">
+    <!--    指定结果集要封装的java对象类型 全限定类名   -->
+    <select id="selectAll" resultType="Log">
+        select
+            id,
+            log,
+            time
+        from
+            t_log_${num}
+    </select>
+
+</mapper>

@@ -1,0 +1,81 @@
+什么是Bean的循环依赖
+A对象中有B属性。B对象中有A属性。这就是循环依赖。我依赖你，你也依赖我。
+比如：丈夫类Husband，妻子类Wife。Husband中有Wife的引用。Wife中有Husband的引用。
+
+singleton下的set注入产生的循环依赖
+prototype下的set注入产生的循环依赖
+
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="husbandBean" class="com.powernode.spring6.bean.Husband" scope="prototype">
+        <property name="name" value="张三"/>
+        <property name="wife" ref="wifeBean"/>
+    </bean>
+    <bean id="wifeBean" class="com.powernode.spring6.bean.Wife" scope="prototype">
+        <property name="name" value="小花"/>
+        <property name="husband" ref="husbandBean"/>
+    </bean>
+</beans>
+
+执行测试程序：发生了异常，异常信息如下：
+Caused by: org.springframework.beans.factory.BeanCurrentlyInCreationException: Error creating bean with name 'husbandBean': Requested bean is currently in creation: Is there an unresolvable circular reference?
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:265)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:325)
+	... 44 more
+翻译为：创建名为“husbandBean”的bean时出错：请求的bean当前正在创建中：是否存在无法解析的循环引用？
+通过测试得知，当循环依赖的所有Bean的scope="prototype"的时候，产生的循环依赖，Spring是无法解决的，会出现BeanCurrentlyInCreationException异常。
+大家可以测试一下，以上两个Bean，如果其中一个是singleton，另一个是prototype，是没有问题的。
+为什么两个Bean都是prototype时会出错呢？
+
+
+ singleton下的构造注入产生的循环依赖
+ 我们再来测试一下singleton + 构造注入的方式下，spring是否能够解决这种循环依赖
+ 执行结果：发生了异常，信息如下：
+ Caused by: org.springframework.beans.factory.BeanCurrentlyInCreationException: Error creating bean with name 'hBean': Requested bean is currently in creation: Is there an unresolvable circular reference?
+ 	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.beforeSingletonCreation(DefaultSingletonBeanRegistry.java:355)
+ 	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:227)
+ 	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:324)
+ 	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+ 	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:325)
+ 	... 56 more
+ 和上一个测试结果相同，都是提示产生了循环依赖，并且Spring是无法解决这种循环依赖的。
+ 为什么呢？
+ 主要原因是因为通过构造方法注入导致的：因为构造方法注入会导致实例化对象的过程和对象属性赋值的过程没有分离开，必须在一起完成导致的。
+
+
+ Spring解决循环依赖的机理
+ Spring为什么可以解决set + singleton模式下循环依赖？
+ 根本的原因在于：这种方式可以做到将“实例化Bean”和“给Bean属性赋值”这两个动作分开去完成。
+ 实例化Bean的时候：调用无参数构造方法来完成。此时可以先不给属性赋值，可以提前将该Bean对象“曝光”给外界。
+ 给Bean属性赋值的时候：调用setter方法来完成。
+ 两个步骤是完全可以分离开去完成的，并且这两步不要求在同一个时间点上完成。
+ 也就是说，Bean都是单例的，我们可以先把所有的单例Bean实例化出来，放到一个集合当中（我们可以称之为缓存），所有的单例Bean全部实例化完成之后，以后我们再慢慢的调用setter方法给属性赋值。这样就解决了循环依赖的问题。
+ 那么在Spring框架底层源码级别上是如何实现的呢？请看：
+
+ 以上类中包含三个重要的属性：
+ Cache of singleton objects: bean name to bean instance. 单例对象的缓存：key存储bean名称，value存储Bean对象【一级缓存】
+ Cache of early singleton objects: bean name to bean instance. 早期单例对象的缓存：key存储bean名称，value存储早期的Bean对象【二级缓存】
+ Cache of singleton factories: bean name to ObjectFactory. 单例工厂缓存：key存储bean名称，value存储该Bean对应的ObjectFactory对象【三级缓存】
+ 这三个缓存其实本质上是三个Map集合。
+ 我们再来看，在该类中有这样一个方法addSingletonFactory()，这个方法的作用是：将创建Bean对象的ObjectFactory对象提前曝光。
+
+ 从源码中可以看到，spring会先从一级缓存中获取Bean，如果获取不到，则从二级缓存中获取Bean，如果二级缓存还是获取不到，则从三级缓存中获取之前曝光的ObjectFactory对象，通过ObjectFactory对象获取Bean实例，这样就解决了循环依赖的问题。
+ 总结：
+ Spring只能解决setter方法注入的单例bean之间的循环依赖。ClassA依赖ClassB，ClassB又依赖ClassA，形成依赖闭环。Spring在创建ClassA对象后，不需要等给属性赋值，直接将其曝光到bean缓存当中。在解析ClassA的属性时，又发现依赖于ClassB，再次去获取ClassB，当解析ClassB的属性时，又发现需要ClassA的属性，但此时的ClassA已经被提前曝光加入了正在创建的bean的缓存中，则无需创建新的的ClassA的实例，直接从缓存中获取即可。从而解决循环依赖问题。
+
+
+
+ 源码分析：
+ DefaultSingletonBeanRegistry类中有三个比较重要的缓存：
+ private final Map<String, Object> singletonObjects 一级缓存
+ private final Map<String, Object> earlySingletonObjects  二级缓存
+ private final Map<String, ObjectFactory<?>> singletonFactories三级缓存
+ 这三个缓存都是Map集合。Map集合的key存储的都是bean的name （bean id）。
+ 一级缓存存储的是：单例Bean对象。完整的单例Bean对象，也就是说这个缓存中的Bean对象的属性都已经赋值了。是一个完整的Bean对象。
+ 二级缓存存储的是:早期的单例Bean对象。这个缓存中的单例Bean对象的属性没有赋值。只是一个早期的实例对象。
+ 三级缓存存储的是:单例工厂对象。这个里面存储了大量的"工厂对象",每一个单例Bean对象都会对应一个单例工厂对象。这个集合中存储的是，创建该单例对象时对应的那个单例工厂对象。
+

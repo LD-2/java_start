@@ -1,0 +1,57 @@
+先预编译再填充占位符
+注意转发的路径有项目名  css中的../的意思  前端页面有项目名  servlet中没
+
+使用Servlet+JSP完成oa项目的改造
+    使用Servlet处理业务 收集数据
+    使用JSP展示数据
+
+将之前的html改为jsp文件 在文件头添加page 指定contentType防止中文乱码
+servlet中完成业务处理 数据处理 取出数据封装成对象存储
+
+可以用JSP一个技术完成web应用的开发
+ JSP就是一个servlet 但是一般jsp页面展示 servlet数据处理   jsp中java代码越少越好
+ jsp的扩展名是可以配置的 jsp就是一个servlet 这里只不过是一个url  可以在CATALINA_HOME/conf/web.xml中配置  以及默认的开始页面
+ jsp对于服务器就是一个普通的文本文件 web容器最终会将其生成java程序 最终调用的是java对象相关的方法 真正执行的时候和jsp文件无关
+
+整个java程序中有很多bean的存在 有很多bean组成
+javabean可以理解为符合某种规范的java类 比如
+    有无参数构造方法
+    属性私有化
+    对外公开的set和get方法
+    实现一些接口
+    ....
+javabean其实就是java中的实体类 负责数据的封装
+
+Servlet+jsp
+    session
+    cookie
+    EL表达式
+    jstl表达式
+    Filter
+    Listener
+AJAX
+jQuery
+Vue
+mvc框架
+连接池
+SSM
+maven
+git
+
+当前oa项目存在的问题
+    任何一个用户都可以访问这个系统 没有管理员登入权限
+    加一个登入页面 登入成功可以 改动  登入失败不可以改动
+实现登入功能
+    在数据库中添加一个用户表t_user表
+        t_user表中存储的是用户的登入信息 最基本信息也包括用户的用户名 用户密码
+        密码一般在数据库中的存储时密文 不是明文
+        向t_user表中添加数据
+    实现一个登入的页面
+        有form表单提交数据
+        form提交数据这里是post请求
+    后台有一个对应的Servlet来处理此请求
+        登入失败: 跳转到失败页面
+        登入成功: 跳转到list页面
+    提供一个登入失败的页面
+    
+

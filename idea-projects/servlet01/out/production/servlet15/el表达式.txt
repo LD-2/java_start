@@ -1,0 +1,67 @@
+el表达式是jsp的一种语法
+
+EL表达式是干什么的
+    Exception Language（表达式语言）
+    EL表达式可以代替JSP中的java代码 让JSP文件更加整洁
+    EL表达式可以算作是JSP语法的一部分 EL表达式归属于jsp
+EL表达式出现在JSP中主要是
+    从某个作用域中取数据 然后将其转换为字符串 然后将其输出到浏览器
+        从某个域中取得数据
+        将数据转换为字符串
+            如果这个数据是对象 则会自动调用其toString方法
+        将字符串输出到浏览器
+EL表达式的语法格式
+    ${表达式}
+
+${"abc"}和${abc}的区别:
+    ${abc}表示从某个域中取得数据
+    ${"abc"}表示直接把"abc"当作普通字符串输出到浏览器 不会从域中取数据
+EL表达式调用对象的属性 其实 底层上调用了 getXxx()方法
+注意el表达式中的属性写法
+
+el表达式直接输出一个对象 是调用其toString()方法
+获取属性值即底层调用了getXxx()方法
+输出key不带""  带了"" 相当于直接输出到浏览器
+当输出同一个key的时候有优先级 输出作用域小的   在没有指定范围的前提下 EL表达式优先从小范围中取数据
+
+EL表达式有四个隐含的饮食范围对象
+pageScope        对应的是页面上下文范围
+requestScope     对应的是request范围
+sessionScope     对应的是session范围
+application      对应的是application范围
+
+一个域一个域的找 找不到 就不显示
+EL表达式不会出现异常 数组越界了 也只是取不出来数据
+<%--EL表达式主要任务是做页面展示 要求最终页面展示上是友好的--%>
+<%--所以EL表达式对null进行了处理 如果是null 则在浏览器上显示空白--%>
+
+EL表达式表达式对null进行了预处理 如果是null 则向浏览器输出一个空字符串
+EL表达式取数据的时候有两种形式
+    第一种: .
+    第二种: 如果有特殊情况时 [""]
+
+从map集合中取数据
+    ${map.key}
+从数组中取得数据
+    ${arrays[index]}
+list也可以这么取
+set不可以直接下标取得 因为是无序的
+
+isELIgnored="true"不识别el表达式 则变成了普通字符串 默认false
+
+
+在el表达式中没有request这个隐式对象
+requestScope 这个只代表请求范围 不等同于request对象
+有pageContext这个隐式对象
+因此可以通过调用pageContext.getRequest()方法 再去调用request的方法
+el表达式中隐式对象pageContext和JSP九大内置对象中的是一个
+强转一下 因为servletRequest的没有获取根路径的方法
+
+EL表达式中其他的隐式对象
+    param
+    paramValues
+    initParam
+
+
+
+ 从域中取数据 转为字符串 输出到浏览器

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery-Test</title>
+    <script src="./jQuery.js"></script>
+<!--    <script src="./3.js"></script>-->
+</head>
+<body>
+<script type="text/javascript">
+    // alert(a)
+    $(function (){
+        $("#btn").click(function(){
+            let jsonObj={
+                method: "post",
+                url:"/ajax/AjaxRequest",
+                data:"name="+$("#name").val(),
+                async:true,
+                success:function(returnJsonStrObj){
+                    $("#content").html("<font color='green'>"+returnJsonStrObj.name+"</font>");
+                }
+            }
+            $.ajax(jsonObj)
+        })
+    })
+</script>
+<button id="btn">show</button>
+<input type="text" id="name">
+<span id="content"></span>
+</body>
+</html>

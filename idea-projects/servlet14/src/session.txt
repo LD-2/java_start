@@ -1,0 +1,83 @@
+服务器端生成记号 浏览器端也会保存一份
+
+关于B/S结构系统的会话机制(session机制)
+什么是会话
+    会话对应的英文单词是session
+    用户打开浏览器 进行一系列操作 最终浏览器关闭 这整个过程称为一次会话 会话在服务器端也有一个对应的java对象 session对象
+    什么是一次请求 用户在浏览器上进行一次页面更新 就是一次请求 请求对应的java对象  request
+    一个会话中包含多次请求
+在java servlet规范中，session对应的类名HttpSession(jarkata.servlet.http.Session)
+session机制属于B/S结构的一部分 使用不同语言开发web项目也是有session机制的 session机制实际上是一种规范
+session对象的主要作用是: 保存会话状态 （用户登入成功了就是成功的状态 用session对象可以保留会话状态）
+为什么要session对象保存这种会话状态
+    因为http是一种无状态协议
+    无状态就是请求的时候 BS是连接的 请求结束后连接就断开了 这种无状态协议可以减少服务器的压力 连接存在请求的一瞬间 请求结束连接断开
+    连接断开了 关闭浏览器这个动作 服务器是不知道的  （因此有时后会有安全退出的功能 可能就是为了防止 session会话 和 cookie缓存）
+为什么不使用request对象或者ServletContext保存
+    request请求域 一次请求一个对象 请求结束 对象销毁 作用域太小
+    ServletContext应用域 服务器开启 创建此对象 关闭服务器销毁此对象 作用域太大了
+    request请求域<session会话域<ServletContext应用域
+
+
+Session超时机制
+因为http协议是无状态协议
+浏览器关闭页面 服务器并不知道 session对象也不是关了浏览器就销毁了 而是按照session超时机制关闭的 就比如页面长时间不登录 重新登入
+
+session对象是存储在服务器端的
+一个session对象对应一个会话
+一次会话中包括多次请求
+session怎么获取
+    HttpSession session = request.getSession();
+    从服务器中获取当前的session对象
+    如果没有获取任何的session对象 则新建
+
+    HttpSession session = request.getSession(false);
+    从服务器中获取当前的session对象
+    如果获取不到session 则不会新建 返回一个null
+session的实现原理
+    在web服务器中有一个session列表 类似于map集合
+    这个map集合的key存储的是sessionid
+    这个map集合的value存储的是对应的session对象
+
+    用户发送第一次请求的时候 服务器会创建一个新的session对象 同时给session对象生成一个id
+    服务器会将此sessionid相应给浏览器 浏览器会把其存在缓存中
+
+    用户发送第二次请求的时候 浏览器会吧sessionid请求 服务器获取到sessionid会从session表中查找对应的session对象
+为什么关闭浏览器会话会结束
+    关闭浏览器后 浏览器中保存的sessionid消失 下次重新打开浏览器 浏览器的缓存中没有这个sessionid 所以就无法找到服务器中对应的session对象
+    session对象没有找到 就 等同于会话结束
+session对象什么时候被销毁
+    一种销毁是超时销毁
+    一种销毁是手动销毁
+http协议是无状态协议 浏览器关闭 服务器并不会知道所以就有了session超时销毁机制  就比如长时间不发送请求 页面会重新登入
+也可以手动关闭 手动请求关闭 session对象立马销毁
+
+session的实现原理
+    JESSIONID=xxxxx 这个是以cookie的形式保存在浏览器的内存中的 浏览器关闭了 这个cookie就没有了
+    session列表是一个map列表 每一个sessionid对应一个session对象
+    用户第一次请求 服务器生成session对象 同时生成id 将id发送给浏览器
+    用户第二次请求 浏览器把id发送到服务器 服务器根据id找对应的session对象
+    浏览器关闭 内存消失 cookie消失 sessionid消失 等同于会话结束
+    session对象的销毁则是根据时间销毁
+cookie禁用了 session还可以找到吗
+    cookie禁用就是服务器还会给浏览器发送sessionid 但是浏览器不接收
+    因为找不到id所以每次刷新都会创建新的session对象
+    cookie禁用了可以用url找到session http://localhost:8080/test/test/session;jessionid=E3FBB1C85A260C8200871A0C83B5B8FF
+    但是这样会提高开发成本 每次请求路径的时候都要添加一个sessionid 大部分网站的设计是禁用cookie就不可以用了
+总结一下目前的域
+    请求域request  对应类名HttpServletRequest  请求级别
+    会话域session  对应类名HttpSession 用户级别
+    应用域application 对应类名ServletContext 项目级别
+三个域的大小关系
+    request<session<application
+他们三个的对象都有类似的方法
+    setAttribute()
+    getAttribute()
+    removeAttribute()
+使用原则: 尽量使用小的域
+
+
+ CATALINA_BASE:  "C:\Users\86137\AppData\Local\JetBrains\IntelliJIdea2022.2\tomcat\c1cd81be-1a42-4b37-a127-e7a757e3627a"
+ jsp中的就打内置对象之一 session 会被自动创建 所以有时候会false  null
+
+

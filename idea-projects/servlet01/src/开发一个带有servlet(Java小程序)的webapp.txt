@@ -1,0 +1,71 @@
+第一步: 在webapps目录下建立一个项目 这个项目名就是这个webapp的根目录 此目录里面可以有静态资源也可以有Java小程序(Servlet)
+第二步: 在此项目根目录下建议一个WEB-INF目录 这个目录下就存放有关servlet的东西  这个目录的名字是servlet规范定的 因此要保持一致
+第三步: 在WEB-INF目录下建立一个classes目录里面存放所有的Java程序编译后的class文件(字节码文件) 此目录名也是servlet规范规定的
+第四步: 在WEB-INF目录下建立一个lib目录 此目录可有可无 此目录下存放开发webapp中所需的外部类库 导入jar包用的
+第五步: 在WEB-INF目录下建立一个web.xml文件里面存放配置信息 描述了请求路径和Servlet类之间的对照关系
+第六步: 编写一个Java小程序必须实现servlet接口
+ servlet接口不在jdk中 在tomcat中 或者 在所有的web服务器中有 因为web服务器实现了javaee规范中的servlet规范
+ servlet接口是Servlet.class文件 由Oracle提供
+ servlet规范是javaee13种规范中的一种规范
+ javaee在升级到9后就改名为jakarta9因为 oracle公司将其给了apache  java8的servlet类名是: javax.servlet.Servlet   jakarta9的servlet类名是: jakarta.servlet.Servlet
+ tomcat10以上的servlet类就是 jakarta.servlet.Servlet
+JAVA SE之所以可以用jdk的类库是因为配置了环境变量 因此如果想用java ee中的servlet类也需要将这个包的路径导入到环境变量中
+第七步: 配置CLASSPATH环境变量
+第八步: 将以上编译后的HelloServlet.class文件放入classes中
+第九步: 在web.xml中编译配置文件 让请求路径和Servlet类名关联在一起  在web.xml文件中注册Servlet类
+    <?xml version="1.0" encoding="UTF-8"?>
+
+    <web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee
+                          https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
+      version="5.0"
+      metadata-complete="true">
+
+    <!--servlet描述信息-->
+    <!--任何一个servlet都对应一个servlet-mapping-->
+    <servlet>
+    	<!--名字随便写但是要和映射信息中的名字对应-->
+    	<servlet-name>mirror</servlet-name>
+    	<!--带有包名的全限定类名-->
+    	<servlet-class>com.mirror.servlet.HelloServlet<servlet-class>
+    </servlet>
+
+    <!--servlet映射信息-->
+    <servlet-mapping>
+    	<servlet-name>mirror</servlet-name>
+    	<!--这里的请求路径要以/开头-->
+    	<url-pattern>/mirror/helloServlet<url-pattern>
+    </servlet-mapping>
+
+    </web-app>
+第十步: 启动tomcat
+第十一步: 输入url 当然这里也可以通过超链接跳转
+解决 tomcat乱码问题 把字节码改为gbk    E:\java-projects\package\apache-tomcat-10.0.27\conf\logging.properties  改入gbk
+浏览器中的请求路径和web.xml中的请求路径区别是浏览器上的带项目名
+浏览器路径复杂的话可以用超链接
+
+tomcat服务器负责调用main方法 tomcat启动的时候就是执行main方法 写javaweb项目 只用编写实现servlet的接口 将其注册到web.xml中即可
+
+简言之: 一个webapp项目的目录结构
+webapproot
+    WEB-INF
+        classes（编译后的java文件 存放字节码文件）
+        lib（第三方jar包）
+        web.xml（注册servlet）
+    images
+    html
+    css
+    javascript
+    ...
+
+浏览器发送请求到服务器调用servlet 是一个怎么样的过程
+用户输入url或者点击超链接 找到对应ip服务器 端口软件
+tomcat服务器接受请求路径 根据web.xml找到对应的实体servlet类
+通过tomcat调用此实体类的service方法
+
+在浏览器响应html代码
+连接数据库  导入第三方jar包
+传输文件
+mysql注册驱动类 com.mysql.jdbc.Driver已经过时  新版本用com.mysql.cj.jdbc.Driver
+

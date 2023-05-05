@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery初步</title>
+</head>
+<body>
+<script type="text/javascript">
+
+    //window.onload
+    function jQuery(selector){
+        if(typeof selector == "function"){
+            window.onload=selector
+        }
+
+        //document.get....
+        if(typeof selector == "string"){
+            if(selector.charAt(0)=="#"){
+                domObj=document.getElementById(selector.substring(1))
+                return new jQuery()
+            }
+        }
+
+        //innerHtml
+        this.html=function (htmlStr){
+            domObj.innerHTML=htmlStr
+        }
+
+        //onclick
+        this.click=function (fun){
+            domObj.onclick=fun
+        }
+
+        //onfocus
+        this.focus=function (fun){
+            domObj.onfocus=fun
+        }
+
+        //onchange
+        this.change=function (fun){
+            domObj.onchange=fun
+        }
+
+        //value
+        this.val=function (content){
+            if(content != undefined){
+                domObj.value=content
+            }else{
+                return domObj.value
+            }
+        }
+
+
+        //......
+    }
+    $=jQuery
+    //---------------------------------------------------------------------简易封装jQuery函数
+</script>
+<script type="text/javascript">
+    // $(function (){
+    //     $("#show").onclick=function (){
+    //         $("#content").innerHTML="mirror"
+    //     }
+    // })
+    $(function (){
+        $("#show").click(function (){
+            $("#content").html("<font color='#2e8b57'>mirror</font>")
+            $("#name").val("ld")
+            $("#name").val()
+        })
+    })
+
+</script>
+<input id="name" type="text">
+<button id="show">show</button>
+<br/>
+<span id="content"></span>
+</body>
+</html>

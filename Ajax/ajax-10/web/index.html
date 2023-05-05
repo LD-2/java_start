@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Show</title>
+    <script type="text/javascript" src="./jQuery.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+  $(function (){
+    $.ajax(
+        {
+            method:"GET",
+            url:"/ajax/request",
+            data:"t"+new Date().getTime(),
+            async:true,
+            success:function (returnJsonObj){
+                let html="<option>--请选择省份--</option>"
+                console.log(returnJsonObj)
+                for (let i = 0; i < returnJsonObj.length; i++) {
+                    let jsonObj=returnJsonObj[i]
+                    html+="<option value="+jsonObj.code+">"+jsonObj.name+"</option>"
+                }
+                $("#showList").html(html)
+            }
+        }
+    )
+      $("#showList").change(function (){
+          $.ajax(
+              {
+                  method:"GET",
+                  url:"/ajax/request",
+                  data:"code="+$("#showList").val(),
+                  async:true,
+                  success:function (returnJsonObj){
+                      let html="<option>--请选择城市--</option>"
+                      console.log(returnJsonObj)
+                      for (let i = 0; i < returnJsonObj.length; i++) {
+                          let jsonObj=returnJsonObj[i]
+                          html+="<option value="+jsonObj.code+">"+jsonObj.name+"</option>"
+                      }
+                      $("#cityList").html(html)
+                  }
+              }
+          )
+      })
+  })
+</script>
+<select id="showList">
+
+</select>
+<select id="cityList">
+
+</select>
+</body>
+</html>

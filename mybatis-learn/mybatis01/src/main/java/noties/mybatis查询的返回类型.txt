@@ -1,0 +1,52 @@
+1、返回单个对象 这里Car对象为例
+2、返回多个 返回所有 模糊查询
+3、map接收一个对象
+4、map接收多个对象
+5、大map
+获取所有的Car，返回一个Map集合。
+Map集合的key是Car的id。
+Map集合的value是对应Car。
+@return
+
+@MapKey("id")
+Map<Long,Map<String,Object>> selectAllRetMap();
+
+6、resultMap结果映射
+resultMap结果映射查询结果的列名和java对象的属性名对应不上怎么办？
+第一种方式：as 给列起别名
+第二种方式:使用resultMap进行结果映射
+    1.专门定义一个结果映射，在这个结果映射当中指定数据库表的字段名和Java类的属性名的对应关系。
+    2. type属性：用来指定POJ0类的类名。
+    3. id属性:指定resultMap的唯一标识。这个id将来要在select标签中使用。
+    <resultMap id="carResultMap" type="Car">
+        如果数据库表中有主键，一般都是有主键，要不然不符合数据库设计第一范式.
+        如果有主键，建议这里配置一个id标签，注意：这不是必须的。
+        但是官方的解释是什么呢？这样的配置可以让mybatis提高效率。
+        <id property="id" column="id"/>
+        property后面填写POJ0类的属性名 column后面填写数据库表的字段名
+        <result property="carNum" column="car_num"/>
+        如果column和property是一样的，这个可以省略。
+        <result property="brand" column="brand"/>
+        <result property="guidePrice" column="guide_price"/>
+        <result property="produceTime" column="produce_time"/>
+        <result property="carType" column="car_type"/>
+    </resultMap>
+    select标签的resultMap属性，用来指定使用哪个结果映射。
+    resultMap后面的值是resultMap的id
+    <select id="selectAlLByResultMap" resultMap="carResultMap">
+        select * from t_car
+    </select>
+
+第三种方式：是否开启驼峰命名自动映射（配置settings）
+使用这种方式的前提是:
+属性名遵循Java的命名规范,数据库表的列名遵循SQL的命名规范。
+Java命名规范:首字母小写,后面每个单词首字母大写,遵循驼峰命名方式。
+SQL命名规范:全部小写，单词之间采用下划线分割。比如以下的对应关系:
+
+<settings>
+    <setting name="logImpl" value="SLF4J"/>
+    <setting name="mapUnderscoreToCamelCase" value="true"/>
+</settings>
+
+
+详看008项目

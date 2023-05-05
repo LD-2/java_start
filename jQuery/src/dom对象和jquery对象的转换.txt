@@ -1,0 +1,7 @@
+jquery对象可以和dom对象相互转换
+jquery对象转dom对象:
+    $("#txt").get(0) 或者 $("txt").get[0]
+dom对象转jquery对象
+    let domObj = document.getElementById("txt")
+    $(domObj)
+转换的目的是为了 jquery对象和dom对象中封装的方法 可通过对象类型转换 相互调用

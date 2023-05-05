@@ -1,0 +1,56 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    height: 200vh;
+}
+
+#tb {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: fixed;
+}
+
+
+table {
+    /* margin: 20px auto; */
+    border: 6px dashed rgb(206, 233, 190);
+    background-color: rgb(34, 36, 38);
+    color: rgb(215, 211, 206);
+    padding: 20px;
+}
+
+td {
+    text-align: center;
+    padding: 6px;
+}
+
+th {
+    padding: 10px;
+}
+
+caption {
+    color: rgb(100, 34, 123);
+    font-weight: bolder;
+    padding: 30px;
+}
+
+button a {
+    font-weight: bolder;
+    text-decoration: none;
+}
+
+.add a:link {
+    color: brown;
+}
+
+.add a:visited {
+    color: brown;
+}
+
+.add:hover a {
+    color: brown;
+}

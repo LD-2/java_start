@@ -1,0 +1,35 @@
+HttpServletRequest是一个接口 全限定类名: jakarta.servlet.http.HttpServletRequest
+是Servlet规范中的一员
+其父接口ServletRequest
+实现类: org.apache.catalina.connector.ResponseFacade
+Tomcat服务器实现了HttpServletRequest接口 创建了HttpServletRequest对象
+
+HttpServletRequest对象是由tomcat创建的 封装了HTTP的请求协议
+实际上 用户发送请求时遵循了http协议 发送的是HTTP的请求协议 tomcat把http协议中的信息以及数据解析出来
+然后tomcat服务器把这些信息封装到了HttpServletRequest对象中 封装成方法 供javaWeb开发人员使用
+web开发人员面向接口编程 通过调用方法获得数据
+
+request对象和response对象的声明周期:
+    两个对象在请求时有效
+    每一个请求对应一个请求对象和响应对象
+
+HttpServletRequest接口中常用的方法
+    父接口中常用的:
+        java.util.Map<java.lang.String,java.lang.String[]> 	getParameterMap()                           获取map
+        java.util.Enumeration<java.lang.String>             getParameterNames()                         获取map集合中所有的key
+        java.lang.String	                                getParameter(java.lang.String name)         获取对应key的这个一维数组的第一个值
+        java.lang.String[]                                  getParameterValues(java.lang.String name)   获取对应key的所有值
+
+request.getParameterMap():
+name : mirror
+age : 20
+qq : 1392556557
+interest : ae keep code
+
+request.getParameterNames():
+name age qq interest
+request.getParameterValues():
+ae keep code
+request.getParameter():
+1392556557
+

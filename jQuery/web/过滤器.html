@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+<script type="text/javascript" src="./jquery_min_3.2.1.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+  $(function (){
+      $("#btn1").click(function (){
+          alert($("div:first").html())
+      })
+      $("#btn2").click(function (){
+          $("div:lt(3)").html("666")
+      })
+  })
+</script>
+  <div>第一个div</div>
+  <div>第二个div</div>
+  <div>第三个div</div>
+  <div>第四个div</div>
+  <div>第五个div</div>
+<button id="btn1">显示第一个的value值</button>
+<button id="btn2">显示索引小于3的的所有dom兑现的value值</button>
+
+</body>
+</html>

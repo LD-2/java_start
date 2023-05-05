@@ -1,0 +1,40 @@
+Maven 的常用命令
+Maven 对所有的功能都提供相对应的命令，要想知道 maven 都有哪些命令，那要看 maven 有哪些功能。
+一开始就跟大家说了，
+maven三大功能：管理依赖、构建项目、管理项目信息。
+
+管理依赖，只需要声明就可以自动到仓库下载;
+管理项目信息其实就是生成一个站点文档,一个命令就可以解决,最后再说;
+那maven功能的主体其实就是项目构建。
+
+Maven 提供一个项目构建的模型，把编译、测试、打包、部署等都对应成一个个的生命周期阶段，
+并对每一个阶段提供相应的命令,程序员只需要掌握一小堆命令,就可以完成项目的构建过程。
+
+mvn clean 清理(会删除原来编译和测试的目录，即 target 目录，但是已经install 到仓库里的包不会删除)
+mvn compile,编译主程序(会在当前目录下生成一个target,里边存放编译主程序之后生成的字节码文件)
+mvn test-compile编译测试程序(会在当前目录下生成一个 target,里边存放编译测试程序之后生成的字节码文件)
+mvn test测试(会生成一个目录surefire-reports，保存测试结果）
+mvn package打包主程序(会编译、编译测试、测试、并且按照 pom.xml 配置把主程序打包生成jar 包或者war包)
+mvn install 安装主程序（会把本工程打包，并且按照本工程的坐标保存到本地仓库中)
+mvn deploy部署主程序(会把本工程打包,按照本工程的坐标保存到本地库中,并且还会保存到私服仓库中。还会自动把项目部署到 web 容器中）。
+执行以上命令需要在pom.xml文件所在目录下
+
+mvn compile
+编译main/java/目录下的java为class文件,同时把class拷贝到 target/classes目录下面
+把main/resources目录下的所有文件都拷贝到target/classes目录下l
+
+测试 会生成 测试class  然后测试所内容 可以一次测试多个
+
+打包的结果是main目录下的所有文件
+也就是target/classes目录下的所有内容
+打包的文件放到了target目录下
+
+安装会安装到本地仓库
+groupId  artifactId version决定在仓库中的目录
+artifactId version 决定包名
+这样只要导入依赖就可以用此jar包中的资源、
+
+
+
+
+

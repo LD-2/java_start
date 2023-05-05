@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>first-ajax-request</title>
+</head>
+<body>
+<script type="text/javascript">
+    onload=function (){
+        document.getElementById("sendMe").onclick=function(){
+        //发送ajax请求的四步
+            //1、创建XMLHttpRequest对象
+            let xmlObj=new XMLHttpRequest();
+            // //3、开启通道 建立服务器和浏览器之间的连接
+            // xmlObj.open("GET","/ajax/request1",true)
+            //2、调用xml对象的onreadystatechange属性的被调函数  当readyState状态改变就调用被调函数
+            //注册readystate属性状态事件 调用被调函数
+            xmlObj.onreadystatechange=function (){
+                //readystate状态值改变一次 此函数调用一次
+                //0 -> 1 调用一次
+                //1 -> 2调用一次
+                //2 -> 3调用一次
+                //3 ->4调用一次
+                console.log(xmlObj.readyState)
+                if(xmlObj.readyState == 4){
+                    //响应结束了 一般会有一个HTTP的状态码
+                    //HTTP状态码包括：200表示成功 404表示找不到资源 500表示服务器内部错误
+                    //HTTP状态码是HTTP协议的一部分 HTTP协议中规定 服务器响应后都会有一个状态码
+                    //获取状态码、
+                    console.log(this.status)
+                    // console.log(xmlObj.status)
+                    if(this.status==200){
+                        alert("success..")
+                        alert(xmlObj.responseText)
+                        document.getElementById("mydiv").innerHTML=xmlObj.responseText
+                    }else if(this.status==404){
+                        alert("Not Found..")
+                    }else if(this.status==500){
+                        alert("程序内部错误..")
+                    }
+                }
+            }
+            //3、开启通道 建立服务器和浏览器之间的连接
+            //XMLHttpRequest对象的open()方法
+            //其中的user pwd参数看服务器是否需要服务器需要的时候再写
+            xmlObj.open("GET","/ajax/request1",true)
+            //4、发送ajax的get请求
+            xmlObj.send()
+        }
+    }
+</script>
+<input type="button" id="sendMe" value="A ajax request" >
+<div id="mydiv"></div>
+</body>
+</html>

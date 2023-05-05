@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery库封装jsonp</title>
+    <script type="text/javascript" src="./jquery_min_3.2.1.js"></script>
+</head>
+<body>
+  <script type="text/javascript">
+
+      //这个函数jQuery自动生成 且会调用success回调函数  默认
+      // function jQuery331001417816839145103_1673503117935(jsonObj){}
+
+      function sayHello(jsonObj){
+          $("#mydiv").html("Hello "+jsonObj.name)
+      }
+      $(function (){
+        $("#show").click(function (){
+            $.ajax(
+                {
+                    type:"GET",
+                    //http://localhost:8081/b/jQueryjsonptest?callback=jQuery331001417816839145103_1673503117935&_=1673503117936
+                    //callback就是默认的提交的函数名name 后面的是随机生成的函数名
+                    url:"http://localhost:8081/b/jQueryjsonptest",
+                    dataType:"jsonp",//指定数据类型是jsonp形式
+
+                    //可以不用默认的回调函数success  可以不用默认的提交name 设置jsonp  和   jsonpCallback即可
+                    jsonp:"fun_name",
+                    jsonpCallback:"sayHello"
+
+                    // success:function(jsonObj){
+                    //     $("#mydiv").html("Hello "+jsonObj.name)
+                    // }
+                }
+            )
+        })
+      })
+  </script>
+  <button id="show">show</button>
+  <div id="mydiv"></div>
+</body>
+</html>

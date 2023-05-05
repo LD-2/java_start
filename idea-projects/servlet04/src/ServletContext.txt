@@ -1,0 +1,45 @@
+一个Servlet对象对应一个ServletConfig对象
+一个webapp对应一个ServletContext
+ServletContext被称为Servlet上下文对象
+一个ServletContext对象对应一个web.xml文件
+
+
+ServletContext对象常用的方法
+    <!--上下文的初始化参数-->
+    <context-param>
+        <param-name>pageSize</param-name>
+        <param-value>10</param-value>
+    </context-param>
+    <context-param>
+        <param-name>startPage</param-name>
+        <param-value>0</param-value>
+    </context-param>
+这个配置信息属于应用级别的配置信息 一般一个项目中共享的资源会放到这个标签里
+如果配置信息只给某一个servlet作为参考 那么配置信息在servlet标签中即可
+动态获得应用上下文的根路径 servletContext.getContextPath();
+获得文件的真实路径 servletContext.getRealPath("web.xml");  默认起点 从应用的根起
+log
+日志文件 日志文件会记录在哪里 会记录到tomcat下的logs文件中
+但是由于这里是idea环境下的tomcat 所以会记录到idea中的tomcat的logs目录中
+servletContext.log("Hello Mirror...");Using CATALINA_BASE:
+
+ServletContext对象还有另一个名称: 应用域 后面还会陆续了解请求域 会话域
+如果所有的用户共享一份数据 而且这个数据很少修改 数据量很少 那么可以把这个数据放到ServletContext这个应用域中
+为什么是所有用户共享数据:  因为一个webapp中只有一个servletContext对象 其对象中的数据是共享的
+为什么数据量要小 因为servletContext是tomcat（web服务器创建的）为了维护堆 和服务器的性能
+为什么要很少修改 几乎不修改  因为多个用户使用 修改的话就会涉及到线程并发带来的安全问题
+
+数据量小 所有用户共享 几乎不修改 因此把数据存储到servletContext应用域中就相当于存在了缓存中 不需要再调用数据库 大大提高了执行效率
+存 public void setAttribute(String name, Object value);
+取 public Object getAttribute(String name);
+删 public void removeAttribute(String name);
+
+以后编写Servlet类的时候 实际上不会直接继承GenericServlet类 因为是B/S结构的系统 这总系统是基于超文本传输协议的 在Servlet规范中
+有一个HttpServlet 它是专门为Http协议准备的一个Servlet类 我们编写的servlet类继承HttpServlet类 只用这个类处理http协议更方便
+
+jakarta.servlet.Servlet(接口)
+jakarta.servlet.GenericServlet(抽象类)
+jakarta.servlet.http.HttpServlet(抽象类)
+以后编写的Servlet类要继承HttpServlet抽象类
+
+

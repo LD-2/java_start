@@ -1,0 +1,48 @@
+链表: List
+链表是一个接口  两种实现方式: 变长数组、双链表  查询的情况O(1)  O(n)
+函数:
+add()末尾添加元素
+clear()清空
+size()返回长度
+isEmpty()是否为空
+get(i)获取第i个元素
+set(i,val)将第i个元素的值设置为val
+
+
+栈: Stack
+栈是一个实现 是类的实现
+栈的常用API:
+push()压入到栈
+pop()弹出栈顶元素，并返回栈顶元素
+peek()返回栈顶元素
+size()返回长度
+empty()栈是否为空
+clear()清空栈
+
+
+队列: Queue
+队列是一个接口 普通队列用LinkedList实现  优先队列  默认小根堆PriorityQueue<>()   大根堆PriorityQueue<>(Collections.reverseOrder())
+队列的常用API
+add()对尾添加
+remove()删除并返回队头
+isEmpty()是否为空
+size()长度
+peek()返回对头
+clear()清空
+
+
+Set接口   用哈希表、平衡树实现   treeset红黑树 维护过的有序的 其修改插入删除 都是O(log n)级别的
+哈希表可以用来判断一个数是否存在  平衡树可以动态维护一个有序序列
+常用API
+add()添加元素
+contains()是否包含某个元素
+remove()删除元素
+size()返回元素个数
+isEmpty()是否为空
+clear()清空
+平衡树多的函数:
+ceiling(key)返回大于等于key的最大元素
+floor(key)返回小于等于key的最小元素
+
+
+Map接口

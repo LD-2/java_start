@@ -1,0 +1,12 @@
+maven项目的目录结构：
+    HelloMaven
+        --src
+            --main              #放置主程序java代码和配置文件
+                --java          #放程序包和java文件
+                --resources     #放java程序需要用的配置文件
+            --test              #放测试程序代码和文件（可以没有）
+                --java          #测试程序包和包中的java文件
+                --resources     #测试java程序中需要用的配置文件
+        pom.xml                 #maven的核心文件（maven项目必须有的）
+
+

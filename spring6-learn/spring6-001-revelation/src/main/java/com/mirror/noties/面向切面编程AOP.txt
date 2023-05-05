@@ -1,0 +1,283 @@
+面向切面编程AOP
+IoC使组件松耦合 AOP能捕捉到系统中常用的功能 把他转换为组件
+AOP（Aspect Oriented Programming）面向切面编程 面向方面编程
+AOP是对OOP的补充延深
+AOP底层就是用动态代理实现的
+Spring的AOP使用的动态代理是：JDK动态代理 + CGLIB动态代理技术。Spring在这两种动态代理中灵活切换，
+如果是代理接口，会默认使用JDK动态代理，
+如果要代理某个类，这个类没有实现接口，就会切换使用CGLIB。
+当然，你也可以强制通过一些配置让Spring只使用CGLIB。
+
+切面就是在业务流程中和业务逻辑无关的通用代码
+把这些代码提取了出来
+
+一般一个系统当中都会有一些系统服务，例如：日志、事务管理、安全等。这些系统服务被称为：交叉业务
+这些交叉业务几乎是通用的，不管你是做银行账户转账，还是删除用户数据。日志、事务管理、安全，这些都是需要做的。
+如果在每一个业务处理过程当中，都掺杂这些交叉业务代码进去的话，存在两方面问题：
+● 第一：交叉业务代码在多个业务流程中反复出现，显然这个交叉业务代码没有得到复用。并且修改这些交叉业务代码的话，需要修改多处。
+● 第二：程序员无法专注核心业务代码的编写，在编写核心业务代码的同时还需要处理这些交叉业务。
+使用AOP可以很轻松的解决以上问题。
+
+日志模块 安全模块 事务模块这些都可以称为交叉业务
+核心业务纵向 交叉业务横向 然后横向交叉的方式插入 应用到业务中去，意思就是同一段代码复用性增强了 代码易维护了 开发者更专注代码开发了
+用一句话总结AOP: 将核心业务无关的代码独立抽取出来，形成一个独立的组件，然后横向交叉的方式应用到业务流程当中的过程称作AOP
+AOP的优点:
+    第一: 代码的复用性增强
+    第二: 代码易维护
+    第三: 使开发者更专注业务代码开发
+
+
+AOP的七大术语:
+连接点 Joinpoint  插入的时间点    在程序的整个执行流程中，可以织入切面的位置。方法的执行前后，异常抛出之后等位置
+切点 Pointcut  要插入哪个方法    在程序执行流程中，真正织入切面的方法。（一个切点对应多个连接点
+通知 Advice   通知又叫增强，就是具体你要织入的代码。  ○ 通知包括： ■ 前置通知 ■ 后置通知 ■ 环绕通知 ■ 异常通知 ■ 最终通知
+切面 Aspect    ○ 切点 + 通知就是切面。
+织入 Weaving     把通知应用到目标对象上的过程。
+代理对象 Proxy   一个目标对象被织入通知后产生的新对象。
+目标对象 Target    被织入通知的对象。
+
+
+切点表达式
+切点表达式用来定义通知（Advice）往哪些方法上切入。
+切入点表达式语法格式：
+execution([访问控制权限修饰符] 返回值类型 [全限定类名]方法名(形式参数列表) [异常])
+访问控制权限修饰符：
+● 可选项。
+● 没写，就是4个权限都包括。
+● 写public就表示只包括公开的方法。
+返回值类型：
+● 必填项。
+● * 表示返回值类型任意。
+全限定类名：
+● 可选项。
+● 两个点“..”代表当前包以及子包下的所有类。
+● 省略时表示所有的类。
+方法名：
+● 必填项。
+● *表示所有方法。
+● set*表示所有的set方法。
+形式参数列表：
+● 必填项
+● () 表示没有参数的方法
+● (..) 参数类型和个数随意的方法
+● (*) 只有一个参数的方法
+● (*, String) 第一个参数类型随意，第二个参数是String的。
+异常：
+● 可选项。
+● 省略时表示任意异常类型。
+
+理解以下的切点表达式：
+service包下所有的类中以delete开始的所有方法
+execution(public * com.powernode.mall.service.*.delete*(..))
+
+mall包下所有的类的所有的方法
+execution(* com.powernode.mall..*(..))
+
+所有类的所有方法
+execution(* *(..))
+
+使用Spring的AOP
+Spring对AOP的实现包括以下3种方式：
+● 第一种方式：Spring框架结合AspectJ框架实现的AOP，基于注解方式。
+● 第二种方式：Spring框架结合AspectJ框架实现的AOP，基于XML方式。
+● 第三种方式：Spring框架自己实现的AOP，基于XML配置方式。
+实际开发中，都是Spring+AspectJ来实现AOP。所以我们重点学习第一种和第二种方式。
+什么是AspectJ？（Eclipse组织的一个支持AOP的框架。AspectJ框架是独立于Spring框架之外的一个框架，Spring框架用了AspectJ）
+AspectJ项目起源于帕洛阿尔托（Palo Alto）研究中心（缩写为PARC）。
+该中心由Xerox集团资助，Gregor Kiczales领导，从1997年开始致力于AspectJ的开发，
+1998年第一次发布给外部用户，2001年发布1.0 release。
+为了推动AspectJ技术和社团的发展，PARC在2003年3月正式将AspectJ项目移交给了Eclipse组织，
+因为AspectJ的发展和受关注程度大大超出了PARC的预期，他们已经无力继续维持它的发展。
+
+
+准备工作
+使用Spring+AspectJ的AOP需要引入的依赖如下：
+<!--spring context依赖-->
+<dependency>
+  <groupId>org.springframework</groupId>
+  <artifactId>spring-context</artifactId>
+  <version>6.0.0-M2</version>
+</dependency>
+<!--spring aop依赖-->
+<dependency>
+  <groupId>org.springframework</groupId>
+  <artifactId>spring-aop</artifactId>
+  <version>6.0.0-M2</version>
+</dependency>
+<!--spring aspects依赖-->
+<dependency>
+  <groupId>org.springframework</groupId>
+  <artifactId>spring-aspects</artifactId>
+  <version>6.0.0-M2</version>
+</dependency>
+
+
+Spring配置文件中添加context命名空间和aop命名空间
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+                           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+</beans>
+
+
+基于AspectJ的AOP注解式开发
+看写的类
+
+
+基于XML配置方式的AOP
+看写的类
+
+
+AOP的实际案例：事务处理
+项目中的事务控制是在所难免的。
+在一个业务流程当中，可能需要多条DML语句共同完成，
+为了保证数据的安全，这多条DML语句要么同时成功，要么同时失败。
+这就需要添加事务控制的代码。例如以下伪代码：
+class 业务类1{
+    public void 业务方法1(){
+        try{
+            // 开启事务
+            startTransaction();
+
+            // 执行核心业务逻辑
+            step1();
+            step2();
+            step3();
+            ....
+
+            // 提交事务
+            commitTransaction();
+        }catch(Exception e){
+            // 回滚事务
+            rollbackTransaction();
+        }
+    }
+    public void 业务方法2(){
+        try{
+            // 开启事务
+            startTransaction();
+
+            // 执行核心业务逻辑
+            step1();
+            step2();
+            step3();
+            ....
+
+            // 提交事务
+            commitTransaction();
+        }catch(Exception e){
+            // 回滚事务
+            rollbackTransaction();
+        }
+    }
+    public void 业务方法3(){
+        try{
+            // 开启事务
+            startTransaction();
+
+            // 执行核心业务逻辑
+            step1();
+            step2();
+            step3();
+            ....
+
+            // 提交事务
+            commitTransaction();
+        }catch(Exception e){
+            // 回滚事务
+            rollbackTransaction();
+        }
+    }
+}
+
+class 业务类2{
+    public void 业务方法1(){
+        try{
+            // 开启事务
+            startTransaction();
+
+            // 执行核心业务逻辑
+            step1();
+            step2();
+            step3();
+            ....
+
+            // 提交事务
+            commitTransaction();
+        }catch(Exception e){
+            // 回滚事务
+            rollbackTransaction();
+        }
+    }
+    public void 业务方法2(){
+        try{
+            // 开启事务
+            startTransaction();
+
+            // 执行核心业务逻辑
+            step1();
+            step2();
+            step3();
+            ....
+
+            // 提交事务
+            commitTransaction();
+        }catch(Exception e){
+            // 回滚事务
+            rollbackTransaction();
+        }
+    }
+    public void 业务方法3(){
+        try{
+            // 开启事务
+            startTransaction();
+
+            // 执行核心业务逻辑
+            step1();
+            step2();
+            step3();
+            ....
+
+            // 提交事务
+            commitTransaction();
+        }catch(Exception e){
+            // 回滚事务
+            rollbackTransaction();
+        }
+    }
+}
+//......
+
+
+可以看到，这些业务类中的每一个业务方法都是需要控制事务的，而控制事务的代码又是固定的格式，都是：
+try{
+    // 开启事务
+    startTransaction();
+
+    // 执行核心业务逻辑
+    //......
+
+    // 提交事务
+    commitTransaction();
+}catch(Exception e){
+    // 回滚事务
+    rollbackTransaction();
+}
+
+
+这个控制事务的代码就是和业务逻辑没有关系的“交叉业务”。
+以上伪代码当中可以看到这些交叉业务的代码没有得到复用，
+并且如果这些交叉业务代码需要修改，那必然需要修改多处，难维护，怎么解决？
+可以采用AOP思想解决。
+可以把以上控制事务的代码作为环绕通知，切入到目标类的方法当中。
+看写的例子
+
+
+AOP的实际案例：安全日志
+看写的例子
+

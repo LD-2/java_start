@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="Good1" class="com.mirror.spring6.bean.Goods">
+        <property name="name" value="香蕉"/>
+    </bean>
+
+    <bean id="Good2" class="com.mirror.spring6.bean.Goods">
+        <property name="name" value="苹果"/>
+    </bean>
+
+    <bean id="orderBean" class="com.mirror.spring6.bean.Order">
+        <property name="goods">
+            <array>
+                <ref bean="Good1"/>
+                <ref bean="Good2"/>
+            </array>
+        </property>
+    </bean>
+
+</beans>

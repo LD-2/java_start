@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="husbandBean" class="com.mirror.bean.Husband">
+        <property name="name" value="mirror"/>
+        <property name="wife" ref="wifeBean"/>
+    </bean>
+
+    <bean id="wifeBean" class="com.mirror.bean.Wife">
+        <property name="name" value="ld"/>
+        <property name="husband" ref="husbandBean"/>
+    </bean>
+<!--    因为是先  创建对象 后赋值的  但是这中 是按照-->
+
+
+    <bean id="husbandBean" class="com.mirror.bean.Husband" scope="prototype">
+        <property name="name" value="张三"/>
+        <property name="wife" ref="wifeBean"/>
+    </bean>
+    <bean id="wifeBean" class="com.mirror.bean.Wife" scope="prototype">
+        <property name="name" value="小花"/>
+        <property name="husband" ref="husbandBean"/>
+    </bean>
+
+</beans>

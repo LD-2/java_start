@@ -1,0 +1,25 @@
+package com.mirror.simpleFactory;
+
+public class WeaponFactory {
+    /**
+     * 根据不同的武器类型生产武器
+     * @param weaponType 武器类型
+     * @return 武器对象
+     */
+    public static Weapon get(String weaponType){
+        if (weaponType == null || weaponType.trim().length() == 0) {
+            return null;
+        }
+        Weapon weapon = null;
+        if ("TANK".equalsIgnoreCase(weaponType)) {
+            weapon = new Tank();
+        } else if ("FIGHTER".equalsIgnoreCase(weaponType)) {
+            weapon = new Fighter();
+        } else if ("DAGGER".equalsIgnoreCase(weaponType)) {
+            weapon = new Dagger();
+        } else {
+            throw new RuntimeException("不支持该武器！");
+        }
+        return weapon;
+    }
+}

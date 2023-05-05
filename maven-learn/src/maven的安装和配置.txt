@@ -1,0 +1,7 @@
+1、从官网下载maven的安装包
+2、解压安装包 到非中文目录  bin目录下是执行程序 mvn.cmd   conf下maven的配置文件 settings.xml(配置仓库、镜像等)
+3、配置环境变量
+    cmd运行maven需配置环境变量
+    和其他配置的方法一样 可以先MAVEN_HOME再%MAVEN_HOME%/bin
+    maven运行也需要配jdk
+验证 mvn -v

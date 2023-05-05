@@ -1,0 +1,8 @@
+tomcat 10
+ajax-GET-POST请求响应均无乱码问题
+tomcat 9
+
+响应数据时会有乱码
+response.setContentType("text/html;charset=utf-8")
+发送ajax的post请求发送给服务器数据，服务器接收会有乱码问题
+request.setCharacterEncoding("UTF-8")

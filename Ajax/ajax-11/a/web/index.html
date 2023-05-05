@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>a站点页面</title>
+</head>
+<body>
+<h1>a站点页面</h1>
+<a href="http://localhost:8081/b/index.html">b站点页面跨域访问</a>
+<button onclick="document.location.href='http://localhost:8081/b/index.html'">b站点跨域访问</button>
+<button onclick="window.location.href='http://localhost:8081/b/index.html'">b站点跨域访问</button>
+<form action="http://localhost:8081/b/show" method="post">
+    <input type="text" name="name">
+    <input type="submit" value="submit">
+</form>
+<br>
+<button id="sendAjax">获取b站点数据</button>
+<script type="text/javascript">
+    //此ajax请求无法发送 因为跨域的时候不允许共享同一个XMLHttpRequest对象，因为共享同一个XMLHttpRequest对象是不安全的
+    //ajax请求需要浏览器内置对象XMLHttpRequest对象的参与
+    //什么是同源 什么是不同源
+    //同源策略是浏览器的一种安全策略
+    //同源：协议一致 端口号一致 域名一致
+    //同源 XMLHttpRequest对象可以共享
+    //不同源 不可共享
+    window.onload=function (){
+        document.getElementById("sendAjax").onclick=()=> {
+            let xmlObj = new XMLHttpRequest()
+            //ES6新特性 ()=>{}
+            xmlObj.onreadystatechange = () => {
+                if (xmlObj.readyState == 4) {
+                    if (xmlObj.status == 200) {
+                        // $("#mydiv").html(xmlObj.responseText)
+                        document.getElementById("mydiv").innerHTML=xmlObj.responseText
+                    } else {
+                        alert(xmlObj.status)
+                    }
+                }
+            }
+            xmlObj.open("GET", "http://localhost:8081/b/show", true)
+            xmlObj.send()
+        }
+    }
+</script>
+<div id="mydiv"></div>
+</body>
+</html>

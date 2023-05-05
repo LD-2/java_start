@@ -1,0 +1,5 @@
+com\mirror\pojo\User.class
+com\mirror\mapper\UserMapper.class
+com\mirror\controller\UserController.class
+com\mirror\service\impl\UserServiceImpl.class
+com\mirror\service\UserService.class

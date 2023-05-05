@@ -1,0 +1,32 @@
+依赖注入实现了控制反转的思想。
+Spring通过依赖注入的方式来完成Bean管理的。
+Bean管理说的是：Bean对象的创建，以及Bean对象中属性的赋值（或者叫做Bean对象之间关系的维护）。
+依赖注入：
+● 依赖指的是对象和对象之间的关联关系。
+● 注入指的是一种数据传递行为，通过注入行为来让对象和对象产生关系。
+依赖注入常见的实现方式包括两种：
+● 第一种：set注入
+● 第二种：构造注入
+
+set注入，基于set方法实现的，底层会通过反射机制调用属性对应的set方法然后给属性赋值。
+这种方式要求属性必须对外提供set方法。
+
+
+实现原理：
+通过property标签获取到属性名：userDao
+通过属性名推断出set方法名：setUserDao
+通过反射机制调用setUserDao()方法给属性赋值
+property标签的name是属性名。
+property标签的ref是要注入的bean对象的id。(通过ref属性来完成bean的装配，这是bean最简单的一种装配方式。装配指的是：创建系统组件之间关联的动作)
+
+通过测试看到程序仍然可以正常执行，说明property标签的name是：setUserDao()方法名演变得到的。演变的规律是：
+● setUsername() 演变为 username
+● setPassword() 演变为 password
+● setUserDao() 演变为 userDao
+● setUserService() 演变为 userService
+另外，对于property标签来说，ref属性也可以采用标签的方式，但使用ref属性是多数的：
+
+总结：set注入的核心实现原理：通过反射机制调用set方法来给属性赋值，让两个对象之间产生关系。
+
+
+

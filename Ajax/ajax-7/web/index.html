@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>xml数据交换格式</title>
+</head>
+<body>
+<script type="text/javascript">
+  onload=function (){
+    let show=document.getElementById("show")
+    let content=document.getElementById("content")
+    show.onclick=function (){
+      let xmlObj=new XMLHttpRequest();
+      xmlObj.onreadystatechange=function(){
+        if(this.readyState==4){
+          if(xmlObj.status==200){
+            // console.log(xmlObj.responseText)
+            let xml=xmlObj.responseXML
+            // console.log(xml.getElementsByTagName("students"))
+            // let students=xml.getElementsByTagName("students")
+            let html=""
+            // for(let i=0; i<students.length; i++){
+            //   let student=students[i]
+            //   html+="<tr>"
+            //   let childNodes = student.childNodes;
+            //
+            // }
+            let names=xml.getElementsByTagName("name")
+            let ages=xml.getElementsByTagName("age")
+
+            for (let i = 0; i < names.length; i++) {
+              html+="<tr>"
+              html+="<td>"+names[i].textContent+"</td>"
+              html+="<td>"+ages[i].textContent+"</td>"
+              html+="</tr>"
+            }
+
+            console.log(html)
+            content.innerHTML=html
+          }
+        }
+      }
+      xmlObj.open("GET","/ajax/request",true)
+      xmlObj.send()
+    }
+  }
+</script>
+<button id="show">show</button>
+  <table border="1px" width="50%">
+    <thead>
+      <tr>
+        <th>序号</th>
+        <th>性名</th>
+        <th>年龄</th>
+    </tr>
+    </thead>
+    <tbody id="content">
+
+    </tbody>
+  </table>
+</body>
+</html>

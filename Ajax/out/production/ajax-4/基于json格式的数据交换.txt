@@ -1,0 +1,8 @@
+ajax中
+在进行前端显示部分后端数据时
+可以通过json格式来传递数据
+json一种数据交换格式
+在前端中两种方法可以把字符串转为js语法 也就是 把后端传递的json格式字符串转为json对象
+let jsonObj = window.eval(str)
+利用浏览器内置对象JSON操作
+let jsonObj = JSON.parse(str)

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ajax-3-request</title>
+</head>
+<body>
+<script type="text/javascript">
+    onload=function (){
+        document.getElementById("btn").onclick=function(){
+            //创建XMLHttpRequest对象
+            let xmlObj = new XMLHttpRequest();
+            //注册状态事件
+            xmlObj.onreadystatechange=function(){
+                if(this.readyState==4){
+                    if(this.status==200){
+                        document.getElementById("show").innerHTML=xmlObj.responseText
+                    }else{
+                        alert(this.status)
+                    }
+                }
+            }
+            //创建通道
+            let usercode=document.getElementById("usercode").value
+            let username=document.getElementById("username").value
+            xmlObj.open("GET","/ajax/request3?"+new Date().getTime()+"usercode="+usercode+"&username="+username,true)
+            //发送get请求
+            xmlObj.send()
+        }
+    }
+</script>
+  usercode<input type="text" id="usercode"><br/>
+  username<input type="text" id="username"><br/>
+<button id="btn">发送Ajax-get方法</button>
+<br/>
+<span id="show"></span>
+</body>
+</html>

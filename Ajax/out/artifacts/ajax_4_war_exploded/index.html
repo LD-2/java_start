@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JSON格式字符串转JSON对象</title>
+</head>
+<body>
+  <script type="text/javascript">
+      let fromDB="{\"user\":\"mirror\",\"age\":18}"
+      //将JSON格式的字符串转为JSON格式的对象有两种方式
+      //第一种方式:
+        //使用window.eval()函数把字符串转为js代码
+      //第二种方式:
+        //使用javascript语言中的内置对象JSON的一个方法parse
+      let jsonObj=JSON.parse(fromDB)
+      console.log(jsonObj.user+","+jsonObj.age)
+  </script>
+</body>
+</html>

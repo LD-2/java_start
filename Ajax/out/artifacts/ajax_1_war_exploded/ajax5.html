@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>POST请求提交表单</title>
+</head>
+<body>
+<script type="text/javascript">
+  onload=function (){
+    document.getElementById("show").onclick=function (){
+      //1、创建XMLHttpRequest对象
+      let xmlObj=new XMLHttpRequest();
+      //2、注册状态改变事件
+      xmlObj.onreadystatechange=function(){
+        if(this.readyState==4){
+          if(this.status==200){
+            document.getElementById("content").innerHTML=xmlObj.responseText
+          }else{
+            alert(this.status)
+          }
+        }
+      }
+      //3、开启服务器和浏览器之间通道
+      xmlObj.open("POST","/ajax/request5",true)
+        //需要在开启通道后 写下面的模拟ajax提交form表单
+        xmlObj.setRequestHeader("Content-Type","application/x-www-form-urlencoded")
+      //4、发送请求
+      let name = document.getElementById("name").value
+      let age=document.getElementById("age").value
+        // alert(name)
+        // alert(age)
+      xmlObj.send("name="+name+"&age="+age)
+    }
+  }
+</script>
+<button id="show">show</button><br/>
+name: <input type="text" id="name">
+<br/>
+age: <input type="text" id="age">
+<br/>
+<span id="content"></span>
+<!--<form enctype="application/x-www-form-urlencoded"></form>-->
+</body>
+</html>

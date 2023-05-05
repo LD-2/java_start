@@ -1,0 +1,72 @@
+表现层（UI）：直接跟前端打交互（一是接收前端ajax请求，二是返回json数据给前端）
+业务逻辑层(BLL): 一是处理表现层转发过来的前端请求(也就是具体业务) ,二是将从持久层获取的数据返回到表现层。
+数据访问层(DAL): 直接操作数据库完成CRUD，并将获得的数据返回到上一层（也就是业务逻辑层）。
+
+
+回顾jdbc
+DAO 专门负责数据库增删改查的
+DAO所在的层在数据访问层或者持久层
+jdbc 一组规范的接口 去使得java应用程序操作不同的数据库
+jdbc驱动 impl针对不同的数据库 实现不同的接口
+先根据统一的接口创建一个连接对象
+然后找到需要操作的数据库 然后导入相对应数据库的包 驱动  然后创建对应的驱动对象
+导入驱动就相当于导入jdbc接口的实现类 然后调用相对的方法进行操作
+JDBC小结:
+面向接口编程的思想
+面向接口编程 import不会出现第三方API
+ORM思想:
+一个数据表对应一个java类
+表中的一条记录对应一个对象
+一个字段对应一个属性
+两种技术:
+jdbc结果集的元数据（获取列数 获取别名）
+next指向
+通过反射创建类对象 获得指定的属性并赋值
+具体的API返回值类型
+Mybatis封装了jdbc因此Mybatis也在持久层
+
+Java持久层框架：
+MyBatis
+Hibernate（实现了JPA规范）
+jOOQ
+Guzz
+Spring Data （实现了JPA规范）
+ActiveJDBC
+......
+
+jdbc的不足:
+sql语句写死在java程序中  赋值繁琐(填充通配符)   代码是否可以通过反射进行自动化封装  取值繁琐
+SQL语句写死在Java程序中,不灵活。
+改SQL的话就要改Java代码。违背开闭原则OCP。  该sql就要重新编译java等等打包一系列操作
+給?传值是繁琐的。能不能自动化？？？
+将结果集封装成Java对象是繁琐的。能不能自动化? ??
+
+
+了解mybatis
+mybatis本质上就是对jdbc的封装，通过mybatis完成crud
+mybatis在三层架构中负责的是持久层，属于持久层框架
+MyBatis的发展历程：【引用百度百科】
+MyBatis本是apache的一个开源项目iBatis,2010年这个项目由apache software foundation迁移到了google code，并目改名为MyBatis.
+2013年11月迁移到Github.
+iBATIS一词来源于"internet"和"abatis"的组合,是一个基于Java的持久层框架。
+iBATIS提供的持久层框架包括SQL Maps和Data Access Objects (DAOs)
+
+
+ORM: 对象映射关系
+O (Object): java虚拟机中的Java对象
+R (Relational): 关系型数据库
+M (Mapping): 将java虚拟机中的Java对象映射到数据库表中一行记录，或是将数据库中一行记录映射成java虚拟机中的一个java对象
+
+
+MyBatis属于半自动化ORM框架。
+Hibernate属于全自动化的ORM框架。
+MyBatis框架特点：
+支持定制化SQL、存储过程、基本映射以及高级映射
+避免了几乎所有的 JDBC 代码中手动设置参数以及获取结果集支持XML开发，也支持注解式开发。【为了保证sql语句的灵活，所以mybatis大部分是采用XML方式开发。】
+将接口和 Java 的 POJOs(Plain Ordinary Java Object，简单普通的Java对象)映射成数据库中的记录
+体积小好学:两个jar包,两个XML配置文件。
+完全做到sql解耦合。
+提供了基本映射标签。
+提供了高级映射标签。
+提供了XML标签，支持动态SQL的编写。
+...

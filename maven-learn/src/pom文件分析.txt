@@ -1,0 +1,55 @@
+POM文件:
+    Project Object Model项目对象模型。
+    Maven把一个项目的结构和内容抽象成一个模型，在xml文件中进行声明，方便构建和描述
+    pom.xml是maven的灵魂，所以maven环境搭建好后 所有的学习都是pom.xml
+
+pom.xml初识
+    1、基本信息:
+    modelVersion   Maven模型版本 对于Maven2 和 Maven3 来说，只能是4.0
+    groupId        组织id 一般是公司域名的倒写 格式可以为:域名倒写    域名倒写+项目名   com.mirror  com.mirror.ld
+    artifactId     项目名称，也是模块名称，对应groupId 项目中的子项目
+    version        项目的版本号，如果还在开发中，是最不稳定的版本，通常版本后带-SHAPSHOT  version使用三位数字标识，例如1.2.0
+    packaging      项目的打包类型默认是jar  可以是 jar   war   rar   ear   pom
+
+    2、依赖:
+    dependencies 和 dependency
+    Maven的一个重要作用就是管理jar包，为了一个项目可以构建或运行，项目中不可避免的，会依赖很多其他的jar包
+    在Maven中，这些jar就被称作依赖 使用标签dependency来配置 这种依赖的配置正是通过坐标来定位的，
+    因此maven把所有的jar包都视为项目存在了
+
+    3、配置属性:
+    properties
+    properties是用来定义一些配置属性的例如：project.build.sourceEncoding(项目构建源码编码方式),可以设置为UTF-8，防止中文乱码
+    也可以定义相关构建版本号，便于以后统一升级
+
+    4、构建:
+    build
+    build表示与构建相关的配置，例如设置编译插件的jdk版本
+
+    5、继承
+    parent
+    在maven中，如果多个模块都要声明相同的配置，例如：groupId version 有相同的依赖 或者相同的组件等 也有类似java的继承机制
+    用parent声明要继承的父工程的pom配置
+
+    6、聚合
+    modules
+    在Maven的多模块开发中,为了统一构建整个项目的所有模块,可以提供一个额外的模块，
+    该模块打包方式为 pom,并且在其中使用 modules聚合的其它模块,
+    这样通过本模块就可以一键自动识别模块间的依赖关系来构建所有模块,叫Maven的聚合。
+
+
+
+ https://mvnrepository.com/
+ maven的中央仓库搜索使用的
+ groupId  artifactId 作为搜索条件
+
+坐标: 在互联网中找资源就是根据坐标找的  坐标必须有  唯一标识项目的
+    groupId、artifactId、version
+    三个元素生成了 一个Maven项目的基本坐标
+    在众多maven项目中可以唯一定位到某一个项目
+    坐标也定位着将来仓库中项目的路径和名称
+
+依赖: 项目中要使用的各种资源的说明  相当于java中的import
+
+
+

@@ -1,0 +1,10 @@
+ajax请求异步和同步
+
+异步: 若此ajax请求支持异步  则可发送其它ajax请求
+同步: 若此ajax请求不支持异步 则等这个ajax请求完成后 才可以进行下一个ajax请求
+
+设置true 就是支持异步 支持在自己ajax请求进行时 其它ajax请求也可以发送
+设置false 不支持异步 在自己发送ajax请求时 其它都不可以发送ajax请求
+
+设置ajax请求的
+open() true false与否 决定了此ajax请求是否支持异步请求

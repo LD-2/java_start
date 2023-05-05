@@ -1,0 +1,40 @@
+settings是 MyBatis 中极为重要的调整设置，它们会改变 MyBatis 的运行时行为。
+tdt 规定了xml文件中应该有什么标签 标签属性 内容等 标签顺序
+
+关于mybatis集成日志组件。
+让我们调试起来更加方便。
+mybatis常见的集成的日志组件有哪些呢？
+    SLF4J（沙拉风）  是一个日志标准 其中有一个框架叫做logback，它实现了沙拉风 规范。因此要引入依赖
+    LOG4J
+    LOG4J2
+    STDOUT_LOGGING
+    其中STDOUT_LOGGING是标准日志，mybatis已经实现了这种标准日志。
+    mybatis框架本身己经实现了这种标准。只要开启即可。
+    怎么开启呢？
+    在mybatis-config.xml文件中使用settings标签进行配置开启。
+    <settings>
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+    </settings>这个标签在编写的时候要注意，它应该出现在environments标签之前。
+    注意顺序。当然，不需要记忆这个顺序。
+    因为有dtd文件进行约束呢，我们只要参考dtd约束即可。
+
+    这种实现也是可以的,可以看到一些信息，比如：连接对象什么时候创建，什么时候关闭，sal语句是怎样的
+    但是没有详细的日期，线程名字，等。
+    如果你想使用更加丰富的配置，可以集成第三方的log组件。
+
+
+    集成logback日志框架。
+    logback日志框架实现了slf4j标准。〔沙拉风：日志门面。日志标准。）
+        第一步：引入logback的依赖。
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>1.2.11</version>
+            </dependency>
+        第二步：引入logback所必须的xmL配置文件。
+            这个配置文件的名字必须叫做：logback.xml或者logback-test.xml，不能是其它的名字。
+            这个配置文件必须放到类的根路径下。不能是其他位置。
+            主要配置日志输出相关的级别以及日志具体的格式。
+        如果版本信息是1.4.5则需要名字写成logbacktest.xml
+        注意pom文件中依赖的范围 如果是test则代码编译不可以
+    引入了依赖和xml文件 不写settings中的slf4j也可以

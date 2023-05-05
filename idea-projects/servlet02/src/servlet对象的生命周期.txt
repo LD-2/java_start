@@ -1,0 +1,6 @@
+servlet对象由tomcat创建
+servlet对象的生命周期由tomcat负责 javaWeb开发者无法控制
+tomcat又称web容器
+自己new的servlet不会进入到web容器中  web容器创建servlet对象 这些对象都被放到一个HashMap中
+tomcat启动时servlet对象不会被自动创建 当请求路径时对应的servlet对象被创建(只创建一次 在tomcat服务器关闭时对象才会被销毁)期间再次请求同样的路径重复执行service方法即可
+servlet对象假单例 多线程共享一个对象

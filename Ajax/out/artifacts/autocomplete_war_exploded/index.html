@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Autocomplete</title>
+    <script src="./jquery_min_3.2.1.js"></script>
+    <style>
+        #content{
+            width:300px;
+            height:25px;
+            box-sizing: border-box;
+            font-size:15px;
+            padding-left:5px;
+        }
+        #divContainer{
+            box-sizing: border-box;
+            background-color:beige;
+            width:300px;
+            border: azure 1px solid;
+            margin-top:2px;
+        }
+        #divContainer > p {
+            box-sizing: border-box;
+            width:300px;
+            padding-left:5px;
+            /*background-color: beige;*/
+            margin-top: 3px;
+            margin-bottom:3px;
+            font-size:10px;
+        }
+        #divContainer p:hover {
+            color: blueviolet;
+            cursor:pointer;
+        }
+    </style>
+</head>
+<body>
+
+<script type="text/javascript">
+    $(function(){
+        document.getElementById("divContainer").style.display="none"
+        $("#content").keyup(function (){
+            $.ajax({
+                type:"GET",
+                url:"/autocomplete/getContent",
+                data:"content="+$("#content").val()+"&t="+new Date().getTime(),
+                async:true,
+                success:function(returnJsonObj){
+                    let html=""
+                    let jsonObj=JSON.parse(returnJsonObj)
+                    // alert(returnJsonObj.length)
+                    // alert(jsonObj.length)
+                    // alert(jsonObj)
+                    for (let i = 0; i < jsonObj.length; i++) {
+                        html+="<p onclick=fill("+jsonObj[i].content+")>"+jsonObj[i].content+"</p>";
+                    }
+                    $("#divContainer").html(html)
+                    document.getElementById("divContainer").style.display="block"
+                }
+            })
+        })
+        function fill(fillContent){
+            $("#content").html(fillContent)
+            document.getElementById("divContainer").style.display="none"
+        }
+    })
+</script>
+    <input type="text" id="content">
+    <div id="divContainer">
+<!--        <p>java</p>-->
+<!--        <p>ae</p>-->
+<!--        <p>keep</p>-->
+    </div>
+</body>
+</html>

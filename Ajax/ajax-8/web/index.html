@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ajax的异步和同步</title>
+</head>
+<body>
+
+<script type="text/javascript">
+    onload=function (){
+        let ajaxT1 = document.getElementById("ajaxT1")
+        let ajaxF1=document.getElementById("ajaxF1")
+        let showF1 = document.getElementById("showF1")
+        let showT1 =document.getElementById("showT1")
+
+        //ajax 支持异步
+        ajaxT1.onclick=function (){
+            let xmlObj =new XMLHttpRequest();
+            xmlObj.onreadystatechange=function (){
+                if (xmlObj.readyState==4){
+                    if (xmlObj.status==200){
+                        showT1.innerHTML=xmlObj.responseText
+                    }else {
+                        alert(xmlObj.status)
+                    }
+                }
+            }
+            xmlObj.open("GET","/ajax/request1")
+            xmlObj.send()
+        }
+
+        //ajax请求 不支持异步
+        ajaxF1.onclick=function (){
+            let xmlObj =new XMLHttpRequest();
+            xmlObj.onreadystatechange=function (){
+                if (xmlObj.readyState==4){
+                    if (xmlObj.status==200){
+                        showF1.innerHTML=xmlObj.responseText
+                    }else {
+                        alert(xmlObj.status)
+                    }
+                }
+            }
+            xmlObj.open("GET","/ajax/request2")
+            xmlObj.send()
+        }
+
+
+    }
+</script>
+
+<button id="ajaxT1">ajax请求支持异步 线程睡眠3s</button>
+<span id="showT1"></span>
+<br/>
+
+<button id="ajaxF1">ajax请求bu支持异步</button>
+<span id="showF1"></span>
+<br>
+
+<button id="ajaxT2"></button>
+<span id="showT2"></span>
+<br>
+
+<button id="ajaxF2"></button>
+<span id="showF2"></span>
+<br/>
+</body>
+</html>

@@ -1,0 +1,5 @@
+JdbcTemplate是Spring提供的一个JDBC模板类，是对JDBC的封装，简化JDBC代码。
+当然，你也可以不用，可以让Spring集成其它的ORM框架，例如：MyBatis、Hibernate等。
+接下来我们简单来学习一下，使用JdbcTemplate完成增删改查。
+
+看文档吧 用的时候再说

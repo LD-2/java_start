@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <script type="text/javascript" src="./jquery_min_3.2.1.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+  $(function (){
+    let jqObj = $("#show")
+    jqObj.get(0).onkeyup=function (event){
+      if(event.keyCode == 32){
+        jqObj.get(0).value="转换成功"
+      }
+    }
+  })
+</script>
+  <input type="text" id="show">
+</body>
+</html>

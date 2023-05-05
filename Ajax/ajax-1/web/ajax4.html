@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ajax4-request</title>
+</head>
+<body>
+<script type="text/javascript">
+  onload=function (){
+    document.getElementById("btn").onclick=function (){
+      let xmlObj=new XMLHttpRequest()
+      xmlObj.onreadystatechange=function(){
+        if(xmlObj.readyState==4){
+          if(xmlObj.status==200){
+            document.getElementById("show").innerHTML=xmlObj.responseText
+          }else{
+            alert(xmlObj.status)
+          }
+        }
+      }
+      xmlObj.open("POST","/ajax/request4",true)
+      xmlObj.send()
+    }
+  }
+</script>
+<!--name <input type="text" id="context">-->
+<br/>
+<button id="btn">showName</button>
+<div id="show"></div>
+</body>
+</html>

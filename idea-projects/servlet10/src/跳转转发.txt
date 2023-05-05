@@ -1,0 +1,45 @@
+跳转转发:
+使用方法: 调用跳转器 再调用forward()方法
+req.getRequestDispatcher("URI").forward(req,resp); 路径不带项目名
+这里的理解是你正在执行一个请求路径中的内容 然后会根据跳转 跳到另一个页面执行所跳转的路径中的内容
+等于说共用一个request和response 因此attribute中的内容会被记录 执行是执行最后一个资源的显示内容
+互相调用会死循环 报服务器中程序错误  500错误
+同一个请求域共享内容
+
+两个Servlet之间共享数据 用ServletContext 应用域可以但是相对于请求域的调用 比较占用资源
+可以将数据放到request域中 然后通过Servlet间的转发 保证在一个请求中 这样就可以保证两个Servlet或多个Servlet共享一份数据 一份请求域
+
+转发的下一个资源只要是tomcat中的合法资源都是可以转发的 html...
+
+request.getParameter(...)获取浏览器提交的数据
+request.getAttribute(...)获取请求域中的数据
+
+HttpServletRequest中的其常用他方法
+request.getRemoteAddr() 获得客户端的ip
+post 请求体提交数据
+get 请求行提交数据
+
+
+
+请求行的字符集的默认设置在 CATALINA_HOME/conf/server.xml配置文件 connector
+request.setCharacterEncoding("UTF-8")设置请求体的字符集
+
+获取应用的根路径: request.getContextPath()            /项目名
+获取请求方式: request.getMethod()                    方法名
+获取URL: request.getRequestURL()                    获取资源的URL
+获取servlet path: request.getServletPath()          获取xml中的servlet小程序的路径 不带项目名
+
+this.getServletContext().getContextPath()          获取项目名
+this.getServletContext().getRealPath("web.xml")    获取真实路径 这里项目名是真实的 不是设置的
+
+
+前端带项目名字
+web.xml servlet中不带项目名
+welcome中不加/
+跳转中 不加项目名
+ctrl+r
+
+记得写name
+//请求还是一个  因此上面地址栏还是显示deleteServlet的路径资源
+
+比较容易发现 使用跳转的问题 请求还是同一个 这样可能无法刷新页面 而且doget dopost嵌套使用无意义

@@ -1,0 +1,35 @@
+配置当前maven工程的maven设置
+配置新建maven工程的maven设置
+
+
+1.在idea中设置maven让idea和maven结合使用。
+idea中内置了maven ,一般不使用内置的, 因为用内置修改maven的设置不方便。
+使用自己安装的maven,需要覆盖idea中的默认的设置。
+让idea指定maven安装位置等信息配置的入口
+①：配置当前工程的设置，
+    file--settings ---Build, Excution,Deployment--Build Tools
+    --Maven
+        Maven Home directory: maven的安装目录
+        User Settings File :就是maven安装目录conf/setting.xml配置文件
+        Local Repository :本机仓库的目录位置
+
+        --Build Tools--Maven--Runner
+        VM Options: -DarchetypeCatalog=internal
+        JRE：你项目的jdk
+        -DarchetypeCatalog=internal , maven项目创建时,会联网下载模版文件,比较大,
+        使用-DarchetypeCatalog-internal,不用下载,创建maven项目速度快。
+②:配置以后新建工程的设置， file--other settings
+    同上
+
+
+使用模板快速创建
+普通java项目 maven-archetype-quickstart
+web工程 maven-archetype-webapp
+
+java: 错误: 不支持发行版本 18
+项目设置
+设置中的
+pom.xml
+版本都统一为18
+然后记得刷新maven项目
+

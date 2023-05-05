@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>second-ajax-request</title>
+</head>
+<body>
+    <script type="text/javascript">
+        //1、创建XMLHTTPRequest请求对象
+        let xmlObj = new XMLHttpRequest()
+        onload=function (){
+            document.getElementById("btn").onclick=function () {
+
+                //2、注册readystate改变事件
+                //调用回调函数名字时不写()
+                xmlObj.onreadystatechange = callback
+                //3、开启服务器和浏览器之间的连接  开启通道
+                xmlObj.open("GET","/ajax/request2",true)
+                //4、发送请求
+                xmlObj.send()
+            }
+        }
+        function callback(){
+            if(xmlObj.readyState==4) {
+                if (xmlObj.status == 200) {
+                    document.getElementById("mydiv").innerHTML = xmlObj.responseText
+                } else {
+                    alert(xmlObj.status)
+                }
+            }
+        }
+    </script>
+    <button id="btn">发送ajax-get请求</button>
+    <div id="mydiv">???</div>
+</body>
+</html>

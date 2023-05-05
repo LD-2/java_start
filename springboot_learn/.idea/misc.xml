@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/springboot001-pre/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-002-first/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-005-mvc/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-006-environment/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-007-multi-environment/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-008-custom-yml/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-009-jsp/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-010-container/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-011-commandlinerunner/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-012-interceptor/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot--013-servlet/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-014-filter/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-character-filter/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-017-mapper/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-018-mapperscan/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-019-transactional/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-020-restful/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_18" project-jdk-name="18" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>

@@ -1,0 +1,27 @@
+内置注解 元注解 自定义注解
+
+
+注解和反射是所有框架的底层
+Annotation注解 给人和程序看
+注解不是必须的
+注解有检查约束的作用
+
+注解不是程序本身 可以对程序做出解释
+可以被其它程序（编译器）读取
+注解里面还可以增加一些参数值
+Annotation可以在包 方法 类 代码块 上使用 可以通过反射机制访问元数据
+
+@Override重写注解 表示一个类中 准备重写 一个超类的方法  加了就有约束作用
+@Deprecated不推荐使用的注解
+@SuppressWarnings
+
+自定义注解
+元注解 解释自定义的注解
+@interface
+@Target
+@Retention
+@Documented
+@Inherited
+
+@interface自定义注解时 就自动继承了接口 Annotation
+如果参数名称是value可以省略

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>回顾js中怎么创建对象</title>
+</head>
+<body>
+<script type="text/javascript">
+  function User(name,age){
+    this.name = name;
+    this.age = age;
+    this.doSome = function (){
+      console.log("doSome()")
+    }
+    //静态方法的定义方法  类名加方法
+    User.doHaHa=function (){
+      console.log("haha")
+    }
+    User.prototype.doLaLa=function (){
+      console.log("LaLa")
+    }
+  }
+  let user = new User()
+  user.doLaLa()
+  User.doHaHa()
+  user.doSome()
+  user.doHaHa()
+</script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+<!--  自己项目的坐标  -->
+  <groupId>com.mirror</groupId>
+  <artifactId>maven02</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+
+<!--  生成网页时可以点击这个链接 查看此项目 -->
+  <name>maven02</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+<!--    maven构建项目使用的utf-8 避免中文乱码-->
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+<!--    编译java代码使用的jdk版本-->
+    <maven.compiler.target>18</maven.compiler.target>
+<!--    你的java项目应该运行的jdk版本-->
+    <maven.compiler.source>18</maven.compiler.source>
+  </properties>
+
+
+<dependencies>
+    <!--  依赖-->
+      <dependency>
+          <!--    单元测试-->
+          <groupId>junit</groupId>
+          <artifactId>junit</artifactId>
+          <version>4.13.1</version>
+          <!--      依赖的范围-->
+          <scope>test</scope>
+      </dependency>
+  </dependencies>
+<!--  build 可有可无 一般是设置jdk版本-->
+
+</project>

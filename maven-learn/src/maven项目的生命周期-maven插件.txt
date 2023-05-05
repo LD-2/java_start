@@ -1,0 +1,10 @@
+mvn -v
+mvn -compile 编译src/main目录下的所有java文件
+    为什么要下载: maven工具执行的操作需要很多插件（java类--jar文件）完成的
+    下载什么东西了: jar文件--叫做插件--插件是完成某些功能
+    下载的东西放到哪里了: 默认放到c盘 C:\Users\(登入操作系统的用户名)Administrator\.m2\repository
+    可以更改cof下的setting.xml文件修改下载的本地仓库地址
+中央地址仓库: https//repo.maven.apache.org
+
+执行mvn compile 结果是在项目的根目录下生成target目录（结果目录）
+maven编译java程序 最后的class文件都放在target目录下的classes目录中

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mirror.mapper.UserMapper">
+<!--    返回类型对应接口的方法名 #{} ${} 的应用-->
+<!--    还可以 as  驼峰-->
+    <resultMap id="userMap" type="User">
+        <id property="userId" column="user_id"/>
+        <result property="cardType" column="card_type"/>
+        <result property="cardNo" column="card_no"/>
+        <result property="userName" column="user_name"/>
+        <result property="userSex" column="user_sex"/>
+        <result property="userAge" column="user_age"/>
+        <result property="userRole" column="user_role"/>
+    </resultMap>
+<!--    定义全部列名-->
+    <sql id="allColumns">
+        user_id,card_type,card_no,user_name,user_sex,user_age,user_role
+    </sql>
+    <!--
+        List<User> selectUserPage(
+        @Param("userName") String userName,
+        @Param("userSex") String userSex,
+        @Param("startIndex") int startIndex);
+    -->
+    <select id="selectUserPage" resultMap="userMap">
+        select <include refid="allColumns"/> from user
+        <where>
+            <if test="userName != null and userName != ''">
+                and user_name like concat("%",#{userName},"%")
+            </if>
+            <if test="userSex != null and userSex != ''">
+                and user_sex = #{userSex}
+            </if>
+        </where>
+        limit #{startIndex},5
+    </select>
+
+<!--    int insert(User user);-->
+    <insert id="createUser">
+        insert into user values(#{userId},#{cardType},#{cardNo},#{userName},#{userSex},#{userAge},#{userRole})
+    </insert>
+
+<!--    int delete(String userId);-->
+    <delete id="deleteUserById">
+        delete from user where user_id = #{userId}
+    </delete>
+
+<!--    int getRowCount
+        (@Param("userName")String userName,
+        @Param("userSex") String userSex);
+        -->
+    <select id="getRowCount" resultType="int">
+        select count(*) from user
+        <where>
+            <if test="userName != null and userName != ''">
+                and user_name like concat("%",#{userName},"%")
+            </if>
+            <if test="userSex != null and userSex != ''">
+                and user_sex = #{userSex}
+            </if>
+        </where>
+    </select>
+</mapper>

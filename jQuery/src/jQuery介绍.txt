@@ -1,0 +1,23 @@
+jQuery是javaScript一些方法的封装 是js库 目的是为了更便捷操作HTML DOM对象
+jQuery兼容大部分主流浏览器
+比如绑定标签就省去了大部分代码
+例如:使用JavaScript定位DOM对象常用的三种方式:
+(1)通过 ID 属性：document.getElementById()
+(2)通过 class属性: getElementsByClassName()
+(3)通过标签名： document.getElementsByTagName()
+上面代码可以看出JavaScript方法名太长了,大小写的组合太多了,编写代码效率,容易出错.
+jQuery 分别使用$(“#id”), $(“.class 名”), $(“标签名)封装了上面的 js 方法.
+
+可以去jQuery官网 看具体API文档
+https://jquery.com/
+
+jQuery是一款主流跨浏览器的javascript库，封装了javascript相关的调用方法，简化了javascript对html dom的操作
+
+
+min压缩版 线上操作 便于bs结构  文件传输 文件小传得快  js库
+未压缩版的 看源码方便
+
+用过滤器是把指定的dom对象留在jquery数组中，因此还是jquery对象
+
+自定义的坐标 定义项目的  和需要jar包的 都是有坐标的
+

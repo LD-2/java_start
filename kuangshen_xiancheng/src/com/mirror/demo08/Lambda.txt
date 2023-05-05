@@ -1,0 +1,9 @@
+Lambda表达式
+避免匿名内部类定义过多
+其本质属于函数式编程概念
+(params) -> expression [表达式]
+(params) -> statement [语句]
+(params) -> { statements }
+函数式接口的意义
+如果一个接口只包含一个抽象方法 那么它就是一个函数式接口
+对于函数式接口可以用lambda表达式创建该接口的对象

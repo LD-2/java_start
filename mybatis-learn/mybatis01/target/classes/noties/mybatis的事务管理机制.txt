@@ -1,0 +1,31 @@
+关于mybatis的事务管理机制（深度剖析）
+    在mybatis-config.xml文件中，可以通过这样设置mybatis的事务机制
+        <transactionManager type="JDBC"/>
+    type的属性值有两个:
+        JDBC
+        MANAGED事务管理器
+    mybatis中事务管理机制有两种
+        JDBC事务管理器
+        MANAGED事务管理器
+    JDBC事务管理器
+        mybatis框架自己管理事务，底层是JDBC原生代码
+        conn.setAutoCommit(false); 开启事务
+        conn.commit(); 提交事务
+    MANAGED事务管理器
+        mybatis不再负责事务的管理。事务管理交给其它容器负责。例如Spring
+        对于我们当前的单纯的只有mybatis的情况下，
+        如果配置为：MANAGED那么事务这块是没人管的。没有人管理事务表示事务压根没有开启。
+
+    JDBC中的事务：
+        如果你没有在JDBC代码中执行： conn.setAutoCommit(false);的话，默认的getAutoCommit()是true.
+
+
+    事务机制源码解析
+    因此 SqlSession sqlSession=sqlSessionFactory.openSession(true);相当于没开启事务
+    if (this.connection.getAutoCommit() != desiredAutoCommit) {
+                    if (log.isDebugEnabled()) {
+                        log.debug("Setting autocommit to " + desiredAutoCommit + " on JDBC Connection [" + this.connection + "]");
+                    }
+
+                    this.connection.setAutoCommit(desiredAutoCommit);
+                }

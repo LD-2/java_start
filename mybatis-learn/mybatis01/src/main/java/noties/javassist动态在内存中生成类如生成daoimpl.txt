@@ -1,0 +1,14 @@
+因为daoimpl是固定的写法 所以可以通过javassist动态生成 cglib也可以
+Javassist是一个开源的分析、编辑和创建Java字节码的类库。是由东京工业大学的数学和计算机科学系的Shigeru Chiba (千叶滋)所创建的。
+它已加入了开放源代码JBoss应用服务器项目,通过使用Javassist对字节码操作为JBoss实现动态"AOP"框架。
+
+private CarMapper mapper = SqlSessionUtil.openSession().getMapper(CarMapper.class);
+
+private AccountDao accountDaoImpl = new AccountDaoImpl();
+private AccountDao accountDao = (AccountDao) GenerateDaoProxy.generate(SqlSessionUtil.openSession(), AccountDao.class);
+在mybatis当中，mybatis提供了相关的机制。也可以动态为我们生成dao接口的实现类。(代理类：dao接口的代理）
+mybatis当中实际上采用了代理模式。在内存中生成dao接口的代理类，然后创建代理类的实例。
+private AccountDao accountDao = SqlSessionUtil.openSession().getMapper(AccountDao.class);
+
+底层上还是实现了这个接口的实现类 只不过是 mybatis中的javassist自动在内存中生成的 不用自己写了
+想用的前提是 必须要 namespace对应接口的全限定类名  id对应接口的方法名

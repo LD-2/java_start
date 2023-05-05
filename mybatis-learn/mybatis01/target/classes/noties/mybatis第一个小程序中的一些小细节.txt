@@ -1,0 +1,32 @@
+Mapper.xml文件中的sql语句  ; 可写可不写
+Resources.getResourceAsStream
+    小技巧：以后凡是遇到resource这个单词，大部分情况下，这种加载资源的方式就是从类的根路径下开始加载(开始查找)
+        优点：采用这种方式，从类路径当中加载资源，项目的移植性很强。
+        项目从windows移植到linux，代码不需要修改，因为这个资源文件一直都在类路径当中。
+    InputStream is = new FileInputStream("E:\\java-projects\\mybatis-learn\\mybatis01\\src\\main\\resources\\mybatis-config.xml");
+    采用这种方式也可以。
+        缺点：可移植性太差，程序不够健壮。可能会移植到其他的操作系统当中。
+        导致以上路径无效，还需要修改java代码中的路径。这样违背了OCP原则。
+    已经验证了：
+        mybatis核心配置文件的名字，不一定是：mybatis-config.xml。可以是其它名字。
+        mybatis核心配置文件存放的路径,也不一定是在类的根路径下。可以放到其它位置。
+        但为了项目的移植性,健壮性,最好将这个配置文件放到类路径下面。
+        InputStream is = ClassLoader.getSystemClassLoader().getResourceAsStream("mybatis-config.xml");
+        ClassLoader.getSystemClassLoader()获取系统的类加载器。
+        系统类加载器有一个方法叫做：getResourceAsStream它就是从类路径当中加载资源的。
+        通过源代码分析发现：InputStream is = Resources.getResourceAsStream("mybatis-config.xml");
+        底层的源代码其实就是：InputStream is = ClassLoader.getSystemClassLoader().getResourceAsStream("mybatis-config.xmL");
+        ClassLoaderWrapper() {
+            try {
+                this.systemClassLoader = ClassLoader.getSystemClassLoader();
+            } catch (SecurityException var2) {
+            }
+        }
+
+CarMapper.xmL文件的名字是固定的吗？
+CarMapper.xmL文件的路径是固定的吗？
+都不是固定的。
+<mapper resource="CarMapper.xml"/>
+ resource属性：这种方式是从类路径当中加载资源。
+<mapper url="file:///d:/CarMapper.xml"/>
+ url属性：这种方式是从绝对路径当中加载资源。

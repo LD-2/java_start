@@ -1,0 +1,32 @@
+jsp指令
+    指令的作用: 指导JSP翻译引擎如何工作（如何翻译当前的JSP文件）
+    指令包括哪些
+        include指令: 包含指令 在JSP中完成静态包含
+        taglib指令: 引入标签库指令 JSTL
+        page指令
+    指令的使用语法
+        <%@指令名 属性名=属性值 属性名=属性值%>
+        <%@page session="true" %>
+        <%@page contentType="text/html;charset=utf-8"%>
+        <%@page pageEncoding="utf-8" %>
+        <%@page import="java.util.Date"%>
+        <%@page errorPage="/error.jsp"%>此页面有错跳转到设置的页面 比如报异常 但是后台不显示异常了
+        在错误页面可以启用JSP九大内置对象之一 exception
+        <%@page isErrorPage="true"%>调用后 就可以使用exception对象了
+
+JSP的九大内置对象
+jakarta.servlet.jsp.PageContext pageContext         页面作用域
+jakarta.servlet.http.HttpServletRequest request     请求域
+jakarta.servlet.http.HttpSession session            会话域
+jakarta.servlet.ServletContext application          应用域
+页面作用域<请求域<会话域<应用域   都有setAttribute getAttribute removeAttribute四个方法
+尽量使用小的
+
+jakarta.servlet.ServletConfig config
+
+java.lang.Object page  其实是this 当前servlet对象
+
+java.lang.Throwable exception
+
+jakarta.servlet.jsp.JspWriter out  负责输出
+jakarta.servlet.http.HttpServletResponse response  负责响应

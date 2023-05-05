@@ -1,0 +1,37 @@
+什么是监听器:
+    监听器是Servlet规范中的一员 就像Filter一样 Filter也是Servlet规范中的一员  Servlet规范是Javaee 13个规范之一 JSP也是
+    在Servlet中所有监听器的接口都是以Listener结尾
+监听器有什么作用:
+    监听器实际上是Servlet规范留给javaWeb程序员的特殊时期  就像类加载机制中的静态代码块一样
+    在某一个特殊时机 如果想要执行这个代码 需要想到使用对应状态时机的监听器
+Servlet规范中提供了哪些监听器
+    jakarta.servlet包下的
+        ServletContextListener          在ServletContext对象某些状态时的一些时机  比如创建销毁
+        ServletContextAttributeListener
+        ServletRequestListener
+        ServletRequestAttributeListener
+    jakarta.servlet.http包下的
+        HttpSessionListener
+        HttpSessionAttributeListener
+            该监听器需要使用@WebListener注解 或者xml
+            该监听器监听的是 session域中数据的变化 只要数据变化 就执行相对应的方法中的代码 主要监测点在session域对象上
+        HttpSessionBuildingListener
+            该监听器不需要注解或者xml
+            监听的是 是否有实体类对象实现它 并且在session域中添加或移除他
+        HttpSessionIdListener
+        HttpSessionActivationListener
+实现一个监听器的步骤: 这里以ServletContextListener监听器接口为例 实现此接口
+    第一步: 编写一个类实现ServletContextListener这个接口 并且实现里面的方法
+    第二步: 在web.xml文件中对ServletContextListener配置   也可以使用注解配置@WebListener
+注意: 所有监听器中的方法都是不需要javaWeb程序员调用的 由服务器负责调用 什么时候调用  对象的创建销毁  方法的调用都是由服务器决定的
+    当某个特殊的事件发生(特殊的事件发生其实就是某个时机到了)之后 web服务器自动调用
+
+
+监听器的核心: 某个事件发生后 然后就会调用这个事件对应的监听器中的方法
+
+
+在线人数实现  注意域的问题和 什么情况下+人  什么情况下-人
+
+
+
+

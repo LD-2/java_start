@@ -1,0 +1,94 @@
+/* 
+相对定位的作用其实就是为了让其子标签的绝对定位起作用
+相对定位包含绝对定位的元素 从而更好的定位绝对定位的元素  
+fixed 根据html定位直接
+sticky根据当前位置粘性
+
+position不在文件流了
+*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    /* background-image: linear-gradient(to bottom right, rgb(82, 46, 64), rgb(103, 111, 20)); */
+}
+
+.container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 2px;
+    background-color: rgb(114, 137, 110);
+    box-shadow: 0 0 5px rgba(0 0 0 / .5), 0 0 25px rgba(0 0 0 / .5), 0 0 50px rgba(0 0 0 / .5), 0 0 100px rgba(93, 126, 135);
+    border-radius: 3px;
+    transition: all 1s ease-out;
+
+}
+
+.container:hover {
+
+    /* width: 222px;
+    height: 222px; */
+}
+
+.update-box {
+    box-sizing: content-box;
+    width: 300px;
+    padding: 30px;
+    border-radius: 10px;
+    background-color: rgba(0 0 0 / .2);
+}
+
+.update-box h2 {
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+.row {
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.row label {
+    position: absolute;
+    bottom: -4px;
+    right: 8px;
+}
+
+.row input {
+    margin-left: 4px;
+    caret-color: rgb(100, 34, 123);
+    background: transparent;
+    outline: none;
+    border: none;
+    border-bottom: 2px solid;
+    padding: 2px;
+}
+
+.sb input {
+    outline: none;
+    background: rgba(0 0 0 / .1);
+    border-radius: 10px;
+    border: none;
+    font-size: 22px;
+    padding: 6px;
+}
+
+form {
+    box-sizing: content-box;
+    background-color: aliceblue;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 0 15px rgba(0 0 0 / .5);
+}
+
+/* .sb input:hover {
+    box-shadow: 0 0 5px rgba(100 34 123 / .5), 0 0 25px rgba(100 34 123 / .5), 0 0 50px rgba(100 34 123 / .5), 0 0 100px rgba(100 34 123 / .5);
+} */

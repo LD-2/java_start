@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login-Test</title>
+</head>
+<body>
+<script type="text/javascript">
+    onload=function (){
+        let name=document.getElementById("name")
+        let judge=document.getElementById("judge")
+        let flag=true
+        let regExp=/^\w{6,12}$/
+        name.onblur=function (){
+            if(name.value == ""){
+                judge.innerHTML="<font color='#a52a2a'>用户名不能为空</font>"
+                flag=false
+            }else{
+                if(regExp.test(name.value)){
+                    //初步规范确定 开始进入数据库验证数据
+                    // ajax 发送POST请求
+                    let xmlObj=new XMLHttpRequest();
+                    xmlObj.onreadystatechange=function (){
+                        if(this.readyState==4){
+                            if(this.status==200){
+                                judge.innerHTML=xmlObj.responseText
+                            }else{
+                                alert(this.status)
+                            }
+                        }
+                    }
+                    xmlObj.open("POST","/ajax/new-request",true)
+                    xmlObj.setRequestHeader("Content-Type","application/x-www-form-urlencoded")
+                    xmlObj.send("name="+name.value)
+                }else{
+                    judge.innerHTML="<font color='#a52a2a'>用户名只能由英文、数字、下划线组成，且为6-12位.</font>"
+                    flag=false
+                }
+            }
+        }
+        name.onfocus=function (){
+            if(!flag){
+                judge.innerHTML=""
+            }
+        }
+    }
+</script>
+name: <input type="text" id="name">
+<span id="judge"></span>
+</body>
+</html>

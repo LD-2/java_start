@@ -1,0 +1,40 @@
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>18</maven.compiler.source>
+    <maven.compiler.target>18</maven.compiler.target>
+  </properties>
+
+  <dependencies>
+    
+  </dependencies>
+
+  <build>
+
+<!--    <plugins>-->
+<!--      <plugin>-->
+<!--        <groupId>org.apache.maven.plugins</groupId>-->
+<!--        <artifactId>maven-war-plugin</artifactId>-->
+<!--        <version>3.3.1</version>-->
+<!--      </plugin>-->
+<!--    </plugins>-->
+
+    <resources>
+
+      <resource>
+        <directory>src/main/java</directory>
+        <includes>
+          <include>**/*.txt</include>
+        </includes>
+        <filtering>false</filtering>
+      </resource>
+
+      <resource>
+        <directory>src/main/resources</directory>
+        <includes>
+          <include>**/*</include>
+        </includes>
+      </resource>
+
+    </resources>
+  </build>

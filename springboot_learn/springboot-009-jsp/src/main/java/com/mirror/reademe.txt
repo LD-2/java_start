@@ -1,0 +1,53 @@
+springboot使用jsp
+首先要引入 jsp 相关的依赖
+因为内置的tomcat没有jsp解析包
+
+<!--引入 Spring Boot 内嵌的 Tomcat 对 JSP 的解析包，不加解析不
+了 jsp 页面-->
+<!--如果只是使用 JSP 页面，可以只添加该依赖-->
+<dependency>
+ <groupId>org.apache.tomcat.embed</groupId>
+ <artifactId>tomcat-embed-jasper</artifactId>
+</dependency>
+
+<!--如果要使用 servlet 必须添加该以下两个依赖-->
+<!-- servlet 依赖的 jar 包-->
+<dependency>
+ <groupId>javax.servlet</groupId>
+ <artifactId>javax.servlet-api</artifactId>
+</dependency>
+
+<!-- jsp 依赖 jar 包-->
+<dependency>
+ <groupId>javax.servlet.jsp</groupId>
+ <artifactId>javax.servlet.jsp-api</artifactId>
+ <version>2.3.1</version>
+</dependency>
+
+<!--如果使用 JSTL 必须添加该依赖-->
+<!--jstl 标签依赖的 jar 包 start-->
+<dependency>
+ <groupId>javax.servlet</groupId>
+ <artifactId>jstl</artifactId>
+</dependency>
+
+SpringBoot要求jsp文件必须编译到指定的位置META-INF/resources 目录下才能访问，否则访问不到。
+<resources>
+ <resource>
+ <!--源文件位置-->
+ <directory>src/main/webapp</directory>
+ <!--指定编译到META-INF/resource，该目录不能随便写-->
+ <targetPath>META-INF/resources</targetPath>
+ <!--指定要把哪些文件编译进去，**表示 webapp 目录及子
+目录，*.*表示所有文件-->
+ <includes>
+ <include>**/*.*</include>
+ </includes>
+ </resource>
+
+ 使用jsp页面就要配置SpringBoot的视图解析器
+ 这里在 application.properties中进行配置
+
+在 src/main 下创建一个 webapp 目录创建jsp文件
+
+

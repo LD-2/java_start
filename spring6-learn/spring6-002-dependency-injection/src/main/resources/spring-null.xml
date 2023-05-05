@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="vipBean" class="com.mirror.spring6.bean.Vip">
+<!--        空串的第一种方式-->
+<!--        <property name="email" value=""/>-->
+<!--        第二种方式-->
+        <property name="email">
+            <value/>
+        </property>
+    </bean>
+
+<!--    第一种不赋值-->
+    <bean id="vipBean2" class="com.mirror.spring6.bean.Vip"/>
+<!--    第二种使用<null/>-->
+    <bean id="vipBean3" class="com.mirror.spring6.bean.Vip">
+        <property name="email">
+            <null/>
+        </property>
+    </bean>
+</beans>

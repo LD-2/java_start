@@ -1,0 +1,36 @@
+函数：
+    val操作dom对象的value属性
+    val() dom数组的第一个dom对象的value值
+    val("content") 对选中的所有dom对象统一赋值
+
+    text
+    $(选择器).text():无参数调用，读取数组中所有DOM对象的文字显示内容，将得到内容拼接为一个字符串返回
+    $(选择器).text(值)：有参数方式,对数组中所有DOM对象的文字显示内容进行统一赋值
+
+    attr对 val, text 之外的其他属性操作
+    $(选择器).attr( “属性名”)：获取 DOM 数组第一个对象的属性值
+    $(选择器).attr( "属性名”,"值” ):对数组中所有DOM对象的属性设为新值
+
+    remove
+    $(选择器).remove() :将数组中所有DOM对象及其子对象一并删除
+
+    empty
+    $(选择器).empty() :将数组中所有 DOM 对象的子对象删除
+
+    append
+    $(选择器).append() 为数组中所有 DOM 对象添加子对象
+
+
+    html
+    设置或返回被选元素的内容（innerHTML）。
+    $(选择器).html()：无参数调用方法，获取DOM数组第一个匹元素的内容
+    $(选择器).html(值):有参数调用,用于设置DOM数组中所有元素的内容。
+
+    each
+    each是对数组, json和dom数组等的遍历,对每个元素调用一次函数。
+    语法1: $.each(要遍历的对象, function(index,element){处理程序})
+    语法2: jQuery对象.each( function( index, element){处理程序})
+    index: 数组的下标element： 数组的对象
+
+
+

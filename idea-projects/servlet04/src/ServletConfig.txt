@@ -1,0 +1,8 @@
+什么是ServletConfig ?
+Servlet对象的配置信息
+ServletConfig对象中封装了<servlet></servlet>标签中的配置信息 (web.xml文件中servlet的配置信息)
+一个Servlet对象对应一个config对象
+servlet对象和servletConfig对象都是由tomcat服务器创建的
+ServletConfig接口由tomcat（web服务器）实现
+ServletConfig接口有哪些常用的方法  查询Servlet的名字  获取ServletContext对象 获取所有初始化参数的名字 获取所有初始化参数的value
+GenericServlet也实现了ServletConfig接口 所以在servlet类中也可以通过this调用

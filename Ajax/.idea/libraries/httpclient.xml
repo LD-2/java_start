@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="httpclient">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/ajax-11/c/web/WEB-INF/lib/commons-codec-1.10.jar!/" />
+      <root url="jar://$PROJECT_DIR$/ajax-11/c/web/WEB-INF/lib/commons-logging-1.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/ajax-11/c/web/WEB-INF/lib/httpclient-4.5.6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/ajax-11/c/web/WEB-INF/lib/httpcore-4.4.10.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

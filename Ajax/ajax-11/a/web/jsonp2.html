@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jsonp 创建jscript元素</title>
+    <script type="text/javascript" src="./jquery_min_3.2.1.js">
+
+    </script>
+</head>
+<body>
+    <script type="text/javascript">
+        function hello(jsonObj){
+            $("#content").html("Hello "+jsonObj.name)
+            alert(jsonObj.name);
+        }
+        $(function (){
+            $("#show").click(function (){
+                //创建script元素兑现
+                const htmlScriptElement=document.createElement("script");
+                //设置script的type属性
+                htmlScriptElement.type="text/javascript";
+                //设置script的src属性
+                htmlScriptElement.src="http://localhost:8081/b/jsonptest?fun_name=hello"
+                //将script对象添加到body标签中 加载script
+                document.getElementsByTagName("body")[0].appendChild(htmlScriptElement)
+            })
+        })
+    </script>
+    <button id="show">show</button>
+    <div id="content"></div>
+</body>
+</html>

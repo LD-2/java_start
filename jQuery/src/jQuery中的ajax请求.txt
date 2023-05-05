@@ -1,0 +1,29 @@
+使用jquery的函数,实现ajax请求的处理。
+没有jquery之前，使用XMLHttpRequest做ajax，有4个步骤。
+jquery简化了ajax请求的处理。
+使用三个函数可以实现ajax请求的处理。
+1） $.ajax（） ：jquery中实现ajax的核心函数。
+2) $.post（) ：使用post方式做ajax请求。
+3)$.get（)：使用get方式发送ajax请求。
+$.post()和$.get()他们在内部都是调用的 $.ajax()
+介绍$.ajax函数的使用,
+函数的参数表示请求的url, 请求的方式,参数值等信息。
+$.ajax（)参数是一个json的结构。
+例如: $.ajax( {名称:值, 名称1:值1..... ))
+例如： $.ajax({
+        async:true,
+        contentType:"application/json"
+      )}
+json结构的参数说明：
+1)async:是一个boolean类型的值,默认是true ,表示异步请求的。
+可以不写async这个配置项xmlHttp.open (get,url,true) ,第三个参数一样的意思。
+2)contentType：一个字符串，表示从浏览器发送服务器的参数的类型。可以不写。例如你想表示请求的参数是json格式的，可以写application/json
+3)data:可以是字符串,数组, json,表示请求的参数和参数值。
+4)dataType:表示期望从服务器端返回的数据格式,可选的有:html, text, json
+当我们使用$.ajax()发送请求时, 会把dataType的值发送给服务器, 那我们的servlet能够读取到dataType的值,
+就知道你的浏览器需要的是json或者xml的数据,那么服务器就可以l返回你需要的数据格式。
+5)error：一个function，表示当请求发生错误时，执行的函数error:function(){}( 发生错误时执行)
+6) success:一个function ,请求成功了,从服务器端返回了数据,会执行success指定函数l之前使用xMLHttpRequest对象,
+当readyState-4 && status-200的时候.
+7)url：请求的地址8)type:请求方式, get或者post, 不用区分大小写.默认是get方式.
+主要使用的是 url , data ,dataType,success

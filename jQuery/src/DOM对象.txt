@@ -1,0 +1,6 @@
+DOM对象 Document Object Model 是W3C组织推荐的可扩展标志语言的标准编程接口
+通过DOM对象对HTML页面的解析，可以将页面元素解析为元素节点、属性节点和文本节点，这些解析出的节点对象，即DOM对象可以使用JavaScript语法
+
+dom对象 使用js语法创建的对象叫做dom对象 也是js对象
+    let obj = document.getElementById("txt1")  obj是dom对象也是js对象
+    obj.value

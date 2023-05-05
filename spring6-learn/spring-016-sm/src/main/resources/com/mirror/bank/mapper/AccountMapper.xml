@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mirror.bank.mapper.AccountMapper">
+<!--    返回类型对应接口的方法名 #{} ${} 的应用-->
+    <select id="selectAccountByActno" resultType="Account">
+        select * from `t_act` where `actno` = #{actno}
+    </select>
+
+    <update id="update">
+        update t_act set `balance` = #{balance} where `actno` = #{actno}
+    </update>
+</mapper>

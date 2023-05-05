@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <script type="text/javascript" src="./jquery_min_3.2.1.js"></script>
+</head>
+<body>
+
+<script type="text/javascript">
+  $(function (){
+    $("#btn").click(function (){
+      alert($(":text").val())
+      alert($(":radio").val())
+    })
+  })
+</script>
+<input type="text">
+<input type="radio" value="吃">
+<button id="btn" >show</button>
+</body>
+</html>

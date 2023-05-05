@@ -1,0 +1,8 @@
+DAO及其实现类
+DAO Data Access Object访问数据库的类和接口 包括了对数据的CRUD
+作用: 为了实现功能的模块化 更有利于代码的维护和升级
+
+泛型类 BaseDAO通用的一些curd方法
+各个表对应的DAO接口 是一些相应的表对应的各自的curd操作
+Impl是每个表对应的DAO的实现
+

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>动态展示学院列表</title>
+</head>
+<body>
+<script type="text/javascript">
+  onload=function (){
+    let show=document.getElementById("show")
+    let content=document.getElementById("content")
+    show.onclick=function (){
+      let xmlObj=new XMLHttpRequest();
+      xmlObj.onreadystatechange=function (){
+        if(xmlObj.readyState==4){
+          if(xmlObj.status==200){
+            content.innerHTML=xmlObj.responseText
+          }else{
+            alert(xmlObj.status)
+          }
+        }
+      }
+      xmlObj.open("GET","/ajax/request?t="+new Date().getTime(),true)
+      xmlObj.send()
+    }
+  }
+</script>
+<button id="show" >显示人员列表</button>
+<table border="1px" width="50%">
+  <thead>
+    <tr>
+      <th>序号</th>
+      <th>性名</th>
+      <th>年龄</th>
+      <th>地址</th>
+    </tr>
+  </thead>
+  <tbody id="content">
+  </tbody>
+</table>
+</body>
+</html>

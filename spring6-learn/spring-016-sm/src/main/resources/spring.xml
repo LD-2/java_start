@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+                           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!--组件扫描-->
+    <context:component-scan base-package="com.mirror.bank"/>
+
+    <!--外部属性配置文件-->
+    <context:property-placeholder location="jdbc.properties"/>
+
+    <!--数据源-->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${mybatis.driver}"/>
+        <property name="url" value="${mybatis.url}"/>
+        <property name="username" value="${mybatis.username}"/>
+        <property name="password" value="${mybatis.password}"/>
+    </bean>
+
+    <!--SqlSessionFactoryBean-->
+    <bean class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!--mybatis核心配置文件路径-->
+        <property name="configLocation" value="mybatis-config.xml"/>
+        <!--注入数据源-->
+        <property name="dataSource" ref="dataSource"/>
+        <!--起别名-->
+        <property name="typeAliasesPackage" value="com.mirror.bank.pojo"/>
+    </bean>
+
+    <!--Mapper扫描器-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.mirror.bank.mapper"/>
+    </bean>
+
+    <!--事务管理器-->
+    <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!--开启事务注解-->
+    <tx:annotation-driven transaction-manager="txManager"/>
+
+    <!--引入其他的spring配置文件-->
+<!--    <import resource="spring.xml"/>-->
+<!--    注意：在实际开发中，service单独配置到一个文件中，dao单独配置到一个文件中，然后在核心配置文件中引入，养成好习惯-->
+</beans>

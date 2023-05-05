@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+<!--    springboot项目的父项目-->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.0.3</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+<!--    当前项目的gav-->
+    <groupId>com.mirror</groupId>
+    <artifactId>springboot-002-first</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>springboot-002-first</name>
+    <description>springboot-002-first</description>
+    <properties>
+        <java.version>18</java.version>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <!--            通过看依赖项可以发现 这个依赖中导入了其它的很多依赖 比如spring一些的依赖 和 内置tomcat的依赖-->
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>3.0.3</version>
+            </plugin>
+        </plugins>
+<!--        爆红的加上   <version>spring版本号</version>-->
+    </build>
+
+</project>

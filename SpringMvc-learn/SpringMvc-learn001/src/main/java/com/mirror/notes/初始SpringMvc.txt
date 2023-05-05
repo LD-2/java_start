@@ -1,0 +1,193 @@
+什么是SpringMvc
+它是基于MVC开发模式的框架 用来优化控制器 是Spring家族的一员 具备IOC和AOP
+
+什么事MVC
+是一种开发模式 是模型视图控制器的简称  所有web应用都是基于MVC开发的
+M模型层：pojo对象实体类  业务层 持久层
+V视图层：html javascript vue 都是视图层用来显示数据
+C控制层：是用来接收客户端的请求 并相应数据到客户端的组件 servlet就是一个组件
+
+SpringMVC框架的优点：
+轻量级jar包小
+有IOC AOP
+完全基于注解开发
+易上手
+
+SpringMVC的执行流程
+客户端发送请求  到 DispatcherServlet  它有三个帮手
+HandlerMapping映射  地址映射器
+HandlerAdapter  处理器适配 业务 和 查数据
+ViewResolver  返回地址拼接 /admin/main.jsp
+交给 DispatcherServlet  然后视图的方式返回客户端
+
+Spring MVC运行原理：
+客户端请求提交到DispatcherServlet
+由DispatcherServlet控制器查询一个或多个HandlerMapping，找到处理请求的Controller
+DispatcherServlet将请求提交到Controller
+Controller调用业务逻辑处理后，返回ModelAndView
+DispatcherServlet查询一个或多个ViewResoler视图解析器，找到ModelAndView指定的视图
+视图负责将结果显示到客户端
+
+
+基于注解的
+SpringMVC开发步骤
+webapp项目
+目录补充
+pom依赖
+添加springmvc.xml配置文件,指定包扫描,添加视图解析器.
+删除web.xml文件,新建web.xml
+在web.xml文件中注册springMVC框架(所有的web请求都是基于servlet的)
+删除index.jsp页面,并新建,发送请求给服务器
+开发控制器（Servlet），它是一个普通的类.
+添加tomcat进行测试功能
+
+
+分析web请求
+web请求执行流程
+                           核心处理器
+index.jsp <-----------> DispatcherServlet <------------> SpringMVC处理器是一个普通的方法
+"DispatcherServlet"要在web.xml文件中注册才可用
+
+@RequestMapping注解详解
+public string demo(){
+System.out.println("服务器被访问到了.......");
+return "main";
+}
+//可以直接跳到/admin/main.jsp页面上
+<a href="${pageContext.request.contextPath}/demo.action">访问服务器</a>
+2)此注解可以加在类上，相当于是包名（虚拟路径)，
+区分不同类中相同的action的名称
+@RequestMapping ("/user")public class DemoAction1 {..}
+
+
+可以区分get post
+    @RequestMapping(value = "/req.ld",method = RequestMethod.GET)
+    public String reqGet(){
+        System.out.println("处理get的");
+        return "first";
+    }
+    @RequestMapping(value = "/req.ld",method = RequestMethod.POST)
+    public String reqPost(){
+        System.out.println("处理post请求");
+        return "first";
+    }
+
+五种数据提交方式的优化
+1、单个数据的提交  要求参数名和input标签name一致
+2、对象  要求属性和input标签name一致
+3、动态占位符提交仅限于超链接或地址拦提交数据,它是一杠一值,一杠一大括号,使用注解来解析
+4、解决名称不一致
+5、手动提取 用HttpRequest
+
+
+7、中文乱码解决方案
+配置过滤器
+web.xml中配置并配置参数
+盲猜底层是在这个类中 先通过servletConfig获取这个servlet的参数 然后对对应的属性赋值 所以在反射生成这个类的时候
+就会执行相对应的方法
+
+
+action方法的返回值
+1)String：客户端资源的地址,自动拼接前缀和后缀.还可以屏蔽自动拼接字符串，可以指定返回的路径.
+2)object:返回json格式的对象,自动将对象或集合转为json.使用的jackson工具进行转换,必须要添加jackson依赖,一般用于ajax请求.
+3)void:无返回值,一般用于ajax请求.
+4)基本数据类型，用于ajax请求.
+5)ModelAndView：返回数据和视图对象，现在用的很少.
+
+完成ajax请求访问服务器,返回学生集合.
+1）添加jackson依赖
+2)在webapp目录下新建js目录,添加jQuery函数库
+3)在index.jsp页面上导入函数库
+4)在action上添加注解@ResponseBody,用来处理ajax请求
+5)在springmvc.xml文件中添加注解驱动<mvc:annotationdriven/>,它用来解析@ResponseBody注解
+
+
+请求转发页面（默认）
+请求转发action
+重定向页面
+重定向action
+随便跳转 就用
+
+
+SpringMVC默认的参数类型
+SpringMVC默认的参数类型不需要去创建,直接拿来使用即可.
+1) HttpServletRequest
+2) HttpServletResponse
+3) HttpSession
+4) Model
+5) Map
+6) ModelMap
+注意:Map,Model,ModelMap和request一样,都使用请求作用域进行数据传递.所以服务器端的跳转必须是请求转发.
+
+
+日期的处理：
+日期类型不能自动注入到方法的参数中 需要单独转换处理 使用@DateTimeFormat注解
+需要在springmvc.xml文件中添加<mvc:annotation-driven/>标签
+日期的提交处理
+    1、单个日期的处理
+        要使用@DateTimeFormat 需要在springmvc.xml文件中添加<mvc:annotation-driven/>标签
+    2、类中全局日期的处理
+        注册一个注解，用来解析本类中所有的日期类型 自动转换  可以不用配置xml文件了
+日期的显示处理
+    在页面上显示日期要用JSTL标签库
+    步骤1 添加依赖jstl
+    2 在页面上导入标签库
+    3、使用标签显示数据
+
+
+<mvc:annotation-driven/>会自动注册两个 bean,
+分别为DefaultAnnotationHandlerMapping和AnnotationMethodHandlerAdapter。
+是springmvc为@controller分发请求所必须的。
+除了注册了这两个bean,还提供了很多支持。
+1)支持使用ConversionService实例对表单参数进行类型转换;
+2)支持使用@NumberFormat、@DateTimeFormat;
+3)注解完成数据类型的格式化;
+4)支持使用@RequestBody和@ResponseBody注解;
+5)静态资源的分流也使用这个标签;
+
+
+DefaultAnnotationHandlerMapping解析地址资源路径 地址映射器
+AnnotationMethodHandlerAdapter 根据xml 获取 注解 找对象
+
+资源在WEB-INF目录下此目录下的动态资源,不可直接访问,只能通过请求转发的方式进行访问
+
+SpringMVC的拦截器
+拦截器的执行原理
+拦截器的执行时机
+preHandle() 在请求被处理之前进行的操作
+postHandle() 在请求被处理之后 但是还没有进行渲染操作 可以改变响应结果
+afterCompletion 所有请求响应结束后 执行善后工作 清理对象 关闭资源
+拦截器的实现方式
+1、继承HandlerInterceptorAdapter的父类
+2、实现HandlerInterceptor接口
+
+权限验证拦截器的实现步骤
+1、在登入方法中，用session存储用户信息
+2、实现HandlerInterceptor接口 重写preHandle()方法
+3、在springmvc.xml文件中注册拦截器
+配置要拦截的路径
+要放行的路径
+对应的bean对象
+
+
+多个拦截器会形成一个拦截器链
+责任链设计模式
+
+
+SSM整合的步骤
+建库建表
+新建maven项目 选择webapp模板
+修改目录
+修改pom.xml文件
+添加jdbc.properties文件
+添加SqlMapConfig.xml文件（使用模板）
+添加applicationContext_mapper.xml文件（数据访问层的核心配置文件）
+添加applicationContext_service.xml文件（业务逻辑层的核心配置文件）
+添加springmvc.xml文件
+更换高版本web.xml文件
+新建实体类user
+新建UserMapper.java接口
+新建UserMapper.xml实现增删查所有功能,没有更新
+新建service接口和实现类
+新建测试类,完成所有功能的测试
+新建控制器完成所有功能浏览器测试功能

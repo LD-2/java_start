@@ -1,0 +1,128 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100%;
+    height: 100vh;
+}
+
+.container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    /* 不是太理解为什么设置了交叉轴的居中但是它没有居中 */
+    width: 100%;
+    height: 100%;
+    padding: 20px 100px;
+}
+
+.container::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: url("../images/preview.jpg") no-repeat center;
+    /* background-size: cover; */
+    z-index: -1;
+    filter: blur(6px);
+}
+
+.add-box {
+    margin-top: 50px;
+
+    max-height: 600px;
+    max-width: 850px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: #fff;
+    box-shadow: 3px 3px 30px black;
+}
+
+.left {
+
+    width: 100%;
+    height: 100%;
+    background: url("../images/preview.jpg") no-repeat center;
+    background-size: cover;
+}
+
+.right {
+    padding: 25px 40px;
+}
+
+h2 {
+    position: relative;
+    padding-bottom: 10px;
+    margin-bottom: 60px;
+}
+
+/* 这里有点不理解这个横杠的定位 */
+h2::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    height: 4px;
+    width: 50px;
+    border-radius: 2px;
+    background-color: rgb(100, 34, 123);
+}
+
+.field {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    /* outline: 8px ridge rgba(170, 50, 220, .6);
+    border-radius: 2rem; */
+    outline: none;
+    border: 2px solid rgba(0, 0, 0, 0);
+    background-color: rgba(230, 230, 230, 0.6);
+    border-radius: 12px;
+    margin-bottom: 22px;
+    font-size: 1.1rem;
+    transition: .3s;
+}
+
+.field:hover {
+    background-color: rgba(113, 32, 11, 50%)
+}
+
+.field:focus {
+    background-color: #fff;
+    border: 2px solid rgb(100, 34, 123);
+}
+
+form {
+    text-align: left;
+    line-height: 2rem;
+    text-indent: 1rem;
+}
+
+.sb {
+    margin-top: 20px;
+    width: 66%;
+    height: 30px;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    outline: none;
+    background-color: rgba(60, 137, 24);
+    border-radius: 2px;
+    border: 1px solid rgba(38, 51, 41, 50%);
+    font-size: 0.9rem;
+    transition: 0.2s;
+
+}
+
+.sb:hover {
+    width: 68%;
+    height: 36px;
+}

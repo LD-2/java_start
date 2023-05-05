@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <script type="text/javascript" src="./jquery_min_3.2.1.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+  $(function (){
+    let domObj=document.getElementById("show")
+    $(domObj).keyup(function (event){
+      if(event.keyCode == 13){
+        $(domObj).val("转换成功")
+      }
+    })
+  })
+</script>
+  <input type="text" id="show">
+</body>
+</html>

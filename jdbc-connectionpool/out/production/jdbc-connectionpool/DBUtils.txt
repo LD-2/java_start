@@ -1,0 +1,1 @@
+commons-dbutils是apache组织提供的一个开源的JDBC工具类库，它是对jdbc简单的封装

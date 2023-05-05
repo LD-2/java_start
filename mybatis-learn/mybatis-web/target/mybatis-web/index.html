@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Transfer</title>
+    <script type="text/javascript" src="jquery_min_3.2.1.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+    $(function (){
+        $("#judge").click(()=>{
+            if($("#fromact").val()==""||$("#toact").val()==""||$("#money").val()==""){
+                $("#content").html("<h3>请补全数据再提交</h3>")
+                // alert($("#fromact").val())
+                // alert($("#toact").val())
+                // alert($("#content").val())
+            }else{
+                if(window.confirm("是否要转账")){
+                    $.ajax({
+                        type: "POST",
+                        async: true,
+                        // url:"/mybatis/firstTest",
+                        url:"/mybatis/transfer",
+                        data: "fromact="+$("#fromact").val()+"&toact="+$("#toact").val()+"&money="+$("#money").val()+"&t="+new Date().getTime(),
+                        success: function (returnObj){
+                            $("#content").html(returnObj)
+                        }
+                    })
+                }else{
+                    $("#content").html("转账失败")
+                }
+            }
+        })
+        $("#toact").focus(function (){
+            $("#content").html("")
+        })
+        $("#fromact").focus(function (){
+            $("#content").html("")
+        })
+        $("#money").focus(function (){
+            $("#content").html("")
+        })
+    })
+</script>
+        转入账户: <input type="text" name="toact" id="toact"> <br/>
+        转出账户: <input type="text" name="fromact" id="fromact"> <br/>
+        转账金额: <input type="text" name="money" id="money"> <br/>
+        <input type="submit" value="确定" id="judge"> <br/>
+        <div id="content"></div>
+<!--既然学了ajax这里就用ajx+jquery来提示-->
+<!--    <form action="/mybatis/transfer" method="post">-->
+<!--        转入账户: <input type="text" name="toact"> <br/>-->
+<!--        转出账户: <input type="text" name="fromact"> <br/>-->
+<!--        <input type="submit" value="确定" id="judge">-->
+<!--    </form>-->
+
+</body>
+</html>

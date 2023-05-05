@@ -1,0 +1,31 @@
+2.6.2 resources 插件maven-resources-plugin:2.6
+resource 插件的功能就是把项目需要的配置文件拷贝到指定的目当，默认是拷贝 src\main\resources 目录下的件到classes 目录下
+
+2.6.3 compile插件maven-compiler-plugin
+compile插件执行时先调用resources插件,功能就是把src\main java源码编译成字节码生成class文件,
+并把编译好的 class 文件输出到 target\classes 目录下
+
+2.6.4 test 测试插件单元测试所用的 compile和 resources插件和主代码是相同的，
+但执行的目标不行，目标testCompile和testResources是把src\test\java下的代码编译成字节码输出到target\test-classes,
+同时把src\test\resources下的配置文件拷贝到target\test-classes
+
+
+<build>
+    <！-- 配置插件 -->
+    <plugins>
+        <！-- 配置具体的插件-->
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <！-- 插件的名称-->
+            <artifactId>maven-compiler-plugin</artifactId>
+            <!-- 插件的版本 -->
+            <version>3.8.1</version>
+            <!--配置插件的信息 -->
+                <configuration>
+                <！-- 告诉maven 我们的写的代码是在jdk1.8上编译的。-->
+                <source>1.8</source>
+                <！-- 我们的程序应该运行在 1.8的jdk上-->
+                <target>1.8</target></configuration>
+        </plugin>
+    </plugins>
+</build>

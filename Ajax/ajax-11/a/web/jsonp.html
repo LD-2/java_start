@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jsonp的test</title>
+</head>
+<body>
+
+<script type="text/javascript">
+    function sayHello(){
+        alert("Hello jsonp..")
+    }
+
+    function show(jsonObj){
+        alert(jsonObj.name)
+    }
+</script>
+<!--<script>标签可以跨域 src可以是一个servlet对象  超链接也可以跨域 但是超链接不是局部刷新 是全局刷新-->
+<script type="text/javascript" src="http://localhost:8081/b/jsonptest?fun_name=show"></script>
+
+</body>
+</html>

@@ -1,0 +1,12 @@
+idea开发servlet的流程:
+创建java项目
+将java项目转换为javaee模式 从而自动生成webapp目录结构  生成的web就是webapp根目录
+这里把.jsp删了因为还没用
+编写servlet实现类
+添加对应的依赖jar包
+导入lib中第三方jar包
+在web.xml文件中完成请求路径和实现类之间的对应
+结合超链接发送请求tomcat实现对应的servlet实现类
+项目名哪里加 哪里 不加 注意
+配置tomcat服务器 设置项目名
+启动服务器

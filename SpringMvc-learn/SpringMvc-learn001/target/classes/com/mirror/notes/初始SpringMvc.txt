@@ -1,0 +1,60 @@
+什么是SpringMvc
+它是基于MVC开发模式的框架 用来优化控制器 是Spring家族的一员 具备IOC和AOP
+
+什么事MVC
+是一种开发模式 是模型视图控制器的简称  所有web应用都是基于MVC开发的
+M模型层：pojo对象实体类  业务层 持久层
+V视图层：html javascript vue 都是视图层用来显示数据
+C控制层：是用来接收客户端的请求 并相应数据到客户端的组件 servlet就是一个组件
+
+SpringMVC框架的优点：
+轻量级jar包小
+有IOC AOP
+完全基于注解开发
+易上手
+
+SpringMVC的执行流程
+客户端发送请求  到 DispatcherServlet  它有三个帮手
+HandlerMapping映射  地址映射器
+HandlerAdapter  处理器适配 业务 和 查数据
+ViewResolver  返回地址拼接 /admin/main.jsp
+交给 DispatcherServlet  然后视图的方式返回客户端
+
+Spring MVC运行原理：
+客户端请求提交到DispatcherServlet
+由DispatcherServlet控制器查询一个或多个HandlerMapping，找到处理请求的Controller
+DispatcherServlet将请求提交到Controller
+Controller调用业务逻辑处理后，返回ModelAndView
+DispatcherServlet查询一个或多个ViewResoler视图解析器，找到ModelAndView指定的视图
+视图负责将结果显示到客户端
+
+
+基于注解的
+SpringMVC开发步骤
+webapp项目
+目录补充
+pom依赖
+添加springmvc.xml配置文件,指定包扫描,添加视图解析器.
+删除web.xml文件,新建web.xml
+在web.xml文件中注册springMVC框架(所有的web请求都是基于servlet的)
+删除index.jsp页面,并新建,发送请求给服务器
+开发控制器（Servlet），它是一个普通的类.
+添加tomcat进行测试功能
+
+
+分析web请求
+web请求执行流程
+                           核心处理器
+index.jsp <-----------> DispatcherServlet <------------> SpringMVC处理器是一个普通的方法
+"DispatcherServlet"要在web.xml文件中注册才可用
+
+@RequestMapping注解详解
+public string demo(){
+System.out.println("服务器被访问到了.......");
+return "main";
+}
+//可以直接跳到/admin/main.jsp页面上
+<a href="${pageContext.request.contextPath}/demo.action">访问服务器</a>
+2)此注解可以加在类上，相当于是包名（虚拟路径)，
+区分不同类中相同的action的名称
+@RequestMapping ("/user")public class DemoAction1 {..}

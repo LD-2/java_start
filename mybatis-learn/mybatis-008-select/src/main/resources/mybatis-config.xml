@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <properties resource="jdbc.properties"></properties>
+
+    <settings>
+        <setting name="logImpl" value="SLF4J"/>
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>
+    <typeAliases>
+        <!--包下所有类自动起别名 使用类简名作为别名-->
+        <package name="com.mirror.car.pojo"/>
+    </typeAliases>
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${mybatis.driver}"/>
+                <property name="url" value="${mybatis.url}"/>
+                <property name="username" value="${mybatis.username}"/>
+                <property name="password" value="${mybatis.password}"/>
+                <property name="poolMaximumActiveConnections" value="10"/>
+                <property name="poolTimeToWait" value="2000"/>
+                <property name="poolMaximumCheckoutTime" value="10000"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+        <!--XML文件必须和接口放在一起 路径一致。并且名字一致。-->
+        <package name="com.mirror.car.mapper"/>
+    </mappers>
+
+</configuration>

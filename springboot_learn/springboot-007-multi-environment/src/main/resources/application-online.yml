@@ -1,0 +1,7 @@
+#上线的配置文件路径
+server:
+  port: ${port:9091}
+#  address: localhost
+  servlet:
+    context-path: /bootonline
+

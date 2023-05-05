@@ -1,0 +1,42 @@
+传统请求：
+直接浏览器地址栏访问
+a超链接
+form表单提交 action
+js实现页面 open()  location
+传统的方法都会直接刷新整个页面 如果服务器慢的话 会有空白期
+
+
+异步：无等待 多线程 并发进行
+同步：会有等待事件的发生
+ajax可以在浏览器中发送异步请求，多个请求之间是异步的谁也不需要等待谁，类似于多线程的并发
+ajax的请求发送之后，不会出现页面清空，会进行页面的局部刷新
+
+浏览器上发送ajax请求这些代码是js语法的代码
+其实发送ajax请求就是编写js代码
+
+对于ajax而言，服务器可能会给浏览器返回三种数据：可以是普通文本、XML字符串、JSON字符串
+XML JSON都是数据交换格式 语言
+
+Ajax接收到了一个服务器响应的普通字符串、XML、JSON Ajax解析这些响应回来的数据，将解析的这些数据渲染到前端的某个元素中这样页面就完成了刷新
+
+Ajax可以做到在同一个页面中同时启动多个请求，类似于同一个页面中开启了多了线程，一个线程对应一个请求
+
+如何发送一个ajax请求：
+发送ajax请求 是一个浏览器的内置对象XMLHttpRequest对象所进行的
+XMLHttpRequest对象是ajax的核心对象，发送请求以及接收服务器数据的返回，全部都是此对象完成的
+XMLHttpRequest对象的常用方法：
+    abort() 取消当前请求
+    getAllResponseHeaders() 返回头部信息
+    getResponseHeader() 返回指定的头部信息
+    open(method,url,async,user,psw) 开启服务器和浏览器之间的连接，通道打开，并不会发送请求 规定请求method：GET POST  url:规定请求文件的路径 规定是否同步异步 true异步 false同步 user可选的用户名称 pwd可选的用户密码
+    send() 将请求发送于服务器用Get请求
+    send(String) 将请求发送到服务器用post请求
+    setRequestHeader() 向要发送的报头添加标签/值对
+XMLHttpRequest对象的属性：
+    onreadystatechange  定义readState属性发生变化时被调用的函数
+    readyState 保存XMLHttpRequest的状态 0：请求未初始化  1：建立通道服务器连接已建立  2：请求已收到  3：请求在处理  4：请求处理完毕且响应已就绪
+    responseText 以字符串返回响应数据
+    responseXml 以xml数据返回响应数据
+    status  返回请求的状态 200：Ok  403:Forbidden  404：Not Found
+    statusText 返回状态文本（比如 ok Not Found）
+

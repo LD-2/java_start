@@ -1,0 +1,51 @@
+JSTL标签库 JSP2.0出现的
+
+什么是JSTL标签库
+    java Standard Tag Lib (java标准的标签库)
+    JSTL标签库通常结合EL表达式一起使用 目的是让JSP中的java代码消失
+    标签对应java语句
+    标签是写在JSP中的 但实际上还是要执行对应的java程序（java程序在Jar包中）
+使用JSTL标签库的步骤
+    第一步: 引入JSTL标签库对应的jar包
+        tomcat10之后引入的jar包是:
+            jakarta.servlet.jsp.jstl-2.0.0.jar
+            jakarta.servlet.jsp.jstl-api-2.0.0.jar
+        在IDEA中怎么引入
+            在WEB-INF下新建lib目录  把这三个包引进去 和数据库连接的包放的位置相同  WEB-INF的lib下放置的是tomcat服务器缺少的项目运行所需的jar包
+            jsp 和 servlet为什么不需要引 因为tomcat服务器有 而本地是模拟tomcat的 所以项目结构中会引入
+    第二步: 在JSP中引入需要使用的标签库
+        JSTL标签库中有很多标签 分类为一个一个小库 然后使用JSP中的taglib指令引入一些标签 prefix命名这个小库 url引入这个小库名称  名字随便 核心标签库一般c命名
+        名字加具体标签使用此标签取代具体java代码
+    第三步: 在需要使用标签的位置使用 表面用的是标签 底层还是用的java代码
+        JSTL标签的原理:
+            <%@taglib prefix="自定义使用库的名字" uri="导入的JSTL标签库中的某个库" %>
+            uri后面的路径实际上指向了一个xxx.tdl文件
+            tld文件实际上是一个xml配置文件
+            在tld文件中描述了标签和java类的关系
+            注意位置META-INF根据自定义名字生成
+        源码解析: 配置文件tld解析
+              <tag>
+                <description>
+                    对该标签的描述
+                </description>
+                <name>catch</name> 标签的名字
+                <tag-class>org.apache.taglibs.standard.tag.common.core.CatchTag</tag-class>  标签对应的java类
+                <body-content>JSP</body-content>  标签体中可以出现的内容 如果是jsp 就表示标签体中可以出现 符合JSP语法的所有代码 例如EL表达式
+                <attribute>  属性
+                    <description>
+                        对这个属性的描述
+                    </description>
+                    <name>var</name>  属性名
+                    <required>false</required>  标签中此属性是否必须
+                    <rtexprvalue>false</rtexprvalue>  说明这个标签是否支持EL表达式
+                </attribute>
+              </tag>
+JSTL标签库 中 核心标签库常用的几个标签
+for循环语句
+forEach 属性var begin end step   items varStatus 使用其count主要
+if语句
+if test="boolean类型"
+if else 语句
+choose when嵌套结构 test="boolean类型"
+
+

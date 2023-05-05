@@ -1,0 +1,21 @@
+window.onload=function(){
+
+}
+
+$(function(){
+
+})
+
+$(document).ready(function(){
+
+})
+
+jQuery(function(){
+
+})
+
+window.jQuery(function(){
+
+})
+
+以上等价 页面元素加载完执行

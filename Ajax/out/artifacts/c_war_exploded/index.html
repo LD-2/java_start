@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HttpClient</title>
+  <script type="text/javascript" src="./jquery_min_3.2.1.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+    $(function (){
+        $("#show").click(function (){
+            $.ajax(
+                {
+                    type:"GET",
+                    url:"/c/proxyServlet",
+                    async:true,
+                    success:function(returnJsonObj){
+                        alert(returnJsonObj.name)
+                       // $("#mydiv").html(returnJsonObj.name)
+                       //  document.getElementById("mydiv").innerHTML=returnJsonObj.name
+                        $("#mydiv").html(returnJsonObj)
+                    }
+                }
+            )
+        })
+    })
+    // window.onload = () => {
+    //     document.getElementById("show").onclick =()=>{
+    //         const xmlHttpRequest = new XMLHttpRequest();
+    //         xmlHttpRequest.onreadystatechange =()=>{
+    //             if (xmlHttpRequest.readyState==4){
+    //                 if (xmlHttpRequest.status >= 200 && xmlHttpRequest.status < 300) {
+    //                     document.getElementById("mydiv").innerHTML = xmlHttpRequest.responseText
+    //                 }else {
+    //                     alert(xmlHttpRequest.status)
+    //                 }
+    //             }
+    //         }
+    //         xmlHttpRequest.open("GET", "/c/proxyServlet", true)
+    //         xmlHttpRequest.send()
+    //     }
+    // }
+
+</script>
+<button id="show">show</button>
+<div id="mydiv"></div>
+</body>
+</html>

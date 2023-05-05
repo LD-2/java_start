@@ -1,0 +1,9 @@
+java的接口
+作用:
+    约束
+    定义一些方法 让不同的人实现
+    public abstract 方法
+    public abstract final 常量
+    接口不能被实例化 接口中没构造方法
+    implements可以实现多个接口
+    必须要重写接口中的方法

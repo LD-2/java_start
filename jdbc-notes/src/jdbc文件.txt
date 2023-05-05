@@ -1,0 +1,71 @@
+对数据库的增删改查操作就封装在dao这个类 和 它的相关子类中
+HTTP协议 应用层
+浏览器通过搜索引擎获取网站信息 HTML CSS JavaScript jQuery VUE React
+服务器端 XML Tomcat Servlet JSP动态页面  EL JSTL  cookie session
+
+数据的 持久化 持久化的应用是将内存中的数据存储在关系型数据库中 当热也可以存储在磁盘文件 XML文件中
+java中数据持久化的技术之一：jdbc  java database connectivity   一个可以操作各种数据库的通用接口  一组规范（如何使用java应用程序操作的规范） 接口
+jdbc 一组规范的接口 去使得java应用程序操作不同的数据库
+jdbc驱动 impl针对不同的数据库 实现不同的接口
+
+
+增删改没有结果集对象的开和关 查询反而多个结果集对象
+
+第二章：获取数据库连接
+先根据统一的接口创建一个连接对象
+然后找到需要操作的数据库 然后导入相对应数据库的包 驱动  然后创建对应的驱动对象
+导入驱动就相当于导入jdbc接口的实现类 然后调用相对的方法进行操作
+
+数据库的连接
+获取数据库的连接
+要素一：Driver驱动对象的对应 不同数据库实现的驱动接口实体类不同
+要素二：URL
+协议:子协议://ip地址端口号/数据库名称
+jdbc:mysql://localhost:3306/数据库名称
+jdbc:mysql://localhost:3306/mirror
+协议: jdbc:mysql
+ip地址: localhost
+默认的mysql端口号: 3306
+数据库的名称: mirror
+要素三：用户名字 和 密码
+要素四：创建连接
+
+数据库的连接有五种方式 每次都在迭代
+方式一：创建Driver对象 url user password的导入 调用driver connection方法
+方式二：加载Driver 导入相对应驱动  url user password的导入 调用driver的connection方法
+方式三：使用DriverManager调用getConnection连接 DriverManager载入driver
+方式四：加载类的时候会自动加载静态方法中的DriverManager载入driver对象 具体看类的结构
+方式五：读取配置文件来导入配置信息 实现了数据和代码的分离 解耦  如果需要修改信息 不用重新打包
+
+
+第三章：使用PreparedStatement实现CRUD操作
+连接过后 创建Statement对象执行SQL语句
+Statement接口  PreparedStatement子接口
+PreparedStatement子接口: 一个代表预编译SQL语句的对象
+怎么获取PreparedStatement的实例在连接中找
+
+
+主要是预编译sql语句 返回PreparedStatement的实例和set占位符 不一样其它的都大体一样
+PreparedStatement之所以安全是因为预编译了sql语句关系直接先确定了 默认选择问号的内容就可以了  关系不会被改变
+PreparedStatement除了可以解决Statement的拼串、sql问题、还会操作Blob类型的数据而Statement做不到、PreparedStatement可以实现更高效的批量操作
+
+
+JDBC小结:
+面向接口编程的思想
+面向接口编程 import不会出现第三方API
+ORM思想:
+一个数据表对应一个java类
+表中的一条记录对应一个对象
+一个字段对应一个属性
+两种技术:
+jdbc结果集的元数据（获取列数 获取别名）
+next指向
+通过反射创建类对象 获得指定的属性并赋值
+具体的API返回值类型
+
+
+PreparedStatement可以操作Blob数据而Statement不可以
+
+
+
+

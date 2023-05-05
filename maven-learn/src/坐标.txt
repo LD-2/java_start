@@ -1,0 +1,7 @@
+Maven把任何一个插件都作为仓库中的一个项目进行管理，用一组(三个)向量组成的坐标来表示。
+坐标在仓库中可以唯一定位一个Maven项目。
+groupId：组织名，通常是公司或组织域名倒序+项目名
+artifactId:模块名,通常是工程名
+version：版本号需要特别指出的是,
+项目在仓库中的位置是由坐标来决定的: groupId, artifactId和version决定项目在仓库中的路径,
+artifactId和version决定jar包的名称。

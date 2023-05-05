@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="orderDaoBean" class="com.mirror.spring6.dao.OrderDao"/>
+
+    <bean id="orderServiceBean1" class="com.mirror.spring6.service.OrderService">
+        <property name="orderDao" ref="orderDaoBean"/>
+    </bean>
+
+    <bean id="orderServiceBean2" class="com.mirror.spring6.service.OrderService">
+        <property name="orderDao">
+            <bean class="com.mirror.spring6.dao.OrderDao"/>
+        </property>
+    </bean>
+
+    <bean id="User" class="com.mirror.spring6.bean.User">
+        <property name="username" value="mirror"/>
+        <property name="password" value="123456"/>
+        <property name="age">
+            <value>20</value>
+        </property>
+    </bean>
+</beans>

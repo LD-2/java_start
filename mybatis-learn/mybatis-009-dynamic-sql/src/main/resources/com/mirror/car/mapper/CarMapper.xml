@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mirror.car.mapper.CarMapper">
+<!--    返回类型对应接口的方法名 #{} ${} 的应用-->
+
+    <resultMap id="CarPro" type="Car">
+        <id property="id" column="id"/>
+        <result property="carNum" column="car_num"/>
+        <!--        <result property="brand" column="brand"/>-->
+        <result property="guidePrice" column="guide_price"/>
+        <result property="produceTime" column="produce_time"/>
+        <result property="carType" column="car_type"/>
+    </resultMap>
+<select id="selectByMultiCondition" resultMap="CarPro">
+    select * from t_car where 1=1
+
+    <if test="brand != null and brand != ''">
+        and brand like "%"#{brand}"%"
+    </if>
+
+    <if test="guidePrice != null and guidePrice != ''">
+<!--        java.sql.SQLSyntaxErrorException: Unknown column 'guidePrice' in 'where clause'-->
+<!--        and guidePrice > #{guidePrice}-->
+        and guide_price > #{guidePrice}
+    </if>
+    
+    <if test="carType != null and carType != ''">
+        and car_type = #{carType}
+    </if>
+</select>
+    <!--
+        1. if标签中test属性是必须的。
+        2. if标签中test属性的值是false或者true.
+        3. 如果test是true，则if标签中的sql语句就会拼接。反之，则不会拼接。
+        4. test属性中可以使用的是：
+           当使用了@Param注解，那么test中要出现的是@Param注解指定的参数名。
+           @Param("brand")，那么这里只能使用brand
+           当没有使用@Param注解，
+           那么test中要出现的是： param1 param2 param3 arg0 arg1 arg2....
+           当使用了POJ0，那么test中出现的是POJ0类的属性名。
+        5. 在mybatis的动态SQL当中，不能使用&&，只能使用and。
+
+    -->
+    
+    
+    <select id="selectByMultiConditionWithWhere" resultMap="CarPro">
+        select * from t_car
+        <where>
+            <if test="brand != null and brand != ''">
+                and brand like "%"#{brand}"%"
+            </if>
+
+            <if test="guidePrice != null and guidePrice != ''">
+                <!--        java.sql.SQLSyntaxErrorException: Unknown column 'guidePrice' in 'where clause'-->
+                <!--        and guidePrice > #{guidePrice}-->
+                and guide_price > #{guidePrice}
+            </if>
+
+            <if test="carType != null and carType != ''">
+                and car_type = #{carType}
+            </if>
+        </where>
+    </select>
+    
+    <select id="selectByMultiConditionWithTrim" resultMap="CarPro">
+        select * from t_car
+        <trim prefix="where" suffixOverrides="or" prefixOverrides="and">
+            <if test="brand != null and brand != ''">
+                and brand like "%"#{brand}"%"
+            </if>
+
+            <if test="guidePrice != null and guidePrice != ''">
+                <!--        java.sql.SQLSyntaxErrorException: Unknown column 'guidePrice' in 'where clause'-->
+                <!--        and guidePrice > #{guidePrice}-->
+                and guide_price > #{guidePrice}
+            </if>
+
+            <if test="carType != null and carType != ''">
+                and car_type = #{carType}
+            </if>
+        </trim>
+    </select>
+    
+    <update id="updateUseSet">
+<!--        update t_car set id = #{id}, car_num=#{carNum}, brand=#{brand}, guide_price=#{guidePrice}, produce_time=#{produceTime}, car_type=#{carType}-->
+        update t_car
+            <set>
+<!--                id = #{id}, car_num=#{carNum}, brand=#{brand}, guide_price=#{guidePrice}, produce_time=#{produceTime}, car_type=#{carType}-->
+                <if test="carNum != null and carNum != ''">car_num = #{carNum},</if>
+                <if test="brand != null and brand != ''">brand = #{brand},</if>
+                <if test="guidePrice != null and guidePrice != ''">guide_price = #{guidePrice},</if>
+                <if test="produceTime != null and produceTime != ''">produce_time = #{produceTime},</if>
+                <if test="carType != null and carType != ''">car_type = #{carType},</if>
+            </set>
+        where id=#{id}
+    </update>
+    
+    <select id="selectUseChoose" resultMap="CarPro">
+        select * from t_car
+            <where>
+                <choose>
+                    <when test="brand != null and brand != ''">brand like "%"#{brand}"%"</when>
+                    <when test="guidePrice != null and guidePrice != ''">guide_Price > #{guidePrice}</when>
+                    <otherwise>car_type = #{carType}</otherwise>
+                </choose>
+            </where>
+    </select>
+<!--
+    foreach标签的属性
+        collection: 指定数组或者集合
+        item: 代表数组或集合中的元素
+        separator: 循环之间的分隔符 多余的会自动删除
+        open close 此循环的最外面和最后面
+        collection="ids"第一次写这个的时候报错了，错误信息是：[array， argθ]什么意思？
+        map.put("array"，数组);
+        map.put("argo"，数组);
+        用@Param就可以了
+-->
+    <delete id="deleteUseForeach">
+        delete from t_car where id in
+            <foreach collection="ids" item="id" separator="," open="(" close=")">
+                #{id}
+            </foreach>
+    </delete>
+    
+    <insert id="insertUseForeach">
+        insert into t_car(id,car_num,brand,guide_price,produce_time,car_type) values
+        <foreach collection="cars" item="car" separator=",">
+            (null,#{car.carNum},#{car.brand},#{car.guidePrice},#{car.produceTime},#{car.carType})
+        </foreach>
+    </insert>
+
+    <delete id="deleteUseOr">
+        delete from t_car where
+        <foreach collection="ids" item="id" separator="or">
+            id = #{id}
+        </foreach>
+    </delete>
+</mapper>

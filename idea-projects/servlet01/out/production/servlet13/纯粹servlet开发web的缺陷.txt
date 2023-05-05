@@ -1,0 +1,79 @@
+在servlet中编写前端代码缺陷
+ java程序中编写前端代码太麻烦 难度大
+ java程序中编写前端代码耦合度高
+ java程序中编写前端代码 代码很不美观
+ java程序中编写前端代码 维护成本高
+ 每一次的修改就要重新编译java程序 生成新的class文件 打一个新的war包重新发布
+
+思路
+不写servlet让web服务器自动生成servlet 只写前端代码
+然后web服务器翻译成servlet这种java程序 然后自动编译生成class文件
+然后再用jvm调用这个class中的方法
+
+CATALINA_BASE:
+在这个路径下访问自动翻译的java文件和编译的class文件
+
+访问.jsp文件就是访问这个自动生成的java程序
+这个index.jsp会被tomcat翻译成index_jsp.java文件 然后tomcat服务器又会将index_jsp.java文件编译成index_jsp.class文件
+访问index.jsp文件其实就是执行 index_jsp.class文件中的方法
+这个class文件继承了 org.apache.jasper.runtime.HttpJspBase
+HttpJspBase 继承了 HttpServlet
+index_jsp这个类继承了HttpJspBase HttpJspBase继承了HttpServlet
+所以index_jsp类本质就是一个servlet类
+jsp的生命周期和servlet生命周期一样
+jsp和servlet都是单例的（假单例）
+    第一次访问慢
+        要先把jsp文件翻译成java文件
+        再把java文件编译成class文件
+        再通过class文件创建servlet类
+        再执行class文件中的init方法
+        最后调用class文件中的service方法
+    第二次比较快
+        直接调用service方法了
+
+JSP是什么
+    JSP是java程序（JSP的本质是一个servlet）
+    JSP是 JavaServer Pages的缩写（基于java语言实现的服务器端页面）
+    JSP是JAVAEE的13个子规范之一
+    JSP是一种规范 每一个web容器/web服务器都会遵守这套规范 按照这套规范翻译JSP文件
+    每一个web容器/web服务器都会内置一个JSP翻译引擎
+打开JSP对应的翻译后的java程序找错
+
+JSP本质上是一个Servlet，那么JSP和SServlet的区别
+    职责不同
+        Servlet的职责: 收集数据（Servlet的强项是逻辑处理、业务处理，然后连接数据库，获取/收集数据）
+        JSP的职责: 展示数据（JSP的强项是做数据的展示）
+
+JSP的基础语法
+    在jsp中直接编写文字会被自动翻译到servlet类中service()方法中的out.write("");中 被java程序当作普通字符串输出到浏览器
+    浏览器会渲染html css js
+    JSP的page可以设置响应的内容类型 <%@page contentType="text/html;charset=utf-8"%> 表示响应的内容类型是text/html,采用的字符集是utf-8
+    怎么在jsp中编写java程序:  <% java语句; %> 在这个符号中编写的语句被视为java语句 会被翻译到Servlet类的service方法内部
+    根据javaSE语法的知识 决定什么能被写到<% %>中 即什么可以被写到Servlet类的service方法中  比如访问权限修饰符不可以用到方法中  静态代码块不可以直接用到方法中
+    在JSP中写注释 <%--JSP的专业注释不会被翻译到java源代码中--%>  <!--这种注释是html的 属于html语言 会被翻译到java源代码中--!>
+    <%! %> 这个符号中编写的语句会被翻译到java源代码的service方法外 这个语法不常用 因为在service方法外面写静态变量和实例变量 会有线程安全问题，JSP就是servlet类 servlet是单例的 多线程并发的环境下 这个静态变量和实例变量一旦修改就会有线程安全问题
+    JSP的输出语句 在浏览器上输出一个java变量 <% String name="mirror"; out.write("name"=name) %>  out是JSP的九大内置对象之一 在service方法中直接用
+    out.print();
+    如果向浏览器中输入字符串 直接字符串就ok  不用 <% out.write("sss") %>
+    如果输出的内容中有java代码 则使用<%= %> 在=后面输出要输出的内容
+    <%=a%> 在java程序中翻译成service方法中的 out.print(a)
+
+JSP基础语法:
+    JSP 中直接编写普通字符串  out.write(" ");
+    <%! %> 翻译到java程序service方法外
+    <% %> 翻译到Java程序service方法中
+    <%= %> service方法中 out.print();  就相当于System.out.println(变量  );
+    <%@page %> page指令 通过contentType属性来设置响应的内容类型
+
+使用Servlet+JSP完成oa项目的改造
+    使用Servlet处理业务 收集数据
+    使用JSP展示数据
+
+示例 JSP项目中的 动态项目名:
+    <a href="<%=request.getContextPath()%>/1.jsp">1.jsp</a>
+    out.write("    <a href=\"");
+    out.print(request.getContextPath());
+    out.write("/1.jsp\">1.jsp</a>\r\n");
+
+    不难发现换行后面 会输出out.write("\r\n");
+    <% %>中的换行 是直接java程序中的换行

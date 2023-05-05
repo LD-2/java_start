@@ -1,0 +1,168 @@
+浏览器向服务器发送请求有7中  get post只是其中两种
+alt键 批量编辑
+
+目前所知道的缓存机制
+堆内存中的字符串常量池:
+    查找一个字符串 先在字符串常量池中查找 如果有直接用 没有建立 再放入字符串常量池
+堆内存中的整数型常量池:
+    [-128 - 127]一共256个Integer类型引用 放在整数型常量池中 没有超出这个范围 直接常量池中取出
+连接池:
+    jdbc数据库连接池
+    jvm是一个进程 数据库是一个进程 进程和进程之间创建连接 比较耗费资源 耗时
+    因此就有了数据库连接池的概念 事先创建一些连接 每一次用户连接的时候 直接连接就可以 省去了连接的步骤
+线程池:
+    tomcat服务器本身就是支持多线程的
+    tomcat在启动的时候 先创建多个线程 放到线程池中 每当有一个请求的时候  就会有一个对应的线程来处理这个请求
+redis:
+    NoSQL数据库 非关系型数据库  缓存数据库
+向ServletContext中存数据 相当于存缓存cache中了
+
+HTTP协议:
+什么是协议: 一套双方遵守的规范 从而可以使得双方之间以某种形式进行通信
+什么是HTTP协议: 是W3C制定的一种超文本传输协议（通信协议）
+超文本: 不是普通的文本 比如流媒体: 视频 声音 图片
+HTTP协议支持传输普通字符串 声音 视频 图片 流媒体等
+B/S之间的数据交流遵循了此种规则 才可以解耦
+B不依赖S
+S不依赖B
+HTTP协议:
+    请求协议
+        浏览器向web服务器发送数据的时候 发送的数据遵守一套标准 这套标准规定了发送数据的具体格式
+    响应协议
+        web服务器向浏览器发送数据 发送的时候遵守了一套标准 标准规定了发送数据的具体格式
+HTTP协议是提前制定好的一套消息模板  不同浏览器 和 不同服务器之间都遵守此协议 此种的数据传送格式  就像不同人 去 不同银行取钱一样 都是一样的流程
+
+HTTP的请求协议: 请求行 请求头 空白行 请求体
+HTTP的响应协议: 状态行 响应头 空白行 响应体
+
+
+HTTP响应协议具体报文:
+HTTP/1.1 200 ok                             状态行
+Content-Type: text/html;charset=UTF-8       响应头
+Content-Length: 148
+Date: Tue, 15 Nov 2022 12:17:49 GMT
+Keep-Alive: timeout=20
+Connection: keep-alive
+                                            空白行
+<!DOCTYPE html>                             响应体
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Title</title>
+</head>
+<body>
+    <h1>get请求</h1>
+</body>
+</html>
+
+状态行:
+    HTTP协议版本号
+    状态码(HTTP规定的响应状态码)
+        200 请求响应成功，正常结束
+        404 资源没找到路径写错了 或者服务器中对应资源没启动成功  属于前端错误
+        405 表示前端发送请求的方式和后端处理方式不同
+            比如前端post请求 后端按照get方式处理
+            前端get请求 后端按照post方式处理
+        500 表示服务器端程序出了异常 一般是服务器端的错误
+    状态的描述属性
+        ok 表示正常结束
+        no found 表示资源找不到
+响应头:
+    响应的内容类型 字节码
+    响应的长度
+    响应的时间
+    ...
+空白行:
+    用来分开响应头和响应体
+响应体:
+    响应体是相应的正文 这些内容被前端浏览器渲染 显示出来
+
+
+HTTP的GET请求
+GET /mirror5/GetServlet?userName=mirror&userPassword=123456 HTTP/1.1
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh-CN,zh;q=0.9,en-CN;q=0.8,en;q=0.7
+Cache-Control: max-age=0
+Connection: keep-alive
+Cookie: Idea-e19a3048=72b4948d-a5af-408d-a969-c789225ff6ac
+Host: localhost:8080
+Referer: http://localhost:8080/mirror5/index.html
+Sec-Fetch-Dest: document
+Sec-Fetch-Mode: navigate
+Sec-Fetch-Site: same-origin
+Sec-Fetch-User: ?1
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Mobile Safari/537.36
+sec-ch-ua: "Google Chrome";v="105", "Not)A;Brand";v="8", "Chromium";v="105"
+sec-ch-ua-mobile: ?1
+sec-ch-ua-platform: "Android"
+
+HTTP的POST请求
+POST /mirror5/PostServlet HTTP/1.1
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh-CN,zh;q=0.9,en-CN;q=0.8,en;q=0.7
+Cache-Control: max-age=0
+Connection: keep-alive
+Content-Length: 34
+Content-Type: application/x-www-form-urlencoded
+Cookie: Idea-e19a3048=72b4948d-a5af-408d-a969-c789225ff6ac
+Host: localhost:8080
+Origin: http://localhost:8080
+Referer: http://localhost:8080/mirror5/index.html
+Sec-Fetch-Dest: document
+Sec-Fetch-Mode: navigate
+Sec-Fetch-Site: same-origin
+Sec-Fetch-User: ?1
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Mobile Safari/537.36
+sec-ch-ua: "Google Chrome";v="105", "Not)A;Brand";v="8", "Chromium";v="105"
+sec-ch-ua-mobile: ?1
+sec-ch-ua-platform: "Android"
+
+userName=admin&userPassword=123456
+
+请求行:
+    请求方式(7种) get post delete put head options trace
+    URI URI统一资源标识符（代表网络中某个资源的名字）  URL统一标识定位符（代表网络中的某个资源 可以定位）
+    HTTP协议版本号
+请求头:
+    主机的端口号
+    请求的主机
+    浏览器信息
+    平台信息
+    cookie等信息
+    ...
+空白行
+请求体
+
+
+GET 和 POST的区别
+    到目前为止只有form标签中的method值为"post"时才会用到post方法
+    其他都是get请求 点击超链接 直接浏览器输入资源url...
+
+    get请求发送的数据在uri的？后面 然后根据split()函数分开数据 从而创建对象存储数据等
+    post的发送的数据在请求体中
+
+    split("&") split("=")
+
+    get只能发送普通的字符串数据 并且字符串长度有限 不同浏览器有不同的限制 无法发送大数据量
+    post可以发送任何类型的数据 包括普通字符串 流媒体等信息: 视频 声音 图片 post可以发送大数据量 理论上没有长度限制
+
+    w3c指定 post请求适合向服务器端发送数据
+    w3c指定 get请求适合从服务器端获取数据
+
+    get请求是绝对安全的 get请求是从服务器端获取数据
+    post请求是危险的 post请求是向服务器发送数据 可能会作弊的手段向服务器发送数据
+    因此一般拦截请求时 都是拦截监听post请求
+
+    get请求支持缓存 任何一个get请求最终的响应结果都会被浏览器缓存下来 在浏览器缓存中
+    一条get请求对应一条资源
+    在发送一条get请求时 浏览器做的第一件事情是先从本地浏览器的缓存中寻找 找不到时再去服务器中找
+    也可以get请求每次都去服务器获取 不去浏览器缓存中获取
+    在URl后加上时间戳 使得每一次数据的url都不一样
+    post请求不支持缓存
+
+    大部分的form表单提交都是post请求 传送大量的数据
+    做文件上传的时候一定时post请求 除了文本文件 还可以是流文件

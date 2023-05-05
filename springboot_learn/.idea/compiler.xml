@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="springboot001-pre" />
+        <module name="springboot-012-interceptor" />
+        <module name="springboot-008-custom-yml" />
+        <module name="springboot--013-servlet" />
+        <module name="springboot-007-multi-environment" />
+        <module name="springboot-014-filter" />
+        <module name="springboot-018-mapperscan" />
+        <module name="springboot-017-mapper" />
+        <module name="springboot-005-mvc" />
+        <module name="springboot-019-transactional" />
+        <module name="springboot-006-environment" />
+        <module name="springboot-020-restful" />
+        <module name="springboot-010-container" />
+        <module name="springboot-011-commandlinerunner" />
+        <module name="springboot-character-filter" />
+        <module name="springboot-002-first" />
+        <module name="springboot-009-jsp" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="springboot--013-servlet" options="-parameters" />
+      <module name="springboot-002-first" options="-parameters" />
+      <module name="springboot-005-mvc" options="-parameters" />
+      <module name="springboot-006-environment" options="-parameters" />
+      <module name="springboot-007-multi-environment" options="-parameters" />
+      <module name="springboot-008-custom-yml" options="-parameters" />
+      <module name="springboot-009-jsp" options="-parameters" />
+      <module name="springboot-010-container" options="-parameters" />
+      <module name="springboot-011-commandlinerunner" options="-parameters" />
+      <module name="springboot-012-interceptor" options="-parameters" />
+      <module name="springboot-014-filter" options="-parameters" />
+      <module name="springboot-017-mapper" options="-parameters" />
+      <module name="springboot-018-mapperscan" options="-parameters" />
+      <module name="springboot-019-transactional" options="-parameters" />
+      <module name="springboot-020-restful" options="-parameters" />
+      <module name="springboot-character-filter" options="-parameters" />
+    </option>
+  </component>
+</project>

@@ -1,0 +1,2 @@
+jQuery对象：使用jQuery语法创建的对象叫做jquery对象，jquery表示的对象都是数组
+例如：let jobj = $("#txt")   jobj就是一个jquery对象，是一个数组，这个数组中只有一个元素，按照id找对象

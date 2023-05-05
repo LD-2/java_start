@@ -1,0 +1,24 @@
+Servlet注解简化配置
+如果是一个大项目 只用web.xml配置文件 那么每一个请求动作都要配置 web.xml文件就会很大
+在web.xml中进行servlet信息的配置开发效率低 每个都需要配置一下
+对于web.xml中不经常修改的配置可以通过注解的方式配到javaServlet程序中
+
+Servlet3.0之后就有了各种的Servlet基于注解的开发
+    优点是 开发效率高 不需要编写大量的配置信息 直接在java类中使用注解进行标记
+    web.xml文件变小了
+有了注解开发之后web.xml还是保存的
+    一些需要变化的仍要配置到web.xml中 一般都是注解加配置文件的开发模式
+    一些不经常变化的配置写到注解中 一些需要变化的配置写到web.xml配置文件中
+
+使用注解开发
+    jakarta.servlet.annotations.webServlet
+    在Servlet类上使用@WebServlet注解
+
+此注解中
+常用的属性
+    name属性 <servlet-name>
+    urlPatterns属性 <url-pattern>
+    loadOnStartup属性 服务器启动时是否要加载servlet <load-on-startup>
+
+注解的使用格式:
+    @注解名称(属性名=属性值, 属性名=属性值, 属性名=属性值 ......)

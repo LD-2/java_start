@@ -1,0 +1,4 @@
+可以导包 使用
+包中JSON对象封装的toJSONString()方法
+把实例对象封装成 json格式字符串
+把list集合封装成json格式的数组 字符串的形式

@@ -1,0 +1,7 @@
+修改maven的配置文件
+    修改maven配置文件 maven安装目录 /conf/settings.xml
+    先备份settings.xml
+
+    修改localRepository  指定自已的本地仓库目录（不要使用中文目录）
+
+镜像文件的更改也是在这里修改的

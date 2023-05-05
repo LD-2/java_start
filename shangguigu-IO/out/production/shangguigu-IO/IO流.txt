@@ -1,0 +1,26 @@
+输入流 输出流
+流的分类: 字节流 字符流
+一般文本数据字符流16bit  非文本数据字节流8bit
+直接作用在文件上节点流 作用在已有的文件上处理流
+输入输出字节字符流 抽象类四个: InputStream OutputStream Reader Writer 剩下得类都是继承它的  旗下比较重要的几个子类: 访问文件的文件流 缓冲流 转换流 对象流
+
+对文本文件使用字符流处理
+对非文本文件使用字节流处理
+但是由于文件的本质是01 所以在不考虑控制台输出 只是文件复制的情况下 字节流都可以
+
+缓冲流 BufferedInputStream  BufferedOutputStream  BufferedReader  BufferedWriter 处理流的一种是上一层节点流的包装
+缓冲流的作用 提高流的读取写入速度
+
+转换流: 处理流的一种   字节流和字符流之间的转换 InputStreamReader OutputStreamWriter
+
+标准的输入输出流
+System.in System.out 分别代表了系统的标准输入输出设备
+默认输入设备是键盘 输出设备是显示器
+System.in的类型是InputStream
+System.out的类型是PrintStream是OutputStream的子类和FilterOutputStream的子类
+重定向 通过System类的setIn setOut方法对默认设备进行改变
+public static void setIn(InputStream in)
+public static void setOut(PrintStream out)
+
+打印流: 实现将基本数据类型转换为字符串输出
+

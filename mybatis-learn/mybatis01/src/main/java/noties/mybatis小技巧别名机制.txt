@@ -1,0 +1,12 @@
+ 关于MyBatis中别名机制：
+    <typeAliases>
+    <！--别名自己指定的-->
+    <typeAlias type="com.powernode.mybatis.pojo.Car" alias="aaa"/>
+    <typeAlias type="com.powernode.mybatis.pojo.Log" alias="bbb"/>
+    <！--采用默认的别名机制-->
+    <typeAlias type="com.powernode.mybatis.pojo.Car"/>
+    <typeAlias type="com.powernode.mybatis.pojo.Log"/>
+    <！--包下所有的类自动起别名。使用简名作为别名。-->
+    <package name="com.powernode.mybatis.pojo"/>
+    </typeAliases>所有别名不区分大小写。
+    namespace不能使用别名机制。

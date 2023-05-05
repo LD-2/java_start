@@ -1,0 +1,50 @@
+Spring为Bean提供了多种实例化方式，通常包括4种方式。（也就是说在Spring中为Bean对象的创建准备了多种方案，目的是：更加灵活）
+● 第一种：通过构造方法实例化
+● 第二种：通过简单工厂模式实例化
+● 第三种：通过factory-bean实例化
+● 第四种：通过FactoryBean接口实例化
+
+
+<!--Spring提供的实例化方式，第一种：在spring配置文件中直接配置类全路径，Spring会自动调用该类的无参数构造方法来实例化Bean-->
+<bean id="sb" class="com.mirror.spring6.bean.User"/>
+
+<!--Spring提供的实例化方式，第二种：通过简单工厂模式。你需要在Spring配置文件中告诉Spring框架，调用哪个类的哪个方法获取Bean-->
+<!--factory-method 属性指定的是工厂类当中的静态方法。也就是告诉Spring框架，调用这个方法可以获取Bean。-->
+<bean id="vipBean" class="com.mirror.spring6.bean.VipFactory" factory-method="get"/>
+
+<!--Spring提供的实例化方式，第三种:通过工厂方法模式。通过factory-bean属性 + factory-method属性来共同完成。-->
+<!--告诉Spring框架，调用哪个对象的哪个方法来获取Bean。-->
+<bean id="orderFactory" class="com.mirror.spring6.bean.OrderFactory"/>
+<!--以下的配置很关系，factory-bean属性告诉Spring调用哪个对象。factory-method替外Spring调用该对象的哪个方法，-->
+<bean id="orderBean" factory-bean="orderFactory" factory-method="get"/>
+
+
+通过FactoryBean接口实例化
+以上的第三种方式中，factory-bean是我们自定义的，factory-method也是我们自己定义的。
+在Spring中，当你编写的类直接实现FactoryBean接口之后，factory-bean不需要指定了，factory-method也不需要指定了。
+factory-bean会自动指向实现FactoryBean接口的类，factory-method会自动指向getObject()方法。
+
+<!--Spring提供的实例化方式，第四种：通过FactoryBean接口来实现。-->
+<!--这种方式实际上就是第三种方式的简化。-->
+<!--由于你编写的类实现了FactoryBean接口，所以这个类是一个特殊的类，不需要你再手动指定：factory-bean、factory-method-->
+<!--通过一个特殊的Bean：工厂Bean。来返回一个普通的Bean Person对象。-->
+<bean id="person" class="com.mirror.spring6.bean.PersonFactory"/>
+
+
+BeanFactory和FactoryBean的区别
+BeanFactory
+Spring IoC容器的顶级对象，BeanFactory被翻译为“Bean工厂”，在Spring的IoC容器中，“Bean工厂”负责创建Bean对象。
+BeanFactory是工厂。
+FactoryBean
+FactoryBean：它是一个Bean，是一个能够辅助Spring实例化其它Bean对象的一个Bean。
+在Spring中，Bean可以分为两类：
+● 第一类：普通Bean
+● 第二类：工厂Bean（记住：工厂Bean也是一种Bean，只不过这种Bean比较特殊，它可以辅助Spring实例化其它Bean对象。）
+
+我们前面说过，java.util.Date在Spring中被当做简单类型，简单类型在注入的时候可以直接使用value属性或value标签来完成。
+但我们之前已经测试过了，
+对于Date类型来说，采用value属性或value标签赋值的时候，
+对日期字符串的格式要求非常严格，必须是这种格式的：Mon Oct 10 14:30:26 CST 2022。其他格式是不会被识别的.
+这种情况下，我们就可以使用FactoryBean来完成这个骚操作。
+编写DateFactoryBean实现FactoryBean接口 它可以辅助Spring实例化其它Bean对象。）
+

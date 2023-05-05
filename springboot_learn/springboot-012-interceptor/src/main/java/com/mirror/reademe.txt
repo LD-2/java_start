@@ -1,0 +1,39 @@
+在SpringMVC中实现拦截器
+首先实现HandlerInterceptor接口
+拦截器的执行时机
+preHandle() 在请求被处理之前进行的操作
+postHandle() 在请求被处理之后 但是还没有进行渲染操作 可以改变响应结果
+afterCompletion 所有请求响应结束后 执行善后工作 清理对象 关闭资源
+然后重写方法就可以
+
+然后
+在springmvc.xml文件中    注册拦截器
+配置要拦截的路径
+要放行的路径
+对应的bean对象
+<!--    注册拦截器-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+<!--            映射要拦截的请求-->
+            <mvc:mapping path="/**"/>
+<!--            设置放行的请求-->
+            <mvc:exclude-mapping path="/login"/>
+            <mvc:exclude-mapping path="/loginSucc"/>
+<!--            配置具体的拦截器实现功能的类-->
+            <bean class="com.mirror.interceptor.LoginInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+多个拦截器会形成一个拦截器链
+责任链设计模式
+
+
+在springboot中使用拦截器
+1、创建类实现 HandlerInterceptor 接口
+2、注册拦截器对象  实现WebMvcConfigurer接口  通过重写 添加拦截器 指定要添加的拦截器 和 要拦截的路径 以及放行的路径  相当于 在xml中配置文件
+3、创建测试使用的 Controller
+4、主启动类
+
+
+
+
